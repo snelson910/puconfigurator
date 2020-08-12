@@ -1,0 +1,42 @@
+h2 {
+	font-size: 30px;
+	color: black;
+	padding: 10px;
+	margin: auto;
+	font-family: Arial;
+}
+
+#hello {
+    text-align: left;
+}
+
+.button {
+	background-color: white;
+	color: black;
+	text-align: center;
+	padding: 7px 30px;
+	border-radius: 10px;
+	margin-left: 25px;
+	font-size: 30px;
+	margin-top: 5px;
+	margin-bottom: 20px;
+	font-family: Arial;
+}
+
+form {
+	margin-left: 25px;
+}
+
+#newunit {
+	position: absolute;
+	left: 25%;
+	-ms-transform: translate(-50%, 0%);
+	transform: translate(-50%, 0%);
+}
+
+#oldunit {
+	position: absolute;
+	left: 75%;
+	-ms-transform: translate(-50%, 0%);
+	transform: translate(-50%, 0%);
+}

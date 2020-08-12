@@ -1,0 +1,60 @@
+{% load static %}
+{% static "images" as baseUrl%}
+<<<<<<< HEAD
+<link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
+=======
+>>>>>>> 1c27faaa72f93a95230d8a8b663ac46863a7e598
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'basestyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'newunit.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<<<<<<< HEAD
+    <script src="/static/pumpmanual.js"></script>  
+=======
+    <script type="text/javascript" src="/static/pumpmanual.js"></script>  
+>>>>>>> 1c27faaa72f93a95230d8a8b663ac46863a7e598
+    <title>Power Unit Pump Selection</title>
+</head>
+<h1>JHF Power Unit Configurator</h1>
+<div id="logout">
+    <a href="/logout">Logout</a>
+</div>
+<body>
+    <form id="pmgroup" method="POST">
+        {% csrf_token %}
+        <br>
+        Select the Required Horsepower:<br>         
+        {{motor}}<br>
+        Select the Required Motor Volage:<br>
+        Voltage:
+        <select id="voltage" name="voltage">
+            <option value="">Select...</option>
+            <option value="1" id="1">110V/230V Single Phase</option>
+            <option value="2" id="2">240V/480V Three Phase</option>
+            <option value="3" id="3">575V Three Phase</option>
+        </select><br>
+        Select the Required Pump:<br>        
+        {{pumps}}<br>
+
+        <input type="button" class="button" value="Submit" id="submit">
+    </form>
+    <div class="text">
+        <a id="bellhousing"></a><br>
+        <a id="motcoup"></a><br>
+        <a id="pumcoup"></a><br>
+        <a id="shafts"></a><br>
+        <a id="motor"></a><br>
+        <a id="pump"></a><br>
+    </div>
+    <form id="continue" action="/newunit/reservoir" hidden="hidden" method="POST" >
+        {% csrf_token %}
+        <input type="submit" class="button" action="reservoir" value="Continue to Reservoir Selection">
+        <input type="text" name="data" id="data" hidden="hidden">
+        <input type="text" name="accountnumber" hidden="hidden" value="{{ accountnumber }}">
+    </form>
+</body>
+</html>

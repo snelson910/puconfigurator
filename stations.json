@@ -1,0 +1,27 @@
+ [{
+	"flowdirect": "Meter Out",
+	"flowOrient": "On A & B Ports",
+	"cborient": "On A & B Ports",
+	"poorient": "",
+	"redorient": "",
+	"redchecks": "",
+	"relorient": ""
+ },
+ {
+	"flowdirect": "Meter Out",
+	"flowOrient": "On A & B Ports",
+	"cborient": "On A & B Ports",
+	"poorient": "On B Port",
+	"redorient": "",
+	"redchecks": "",
+	"relorient": ""
+}, 
+{	
+	"flowdirect": "",
+	"flowOrient": "",
+	"cborient": "",
+	"poorient": "On A & B Ports",
+	"redorient": "On A & B Ports",
+	"redchecks": "none",
+	"relorient": "A to B, B to A"
+}]

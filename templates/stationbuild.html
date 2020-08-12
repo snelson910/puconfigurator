@@ -1,0 +1,186 @@
+{% load static %}
+{% static "images" as baseUrl%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Manifold Builder</title>
+<link rel="stylesheet" type="text/css" href="{% static 'valveStyle.css' %}">
+<h1 id="header">Manifold Builder</h1>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/stationbuild.js"></script>
+<a id="stationNumber" hidden="hidden">10</a>
+<a id="manisize" hidden="hidden">D03</a>
+<a id="pressure" hidden="hidden">D</a>
+<a id="details" hidden="hidden">{{ details }}</a>
+<body class="main">
+	<form id="valveVoltage" class="baseQuestions">
+		<fieldset>
+		<legend class="text">Valve Voltages (If mixed voltages are required, please make a note below)</legend>
+			<select id="stationVoltage">
+				<option value="0" selected="selected" disabled="disabled">Select...</option>
+				<option value="W110">110/120V AC</option>
+				<option value="G24">24V DC</option>
+				<option value="G12">12V DC</option>
+				<option value="W230">230V AC</option>
+			</select><br>
+		</fieldset>
+		<fieldset>
+		<legend class="text"> What type of electrical connection is required? (If mixed connections are required, please make a note below)</legend>
+			<select id="voltagetype">
+				<option value="0" selected="selected" disabled="disabled">Select...</option>
+				<option value="din">DIN Connectors</option>
+				<option value="conduit">1/2&rdquo; Conduit Body</option>
+			</select><br>
+		</fieldset>	
+		<fieldset>
+		<legend class="text">Are valve cables required?</legend>
+			<select id="cablesReq" disabled="disabled">
+				<option value="0" selected="selected" disabled="disabled">Select...</option>
+				<option value="no">No</option>
+				<option value="yes">Yes</option>
+			</select><br>
+		</fieldset>
+	</form>
+	<button type="button" id="voltageSubmit" class="button baseQuestions">Submit</button>
+    <div id="stationMath" hidden="hidden">
+		<div id="valveSelection">
+			<form id="spoolSelection">
+			<span id="stationTag"></span><br><br>
+				<button type="button" value="E" border="0" class="spoolButtons"><img src="{% static 'images/e_spool.png' %}" alt="E-Spool" class="spools"></button>
+				<button type="button" value="G" border="0" class="spoolButtons"><img src="{% static 'images/g_spool.png' %}" alt="G-Spool" class="spools"></button>
+				<button type="button" value="D" border="0" class="spoolButtons"><img src="{% static 'images/d_spool.png' %}" alt="D-Spool" class="spools"></button>
+				<button type="button" value="H" border="0" class="spoolButtons"><img src="{% static 'images/h_spool.png' %}" alt="H-Spool" class="spools"></button>
+				<button type="button" value="J" border="0" class="spoolButtons"><img src="{% static 'images/j_spool.png' %}" alt="J-Spool" class="spools"></button>
+				<button type="button" value="L" border="0" class="spoolButtons"><img src="{% static 'images/l_spool.png' %}" alt="L-Spool" class="spools"></button>
+				<button type="button" value="M" border="0" class="spoolButtons"><img src="{% static 'images/m_spool.png' %}" alt="M-Spool" class="spools"></button>
+				<button type="button" value="P" border="0" class="spoolButtons"><img src="{% static 'images/p_spool.png' %}" alt="P-Spool" class="spools"></button>
+				<button type="button" value="U" border="0" class="spoolButtons"><img src="{% static 'images/u_spool.png' %}" alt="U-Spool" class="spools"></button>
+				<button type="button" value="W" border="0" class="spoolButtons"><img src="{% static 'images/w_spool.png' %}" alt="W-Spool" class="spools"></button>
+				<button type="button" value="F" border="0" class="spoolButtons"><img src="{% static 'images/f_spool.png' %}" alt="F-Spool" class="spools"></button>
+				<button type="button" value="prop" border="0" class="spoolButtons"><img src="{% static 'images/prop.png' %}" alt="Prop" class="spools"></button>
+				<button type="button" value="cover" border="0" class="spoolButtons"><img src="{% static 'images/cover.png' %}" alt="Cover" class="spools"></button>
+				<button type="button" value="cross" border="0" class="spoolButtons"><img src="{% static 'images/cross.png' %}" alt="Cross" class="spools"></button>
+			</form>
+			<br>
+			<button type="button" id="stationSubmit" class="button" hidden="hidden">Submit</button>
+			<button type="button" id="propsubmit" class="button" hidden="hidden">Submit</button>
+			<br>
+			
+		</div>
+		<div id="propvalves" hidden="hidden">
+			<form class="text"><br>
+				<fieldset>
+				<legend class="text">Please enter your desired valve.</legend>
+					Look, prop valves are pretty complex, so just toss the R9 number of the valve you want to use in the box and we'll get it added.
+					You should already know what you want to use and shouldn't need a configurator, anyway.<br><br>
+					Valve Code (R9 only, please):
+					<input type="text" id="propNum" pattern="[Rr]{1}[0-9]{9}" maxlength="10"><br><br>
+				<button type="button" class="button" id="propSubmit">Submit</button>
+				<button type="button" class="button" id="propcancel">Cancel</button>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+	<br>
+	<table id="table" hidden="hidden">
+		<tr>
+			<th>Station Number</th>
+			<th>Valve Number</th>
+			<th>Flow Control Ports</th>
+			<th>Flow Control Configuration</th>
+			<th>Counterbalance Ports</th>
+			<th>P.O. Check Work Ports</th>
+			<th>Reducing Valve Work Ports</th>
+			<th>Reducing Valve Reverse Checks?</th>
+			<th>Relief Configuration</th>
+		</tr>
+		<div>
+			<form id="stationForm">
+				<tr>
+					<td>
+						<a>1</a>
+					</td>
+					<td>
+						<a id="valve1"></a> 
+					</td>
+					<td>
+						<select id="floworient01" class="floworient">
+							<option value="none" selected="selected">None</option>
+							<option value="On A Port">On 'A' Port</option>
+							<option value="On B Port">On 'B' Port</option>
+							<option value="On A and B Ports" >On 'A' and 'B' Ports</option>
+						</select>
+					</td>
+					<td>
+						<select id="flowdirect01" class="flowdirect" disabled="disabled">
+							<option value="none" selected="selected" disabled="disabled">None</option>
+							<option value="Meter Out">Meter Out</option>
+							<option value="Meter In">Meter In</option>
+						</select>
+					</td>
+					<td>
+						<select id="cbStyle01" class="cbStyle">
+							<option value="none" selected="selected">None</option>
+							<option value="On A Line">On 'A' Port</option>
+							<option value="On B Line">On 'B' Port</option>
+							<option value="On A and B Ports">On 'A' and 'B' Ports</option>
+						</select>
+					</td>
+					<td>
+						<select id="poStyle01" class="poStyle">
+							<option value="none" selected="selected">None</option>
+							<option value="On A Port">On 'A' Port</option>
+							<option value="On B Port">On 'B' Port</option>
+							<option value="On A and B Ports">On 'A' and 'B' Ports</option>
+						</select>
+					</td>
+					<td>
+						<select id="reduceStyle01" class="reduceStyle">
+							<option value="none" selected="selected">None</option>
+							<option value="On A Port">On 'A' Port</option>
+							<option value="On B Port">On 'B' Port</option>
+							<option value="On P Line">On 'P' Line</option>
+							<option value="On A and B Ports">On 'A' and 'B' Ports</option>
+						</select>
+					</td>
+					<td>
+						<select id="reduceChecks01" class="reduceChecks">
+							<option value="none" selected="selected">None</option>
+							<option value="On A Port">On 'A' Port</option>
+							<option value="On B Port">On 'B' Port</option>
+							<option value="On A and B Port">On 'A' and 'B' Ports</option>
+						</select>
+					</td>
+					<td>
+						<select id="relievingStyle01" class="relievingStyle">
+							<option value="none" selected="selected">None</option>
+							<option value="On P Line">P Line to Tank</option>
+							<option value="On A Line">A Port to Tank</option>
+							<option value="On B Line">B Port to Tank</option>
+							<option class="defaultSelect" value="A to B, B to A">A to B, B to A (Cross Port)</option>
+						</select>
+					</td>
+				</tr>
+			</form>
+		</div>
+	</table>
+	<br>
+	<button type="button" class="button sandwichConfigurator" id="configSubmit" hidden="hidden">Submit</button>
+	<button type="button" class="button configConfirm" id="sandwichStyleModify" hidden="hidden">Modify Configuration</button>
+	<button type="button" class="button configConfirm" id="sandwichStyleConfirm" hidden="hidden">Confirm</button>
+
+	<div>
+		<form id="formsubmit" action="bom" method="post">{%csrf_token%}		
+			<input type="text" name="stationconfiguration" id="stationinput" hidden="hidden">
+			<input type="text" name="partnumbers" id="partnumbers" hidden="hidden">
+			<input type="text" name="details" id="deets" hidden="hidden">
+			<textarea id="textnotes" name="notes" rows="6" cols="60">Enter any notes here...</textarea>
+		</form>
+	</div>	
+</body>
+	<div id="logout">
+		<a href="/logout">Logout</a>
+	</div>
+</html>

@@ -1,0 +1,18 @@
+Virtual enviornment name is cfg
+To cancel the server, enter the terminal and hit CTRL+C
+Account information is saved in accounts database on postgres server
+Sales group ZZZ designates user can view all power units regardless of constructor.
+
+Password strength information
+{
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+
+
+Something currently breaks when moving to the meterin/meter/out stage of the manifold builder.

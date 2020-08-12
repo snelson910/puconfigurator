@@ -1,0 +1,31 @@
+{% load static %}
+{% static "images" as baseUrl%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'basestyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'splash.css' %}">
+    <title>Power Unit Configurator- Home</title>
+</head>
+<h1>
+    JHF Power Unit Configurator
+</h1>
+<div id="logout">
+    <a href="/logout">Logout</a>
+</div>
+<h2>
+    <div id="hello">
+        Hello, {{user.first_name}}
+        <br>
+        {% for group in user.groups.all %}
+            {{ group }},
+        {% endfor %}
+    </div>
+</h2>
+<body>
+    <a href="/customers" class="button" id="newunit">New Manifold or Power Unit</a>
+    <a href="/history" class="button" id="oldunit">See Previous Power Units</a>
+</body>
+</html>

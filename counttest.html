@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="counttest.js"></script>
+</head>
+<body>
+
+    <!--Press Me:<br>
+    <form>
+     <input type="text" id="text" pattern="[Rr]{1}[0-9]{9}" maxlength="10">
+    </form><br>-->
+    <button type="button" id="submit" >Submit</button><br>
+    <a id="valve1"></a><br>
+    <a id="valve2"></a><br>
+    <a id="valve3"></a><br>
+    <a id="valve4"></a><br>
+    <a id="valve5"></a><br>
+    <a id="valve6"></a><br>
+    <a id="valve7"></a><br>
+    <a id="valve8"></a><br>
+    <a id="valve9"></a><br>
+    <a id="valve10"></a><br>
+    <a id="valve11"></a><br>
+    <a id="valve12"></a><br>
+    <a id="valve13"></a><br>
+    <a id="valve14"></a><br>
+    <a id="valve15"></a><br>
+    <!--<table id="bom">
+        <tr>
+            <th>Valve Number</th>
+            <th>Flow Control Ports</th>
+            <th>Flow Control Configuration</th>
+            <th>Counterbalance Ports</th>
+            <th>P.O. Check Work Ports</th>
+            <th>Reducing Valve Work Ports</th>
+            <th>Reducing Valve Reverse Checks?</th>
+            <th>Relief Configuration</th>
+        </tr>
+        <div>
+            <tr>
+                <td>
+                   <a id="valve1"></a> 
+                </td>
+                <td class="flowControlConfig">
+                    <select id="flowStyle1" class="sandwichConfigurator">
+                        <option value="On A Port">On 'A' Port</option>
+                        <option value="On B Port">On 'B' Port</option>
+                        <option class="defaultSelect" value="On A &amp B Ports" selected="selected">On 'A' &amp 'B' Ports</option>
+                    </select>
+                </td>
+                <td class="flowControlConfig">
+                    <select id="fcDirect1" class="sandwichConfigurator">
+                        <option id="defaultSelect" value="Meter Out" selected="selected">Meter Out</option>
+                        <option value="Meter In">Meter In</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="relievingStyle1" class="relievingStyle">
+                        <option value="On P Line">P Line to Tank</option>
+                        <option value="On A Line">A Port to Tank</option>
+                        <option value="On B Line">B Port to Tank</option>
+                        <option class="defaultSelect" value="A to B, B to A" selected="selected">A to B, B to A (Cross Port)</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="poStyle1" class="poStyle">
+                        <option value="On A Port">On 'A' Port</option>
+                        <option value="On B Port">On 'B' Port</option>
+                        <option class="defaultSelect" value="On A &amp; B Ports" selected="selected">On 'A' &amp; 'B' Ports</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="reduceStyle1" class="reduceStyle">
+                        <option value="On A Port">On 'A' Port</option>
+                        <option value="On B Port">On 'B' Port</option>
+                        <option value="On P Line">On 'P' Line</option>
+                        <option class="defaultSelect" value="On A &amp; B Ports" selected="selected">On 'A' &amp; 'B' Ports</option>
+                    </select>
+                </td>
+                <td class="reducingConfig">
+                    <select id="reduceChecks1" class="reduceChecks">
+                        <option value="none">None</option>
+                        <option value="On A Port">On 'A' Port</option>
+                        <option value="On B Port">On 'B' Port</option>
+                        <option value="On A &amp; B Port">On 'A' &amp; 'B' Ports</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="relievingStyle1" class="relievingStyle">
+                        <option value="On P Line">P Line to Tank</option>
+                        <option value="On A Line">A Port to Tank</option>
+                        <option value="On B Line">B Port to Tank</option>
+                        <option class="defaultSelect" value="A to B, B to A" selected="selected">A to B, B to A (Cross Port)</option>
+                    </select>
+                </td>
+            </tr>
+        </div>
+    </table>
+    <table id="valvetable">
+        <tr>
+            <th>Valve Number</th>
+            <th>Flow Control Ports</th>
+            <th>Flow Control Configuration</th>
+            <th>Counterbalance Ports</th>
+            <th>P.O. Check Work Ports</th>
+            <th>Reducing Valve Work Ports</th>
+            <th>Reducing Valve Reverse Checks?</th>
+            <th>Relief Configuration</th>
+        </tr>
+        <tr>
+            <td>
+                <a id="valvenumber"></a>
+            </td>
+            <td>
+                <select id="flowStyle1" class="flowStyle">
+                    <option value="On A Port">On 'A' Port</option>
+                    <option value="On B Port">On 'B' Port</option>
+                    <option class="defaultSelect" value="On A &amp; B Ports" selected="selected">On 'A' &amp; 'B' Ports</option>
+                </select>
+            </td>
+            <td>
+                <select id="fcDirect1" class="fcDirect">
+                    <option id="defaultSelect" value="Meter Out" selected="selected">Meter Out</option>
+                    <option value="Meter In">Meter In</option>
+                </select>
+            </td>
+            <td>
+                <select id="cbStyle1" class="cbStyle">
+                    <option value="On A Port">On 'A' Port</option>
+                    <option value="On B Port">On 'B' Port</option>
+                    <option class="defaultSelect" value="On A &amp; B Ports" selected="selected">On 'A' &amp; 'B' Ports</option>
+                </select>
+            </td>
+            <td>
+                <select id="poStyle1" class="poStyle">
+                    <option value="On A Port">On 'A' Port</option>
+                    <option value="On B Port">On 'B' Port</option>
+                    <option class="defaultSelect" value="On A &amp; B Ports" selected="selected">On 'A' &amp; 'B' Ports</option>
+                </select>
+            </td>
+            <td>
+                <select id="reduceStyle1" class="reduceStyle">
+                    <option value="On A Port">On 'A' Port</option>
+                    <option value="On B Port">On 'B' Port</option>
+                    <option value="On P Line">On 'P' Line</option>
+                    <option class="defaultSelect" value="On A &amp; B Ports" selected="selected">On 'A' &amp; 'B' Ports</option>
+                </select>
+            </td>
+            <td class="reducingConfig">
+                <select id="reduceChecks1" class="reduceChecks">
+                    <option value="none">None</option>
+                    <option value="On A Port">On 'A' Port</option>
+                    <option value="On B Port">On 'B' Port</option>
+                    <option value="On A &amp; B Port">On 'A' &amp; 'B' Ports</option>
+                </select>
+            </td>
+            <td>
+                <select id="relievingStyle1" class="relievingStyle">
+                    <option value="On P Line">P Line to Tank</option>
+                    <option value="On A Line">A Port to Tank</option>
+                    <option value="On B Line">B Port to Tank</option>
+                    <option class="defaultSelect" value="A to B, B to A" selected="selected">A to B, B to A (Cross Port)</option>
+                </select>
+            </td>
+        </tr>
+    </table>-->
+</body>
+</html>

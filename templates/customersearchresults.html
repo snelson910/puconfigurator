@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'basestyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'customer.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>Customer Search</title>
+</head>
+<h1>JHF Power Unit Configurator</h1>
+<div id="logout">
+    <a href="/logout">Logout</a>
+</div>
+<body>
+    <br>
+    {% if object_list %}
+    <table>
+        <caption>Search Results</caption>
+        <tr>
+            <th>Customer #</th>
+            <th>Customer Name</th>
+            <th>Address</th>
+            <th>Sales Group</th>
+        </tr>
+        {% for customers in object_list %}
+        <tr id="{{ customers.customer_account }}">
+            <td onclick="customerAccount('{{ customers.customer_account }}')">{{ customers.customer_account }} </td>
+            <td onclick="customerAccount('{{ customers.customer_account }}')">{{ customers.name }}</td>
+            <td onclick="customerAccount('{{ customers.customer_account }}')">{{ customers.address }}</td>
+            <td onclick="customerAccount('{{ customers.customer_account }}')">{{ customers.sales_group }}</td>
+        </tr>
+        {% endfor %}
+     </table>
+     <br>
+     <a class="text" id="select">Please select a customer or</a><br><br>
+    {% else %}
+        <a class="text">No results found.</a><br><br>
+    {% endif %}
+    <a href="/customers" class="button">Search again</a>
+</body>
+<br><br>
+<div>
+
+    <form action="/manifold" method="post" id="confirmmani" class="buttons" hidden="hidden">
+        {%csrf_token%}
+        <input type="text" class="accountnumber"  name="accountnumber" hidden="hidden">
+        <input type="submit" class="button" id="confirmbutton" value="New Manifold">
+    </form>
+    <form action="/newunit" method="post" id="confirmunit" class="buttons" hidden="hidden">
+        {%csrf_token%}
+        <input type="text" class="accountnumber"  name="accountnumber" hidden="hidden">
+        <input type="submit" class="button" value="New Power Unit">
+    </form>
+</div>
+</html>
+<script>
+    function customerAccount(a){
+        console.log(a);
+        $("tr").css("background-color", "white");
+        $("#"+a).css("background-color","yellow");
+        $(".buttons").removeAttr("hidden");
+        $("#confirmmani").removeAttr("hidden");
+        $(".accountnumber").val(a)
+    }
+</script>

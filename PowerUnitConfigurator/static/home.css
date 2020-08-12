@@ -1,0 +1,37 @@
+#submitButton {
+	background-color: white;
+	color: black;
+	text-align: center;
+	padding: 7px 30px;
+	border-radius: 10px;
+	font-size: 20px;
+	margin-top: 5px;
+	margin-bottom: 20px;
+}
+
+.form {
+	font: Arial;
+	height: 30px;
+	font-size: 30px;
+	padding: 5px;
+}
+
+#login {
+	font-size: 30px;
+	color: black;
+	text-align: center;
+	background-color: #d4242c;
+	border: solid 3px black;
+	padding: 10px;
+	margin: auto;
+	margin-top: 100px;
+	border-radius: 15px;
+	font-family: Arial;
+	width: 500px;
+}
+
+#error {
+	text-align: center;
+	font-family: Arial;
+	font-size: 25px;
+}

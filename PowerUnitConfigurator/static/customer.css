@@ -1,0 +1,60 @@
+.button {
+	background-color: white;
+	color: black;
+	text-align: center;
+	padding: 7px 30px;
+	border-radius: 10px;
+	margin-left: 25px;
+	font-size: 25px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font-family: Arial;
+	text-decoration: underline;
+}
+#submit {
+	background-color: white;
+	color: black;
+	text-align: center;
+	padding: 7px 30px;
+	border-radius: 10px;
+	margin-left: 25px;
+	font-size: 25px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font-family: Arial;
+}
+table {
+    width: auto;
+    border-collapse: collapse;
+	margin-left: 25px;
+	font-family: Arial;
+}
+
+table, td, th {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+th {
+	text-align: left;
+}
+
+tr {
+	background-color: white;
+	color: black;
+}
+
+caption {
+	background-color: white;
+	color: black;
+	border: 1px solid black;
+	padding: 10px;
+	font-family: arial;
+	font-size: 20px;
+	font-weight: bold;
+}
+.text {
+	font-size: 20px;
+	font-family: arial;
+	padding-left: 25px;
+}

@@ -1,0 +1,174 @@
+body {
+	background-color: #b6b2b1;
+	font-size: 16px;
+}
+
+h1 {
+	font-size: 30px;
+	color: black;
+	text-align: center;
+	background-color: #d4242c;
+	border: solid 3px black;
+	padding: 10px;
+	margin: auto;
+	border-radius: 15px;
+	font-family: Arial;
+}
+
+#manifoldDetails {
+	margin-top: 25px;
+	font-family: Arial;
+	margin-left: 25px;
+}
+
+#details {
+	font-size: 25px;
+}
+
+#valveCodes {
+	margin-left: -15px;
+}
+
+.button {
+	background-color: white;
+	color: black;
+	text-align: center;
+	padding: 7px 30px;
+	border-radius: 10px;
+	margin-left: 25px;
+	font-size: 16px;
+	margin-top: 5px;
+	margin-bottom: 20px;
+}
+
+table {
+    width: auto;
+    border-collapse: collapse;
+	margin-left: 20px;
+	font-family: Arial;
+}
+
+table, td, th {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+th {
+	text-align: left;
+}
+
+tr {
+	background-color: white;
+	color: black;
+}
+form {
+	margin-left: 25px;
+}
+
+.spools {
+	height: 150px;
+}
+
+.spoolButtons {
+	background-color: white;
+}
+
+#stationTag {
+	font-size: 24px;
+	margin-left: 25px;
+	font-family: Arial;
+	font-weight: heavy;
+}
+
+#sandwichTime {
+	font-size: 17px;
+	font-family: Arial;
+}
+
+.text {
+	font-size: 17px;
+	font-family: Arial;
+	font-weight: normal;
+}
+
+.sidebar {
+  height: 96%; /* Full-height: remove this if you want "auto" height */
+  width: 250px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 7px; /* Stay at the top */
+  right: 2px;
+  background-color: #d4242c; 
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+  border-radius: 15px;
+  border: solid 3px black;
+}
+
+/* The navigation menu links */
+.sidebar a {
+  padding: 6px 16px 6px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  color: black;
+  display: block;
+  font-family: Arial;
+  font-weight: bold;
+}
+
+/* Style page content */
+.main {
+  margin-right: 250px; /* Same as the width of the sidebar */
+  padding: 0px 10px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+textarea {
+	width: 525px;
+	transform: translate(-2%, 3%);
+	height: 160px;
+	font-family: Arial;
+	font-size: 16px;
+	border: 2px solid black;
+	border-radius: 5px;
+	resize: none;
+	text-align: left;	
+}
+#textBox {
+	width: 580px;
+	border: solid 3px black;
+	border-radius: 15px;
+	background-color: #d4242c;
+	height:200px;
+	position: fixed;
+	bottom:5px;
+	right: 260px;
+	font-family: Arial;
+	text-align: center;
+	padding-top: 3px;
+	font-weight: bold;
+}
+#sizeSubmit { 
+	margin-left: 50px;
+}
+
+#stationTag {
+	margin-left: 0px;
+	font-weight: bold;
+	font-size: 25px;
+}
+
+.notes{
+	margin-left: 25px;
+	font-family: Arial;
+	font-size: 16px;
+}
+caption {
+	font-size: 25px;
+	font-family: Arial;
+	font-weight: bold;
+}

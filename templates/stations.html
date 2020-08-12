@@ -1,0 +1,197 @@
+{% load static %}
+{% static "images" as baseUrl%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Manifold Builder</title>
+<link rel="stylesheet" type="text/css" href="{% static 'valveStyle.css' %}">
+<h1 id="header">Manifold Builder- Station Configurator</h1>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/stations.js"></script>
+<a id="details" hidden="hidden">{{ details }}</a>
+<body class="main">
+    <div id="stationMath">
+		<div id="valveSelection">
+			<form id="spoolSelection">
+			<span id="stationTag">Station 1</span><br><br>
+				<button type="button" value="E" border="0" class="spoolButtons"><img src="{% static 'images/e_spool.png' %}" alt="E-Spool" class="spools"></button>
+				<button type="button" value="G" border="0" class="spoolButtons"><img src="{% static 'images/g_spool.png' %}" alt="G-Spool" class="spools"></button>
+				<button type="button" value="D" border="0" class="spoolButtons"><img src="{% static 'images/d_spool.png' %}" alt="D-Spool" class="spools"></button>
+				<button type="button" value="H" border="0" class="spoolButtons"><img src="{% static 'images/h_spool.png' %}" alt="H-Spool" class="spools"></button>
+				<button type="button" value="J" border="0" class="spoolButtons"><img src="{% static 'images/j_spool.png' %}" alt="J-Spool" class="spools"></button>
+				<button type="button" value="L" border="0" class="spoolButtons"><img src="{% static 'images/l_spool.png' %}" alt="L-Spool" class="spools"></button>
+				<button type="button" value="M" border="0" class="spoolButtons"><img src="{% static 'images/m_spool.png' %}" alt="M-Spool" class="spools"></button>
+				<button type="button" value="P" border="0" class="spoolButtons"><img src="{% static 'images/p_spool.png' %}" alt="P-Spool" class="spools"></button>
+				<button type="button" value="U" border="0" class="spoolButtons"><img src="{% static 'images/u_spool.png' %}" alt="U-Spool" class="spools"></button>
+				<button type="button" value="W" border="0" class="spoolButtons"><img src="{% static 'images/w_spool.png' %}" alt="W-Spool" class="spools"></button>
+				<button type="button" value="F" border="0" class="spoolButtons"><img src="{% static 'images/f_spool.png' %}" alt="F-Spool" class="spools"></button>
+				<button type="button" value="prop" border="0" class="spoolButtons"><img src="{% static 'images/prop.png' %}" alt="Prop" class="spools"></button>
+			</form>
+			<br>
+
+			<form id="valveVoltage" hidden="hidden" class="cleanupClass">
+				<select id="stationVoltage">
+					<option value="0" selected="selected" disabled="disabled">Select...</option>
+					<option value="W110">110/120V AC</option>
+					<option value="G24">24V DC</option>
+					<option value="G12">12V DC</option>
+					<option value="W230">230V AC</option>
+				</select>
+				<select id="voltagetype">
+					<option value="0" selected="selected" disabled="disabled">Select...</option>
+					<option value="din">DIN Connectors</option>
+					<option value="conduit">1/2&rdquo; Conduit Body</option>
+				</select>
+				<br>
+			</form>
+			<br>
+			<button type="button" id="voltageSubmit" class="button" disabled="disabled" hidden="hidden">Submit</button>
+		</div>
+		<div id="propvalves" hidden="hidden">
+			<form><br>
+				<fieldset>
+				<br><legend class="text">Please select a proportional valve style. If your desired valve is not listed, please make a note below.</legend>
+					<select id="propselect">
+						<option value="0" selected="selected" disabled="disabled">Select...</option>
+						<option value="4WRA" id="4WRA">4WRA Non-OBE Valve</option>
+						<option value="4WRAE" id="4WRAE">4WRAE OBE Valve</option>
+						<option value="4WRE" id="4WRE">4WRE Non-OBE Valve</option>
+						<option value="4WREE" id="4WREE">4WREE OBE Valve</option>
+						<option value="4WREEM" id="4WREEM">4WREEM</option>
+						<option value="4WRZ" id="4WRZ">4WRZ Non-OBE Valve</option>
+						<option value="4WRZE" id="4WRZE">4WRZE OBE Valve</option>
+						<option value="4WRH" id="4WRH">4WRH Non-OBE Valve</option>
+					</select><br><br>
+					Look, prop valves are pretty complex, so just toss the R9 number of the valve you want to use in the comments box and we'll get it added.
+					You should already know what you want to use and shouldn't need a configurator, anyway.<br>
+					We'll figure about $1500 for a D03 or D05 valve, and $3000 for a D08. Sound good?<br>
+				<button type="button" class="button" id="propSubmit">Submit</button>
+				</fieldset>
+			</form>
+		</div>
+		<div id="sandwichTime" hidden="hidden">
+			<form id="sandwichOptions">
+				Please select any sandwich valves required for this station.<br>
+				<input type="checkbox" id="flowControl" name="flowControl" value="flowControl" class="sandwichConfigurator">
+				<label for="flowControl">Flow Control</label><br>
+				<input type="checkbox" id="counterBalance" name="counterBalance" value="counterbalance" class="sandwichConfigurator">
+				<label for="counterBalance">Counterbalance Valve</label><br>
+				<input type="checkbox" id="poCheck" name="poCheck" value="poCheck" class="sandwichConfigurator">
+				<label for="poCheck">Pilot Operated Check</label><br>
+				<input type="checkbox" id="reducing" name="reducing" value="reducing" class="sandwichConfigurator">
+				<label for="reducing">Reducing Valve</label><br>
+				<input type="checkbox" id="reducingCheck" name="reducingCheck" value="reducingCheck" class="sandwichConfigurator">
+				<label for="reducingCheck">Reducing Valve with Reverse Checks</label><br>
+				<input type="checkbox" id="relieving" name="relieving" value="relieving" class="sandwichConfigurator">
+				<label for="relieving">Relief Valves</label><br>
+			</form>
+			
+			<form id="sandwichConfig">
+				<br>
+				<table>
+					<tr>
+						<th class="flowControlConfig" hidden="hidden">Flow Control Ports</th>
+						<th class="flowControlConfig" hidden="hidden">Flow Control Configuration</th>
+						<th class="counterbalanceConfig" hidden="hidden">Counterbalance Ports</th>
+						<th class="pocheckConfig" hidden="hidden">P.O. Check Work Ports</th>
+						<th class="reducingConfig" hidden="hidden">Reducing Valve Work Ports</th>
+						<th class="reducingCheckConfig" hidden="hidden">Reducing Valve Reverse Checks?</th>
+						<th class="relievingConfig" hidden="hidden">Relief Configuration</th>
+					</tr>
+					<tr>
+						<td class="flowControlConfig" hidden="hidden">
+							<select id="flowStyle" class="sandwichConfigurator">
+								<option value="On A Port">On 'A' Port</option>
+								<option value="On B Port">On 'B' Port</option>
+								<option class="defaultSelect" value="On A &amp B Ports" selected="selected">On 'A' &amp 'B' Ports</option>
+							</select>
+						</td>
+						<td class="flowControlConfig" hidden="hidden">
+							<select id="fcDirect" class="sandwichConfigurator">
+								<option id="defaultSelect" value="Meter Out" selected="selected">Meter Out</option>
+								<option value="Meter In">Meter In</option>
+							</select>
+						</td>
+						<td class="counterbalanceConfig" hidden="hidden">
+							<select id="cbStyle" class="sandwichConfigurator">
+								<option value="On A Port">On 'A' Port</option>
+								<option value="On B Port">On 'B' Port</option>
+								<option class="defaultSelect" value="On A &amp B Ports" selected="selected">On 'A' &amp 'B' Ports</option>
+							</select>
+						</td>
+						<td class="pocheckConfig" hidden="hidden">
+							<select id="poStyle" class="sandwichConfigurator">
+								<option value="On A Port">On 'A' Port</option>
+								<option value="On B Port">On 'B' Port</option>
+								<option class="defaultSelect" value="On A &amp B Ports" selected="selected">On 'A' &amp 'B' Ports</option>
+							</select>
+						</td>
+						<td class="reducingConfig" hidden="hidden">
+							<select id="reduceStyle" class="sandwichConfigurator">
+								<option value="On A Port">On 'A' Port</option>
+								<option value="On B Port">On 'B' Port</option>
+								<option value="On P Line">On 'P' Line</option>
+								<option class="defaultSelect" value="On A &amp B Ports" selected="selected">On 'A' &amp 'B' Ports</option>
+							</select>
+						</td>
+						<td class="reducingCheckConfig" hidden="hidden">
+							<select id="reduceChecks" class="sandwichConfigurator">
+								<option class="defaultSelect" value="On A Port">On 'A' Port</option>
+								<option value="On B Port">On 'B' Port</option>
+								<option value="On A &amp B Port">On 'A' &amp 'B' Ports</option>
+							</select>
+						</td>
+						<td class="relievingConfig" hidden="hidden">
+							<select id="relievingStyle" class="sandwichConfigurator">
+								<option value="On P Line">P Line to Tank</option>
+								<option value="On A Line">A Port to Tank</option>
+								<option value="On B Line">B Port to Tank</option>
+								<option class="defaultSelect" value="A to B, B to A" selected="selected">A to B, B to A (Cross Port)</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+				<span class="flowControlConfig" hidden="hidden">Hint: When in doubt, meter out!</span>
+				<br>
+				<button type="button" class="button sandwichConfigurator" id="sandwichStyleSubmit">Submit</button>
+				<button type="button" class="button configConfirm" id="sandwichStyleModify" hidden="hidden">Modify Configuration</button>
+				<button type="button" class="button configConfirm" id="sandwichStyleConfirm" hidden="hidden">Confirm</button>
+			</form>
+		</div>
+		<div>
+			<form name="stationsubmit" action="stations/bom" method="post">
+				{%csrf_token%}
+				<input type="text" name="stationconfiguration" id="stationinput" hidden="hidden">
+				<input type="text" name="valveData" id="valveData" hidden="hidden">
+				<input type="text" name="voltages" id="voltages" hidden="hidden">
+				<input type="text" name="details" id="detailsinput" hidden="hidden">
+				<div id="textbox">
+					<label class="notes" for="textBox">
+					Please enter any notes or concerns for the Power Units department here.
+					</label><br>
+					<textarea name="manifoldNotes" id="textBox" class="notes">{{ maninotes }}</textarea>
+				</div>
+			</form>
+		</div>
+	</div>
+	<br>		
+	<div class="sidebar">
+		<a id="details">Details:</a>
+		<a id="manifold"></a>
+		<a id="reliefValve"></a>
+		<a id="valveCodes"></a>
+	</div>
+	<!--	<div id="textBox">
+		Please enter any notes or concerns for the Power Units department here.<br>
+		<form id="noteBox">
+			<textarea name="powerUnitNotes"></textarea>
+		</form>
+	</div>-->
+<a id="testspot"></a>	
+</body>
+<div id="logout">
+    <a href="/logout">Logout</a>
+</div>
+</html>

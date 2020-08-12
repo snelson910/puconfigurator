@@ -1,0 +1,82 @@
+{% load static %}
+{% static "images" as baseUrl%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Manifold Builder- Manifold Selection</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'basestyle.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'manifold.css' %}">
+	<h1 id="header">Manifold Builder- Manifold Selection</h1>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/manifold.js"></script>
+<a id="projectid" hidden="hidden">{{ projectid }}</a>
+<body class="main">
+	<div id="sizeSelect">
+		<form autocomplete="off" id="baseManifoldForm">
+			<table id="manifoldDetails">
+				<tr>
+					<th>Valve Size</th>
+					<th>Number of Stations</th>
+					<th>Relief Valve?</th>
+					<th>Pressure</th>
+					<th class="reliefClass" hidden="hidden">Relief Style</th>
+				</tr>
+				<tr>
+					<td>
+						<select id="valveSize" name="valveSize">
+							<option value="test" selected="selected" disabled="disabled">Select Valve Size</option>
+							<option value="D03">D03 (Recommended &lt 15GPM)</option>
+							<option value="D05">D05 (Recommended &lt 31GPM)</option>
+							<option value="D08">D08 (Recommended &lt 110GPM)</option>
+						</select>
+					</td>
+					<td>
+						<input type="number" min="1" max="10" value="1" id="stationNumber">
+					</td>
+					<td>
+						<select id="reliefSelect" name="reliefSelect">
+							<option value="" selected="selected" disabled="disabled">Select Relief Style</option>
+							<option value="1">Yes</option>
+							<option value="0">No</option>
+						</select>
+					</td>
+					<td>
+						<select id="pressureSelect" name="pressureSelect">
+							<option value="" selected="selected" disabled="disabled">Select Pressure</option>
+							<option value="lowPressure">Aluminum/3000psi</option>
+							<option value="highPressure">Ductile/5000psi</option>
+						</select>
+					</td>
+					<td class="reliefClass" name="reliefClass" hidden="hidden">
+						<select id="reliefStyle">
+							<option value="" selected="selected" disabled="disabled">Select Relief Class</option>
+							<option value="direct">Direct-Acting</option>
+							<option value="pilot">Pilot-Operated</option>
+						</select>
+					</td>
+			</table>
+		</form>
+		<button id="sizeSubmit" class="button">Submit</button>
+	</div>
+	<div class="confirmClass" >
+		<br>
+		<a hidden="hidden" class="confirmClass">Manifold Part Number:</a><br>
+		<a id="maniNum" class="confirmClass" hidden="hidden"></a><br>
+		<a hidden="hidden" class="confirmClass">Relief Valve Part Number:</a><br>
+		<a id="reliefNum" class="confirmClass" hidden="hidden"></a><br><br>
+		<button id="maniModify" class="button" hidden="hidden">Modify</button>
+		<form action="/manifold/stations" method="post" id="stationform">
+			{%csrf_token%}
+			<button id="maniConfirm" class="button" hidden="hidden">Confirm</button>
+			<input type="text" name="accountnumber" hidden="hidden" value="{{ accountnumber }}">
+			<input type="text" name="details" hidden="hidden" id="details">
+			<textarea id="textnotes" name="notes" rows="6" cols="60">Enter any notes here...</textarea>
+		</form>
+	</div>
+</body>
+<div id="logout">
+    <a href="/logout">Logout</a>
+</div>
+</html>
