@@ -26,9 +26,9 @@ class FrameForm(forms.ModelForm):
         ]
 
 class ReservoirForm(forms.ModelForm):
-    reservoirs = forms.ModelChoiceField(queryset=Reservoirs.objects.order_by('reservoir_size', 'id', lavel="Reservoir", empty_label="Select...", to_field_name="reservoir")
+    reservoirs = forms.ModelChoiceField(queryset=Reservoir.objects.order_by('reservoir_size', 'id', lavel="Reservoir", empty_label="Select...", to_field_name="reservoir"))
     class Meta:
-        model=Reservoirs
+        model=Reservoir
         fields = [
             "reservoirs",
         ]
