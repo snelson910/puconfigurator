@@ -46,7 +46,7 @@
     </div>
     <form id="continue" hidden="hidden" method="POST" >
         {% csrf_token %}
-        <input type="button" id="reservoirsubmit" class="button" action="reservoir" value="Continue to Reservoir Selection">
+        <input type="button" id="reservoirselect" class="button" action="reservoir" value="Continue to Reservoir Selection">
         <input type="text" name="data" id="data" hidden="hidden">
         <input type="text" name="accountnumber" hidden="hidden" value="{{ accountnumber }}">
     </form>
@@ -59,9 +59,10 @@
         <br><legend class="text">Select the Required Reservoir:</legend>
         {% csrf_token %}        
         {{ reservoir }}
-        <br>
+        <br><br>
         </fieldset>
-        <input type="button" class="button" value="Submit"> 
+        <input type="button" class="button" value="Submit" id="reservoirsubmit"> 
+        <input type="text" hidden="hidden" id="formdata">
     </form>
     </div>
 </body>
