@@ -91,9 +91,10 @@ function reservoir(){
         success:function(response)
         {
             if(response != ""){
-                console.log("Tested")
-                console.log(response)
-                console.log(response.data[1])
+                $("#motorselection").attr("hidden", "hidden");
+                $("#reservoirselection").removeAttr("hidden", "hidden");
+                $("#flow").html(response.flow);
+                $("#recommended").html(response.recommended);
             }else{
                 console.log("Not Working")
             }
