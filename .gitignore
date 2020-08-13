@@ -3,3 +3,5 @@ dir_to_ignore/sqlbackup
 *.pyo
 *.pyc
 **/__pycache__
+Power Unit Configurator.code-workspace
+fizzbuzz.py
