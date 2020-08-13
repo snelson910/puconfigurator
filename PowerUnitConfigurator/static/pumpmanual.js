@@ -1,4 +1,5 @@
 var data;
+var data2;
 $(document).ready(function(){
     $("#submit").click(function(){
         //An attempt at form validation.
@@ -72,11 +73,10 @@ function tablebuild(){
     $("#motor").html("Electric Motor: " + data[4]);
     $("#pump").html("Selected Pump: " + data[5]);
     $("#continue").removeAttr("hidden", "hidden")
-    //Stringify the data and send it to the server
     $("#data").val(JSON.stringify(data));
 }
 $(document).ready(function(){
-    $("#reservoirsubmit").click(function(){
+    $("#reservoirselect").click(function(){
         reservoir();
     });
 });
@@ -101,4 +101,10 @@ function reservoir(){
         }
     });
 }
-//Testing
+
+$(document).ready(function(){
+    $("#reservoirsubmit").click(function(){
+        var reservoir = $("#id_reservoir_size-0-reservoirs").val();
+        console.log("Reservoir number is " + reservoir);
+    });
+});
