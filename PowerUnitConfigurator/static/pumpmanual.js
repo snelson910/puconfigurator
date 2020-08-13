@@ -75,3 +75,28 @@ function tablebuild(){
     //Stringify the data and send it to the server
     $("#data").val(JSON.stringify(data));
 }
+$(document).ready(function(){
+    $("#reservoirsubmit").click(function(){
+        reservoir();
+    });
+});
+function reservoir(){
+    $.ajax({
+        url: "reservoir",
+        type: "POST",
+        data: {
+            csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+            data1: $("#data").val()
+        },
+        success:function(response)
+        {
+            if(response != ""){
+                console.log("Tested")
+                console.log(response)
+                console.log(response.data[1])
+            }else{
+                console.log("Not Working")
+            }
+        }
+    });
+}

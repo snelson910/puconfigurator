@@ -37,7 +37,9 @@ def manual(request):
                      motor_formset = MotorFormSet(prefix = 'motor')
                      PumpFormSet = formset_factory(PumpForm)
                      pump_formset = PumpFormSet(prefix = 'pump')
-                     return render(request, "pumpmanual.html", {'motor' : motor_formset, 'pumps' : pump_formset, 'accountnumber' : accountnumber})
+                     ReservoirFormSet = formset_factory(ReservoirForm)
+                     reservoir_formset = ReservoirFormSet(prefix = 'reservoir_size')
+                     return render(request, "pumpmanual.html", {'motor' : motor_formset, 'pumps' : pump_formset, 'accountnumber' : accountnumber,'reservoir' : reservoir_formset,})
               return redirect('/')
        else:
               return redirect('/')
@@ -125,7 +127,7 @@ def coupling(request):
                                    if size == 0:
                                           motorcoupling = "Custom coupling required: M" + str(pref) + str(motcoup)
                                           pumpcoupling = "Custom coupling required: M" + str(pref) + str(pumcoup)
-                     #Drop the data in a JON to pass to the AJAX response
+                     #Drop the data in a JSON to pass to the AJAX response
                      data = [bellnum, motorcoupling, pumpcoupling, l, mot.motor_number, pump]
                      jsondata = json.dumps(data)
                      return HttpResponse(jsondata, content_type="application/json")  
@@ -137,14 +139,14 @@ def coupling(request):
 def reservoir(request):
        if request.user.is_authenticated:
               if request.method == 'POST':
-                     data = json.loads(request.POST['data'])
-                     accountnumber = request.POST['accountnumber']
-                     ReservoirFormSet = formset_factory(ReservoirForm)
-                     reservoir_formset = ReservoirFormSet(prefix = 'reservoir_size')
-                     #Calculate the pump flow in gallons per minut and output it for the user to see
+                     data = json.loads(request.POST['data1'])
+                     #Calculate the pump flow in gallons per minute and output it for the user to see
+                     print(data[5])
                      pump = Pumpcodes.objects.get(pump = data[5])
                      flow = ((pump.pump_size * 1800)* (1/(231*16.3871)))
-                     return render(request, "reservoir.html", {"data": json.dumps(data), "accountnumber" : accountnumber, 'reservoir' : reservoir_formset, "flow" : round(flow,2), "recommended" : (round((flow*3/10),0)*10) })
+                     jsondata = json.dumps({"data": data, "flow" : round(flow,2), "recommended" : int((round((flow*3/10),0)*10)) })
+
+                     return HttpResponse(jsondata, content_type="application/json")
               else:
                      return redirect('/')       
        else:

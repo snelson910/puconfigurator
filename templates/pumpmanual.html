@@ -43,11 +43,23 @@
         <a id="motor"></a><br>
         <a id="pump"></a><br>
     </div>
-    <form id="continue" action="/newunit/reservoir" hidden="hidden" method="POST" >
+    <form id="continue" hidden="hidden" method="POST" >
         {% csrf_token %}
-        <input type="submit" class="button" action="reservoir" value="Continue to Reservoir Selection">
+        <input type="button" id="reservoirsubmit" class="button" action="reservoir" value="Continue to Reservoir Selection">
         <input type="text" name="data" id="data" hidden="hidden">
         <input type="text" name="accountnumber" hidden="hidden" value="{{ accountnumber }}">
     </form>
+    <div hidden="hidden">
+    <br>
+    Your pump flow is {{ flow }} GPM. The reservoir size should be around 2-4 times the flow rate of the pump, or around {{ recommended }} gallons.<br><br>
+    <form id="reservoirs" method="POST">
+        <fieldset>
+        <br><legend class="text">Select the Required Reservoir:</legend>
+        {% csrf_token %}        
+        {{ reservoir }}
+        </fieldset>
+        <input type="button" class="button" value="Submit"> 
+    </form>
+    </div>
 </body>
 </html>

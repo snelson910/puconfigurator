@@ -16,13 +16,15 @@
 <a id="accountnumber" hidden="hidden">{{ accountnumber }}</a>
 <a id="data" hidden="hidden">{{ data }}</a>
 <body onload='getdata()'>
+    <br>
+    Your pump flow is {{ flow }} GPM. The reservoir size should be around 2-4 times the flow rate of the pump, or around {{ recommended }} gallons.<br><br>
     <form id="reservoirs" method="POST">
-        Your pump flow is {{ flow }} GPM. The reservoir size should be around 2-4 times the flow rate of the pump, or around {{ recommended }} gallons.
-        {% csrf_token %}
-        <br>
-        Select the Required Reservoir:<br>         
-        {{ reservoir }}<br>
-        <input type="button" class="button" value="Submit" id="submit">
+        <fieldset>
+        <br><legend class="text">Select the Required Reservoir:</legend>
+        {% csrf_token %}        
+        {{ reservoir }}
+        </fieldset>
+        <input type="button" class="button" value="Submit" id="submit"> 
     </form>
 </body>
 <div id="logout">
