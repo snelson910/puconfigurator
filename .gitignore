@@ -1,2 +1,4 @@
 secrets.py
 dir_to_ignore/sqlbackup
+*.pyo
+*.pyc
