@@ -104,7 +104,9 @@ function reservoir(){
 
 $(document).ready(function(){
     $("#reservoirsubmit").click(function(){
-        var reservoir = $("#id_reservoir_size-0-reservoirs").val();
-        console.log("Reservoir number is " + reservoir);
+        data.push($("#id_reservoir_size-0-reservoirs").val())
+        console.log("Reservoir number is " + data[6]);
+        $("#formdata").val(JSON.stringify(data));
+        console.log($("#formdata").val());
     });
 });
