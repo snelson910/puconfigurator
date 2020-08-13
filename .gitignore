@@ -2,4 +2,4 @@ secrets.py
 dir_to_ignore/sqlbackup
 *.pyo
 *.pyc
-__pycache__
+**/__pycache__
