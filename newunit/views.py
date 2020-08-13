@@ -141,7 +141,6 @@ def reservoir(request):
               if request.method == 'POST':
                      data = json.loads(request.POST['data1'])
                      #Calculate the pump flow in gallons per minute and output it for the user to see
-                     print(data[5])
                      pump = Pumpcodes.objects.get(pump = data[5])
                      flow = ((pump.pump_size * 1800)* (1/(231*16.3871)))
                      jsondata = json.dumps({"data": data, "flow" : round(flow,2), "recommended" : int((round((flow*3/10),0)*10)) })
