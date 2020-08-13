@@ -1,6 +1,7 @@
 var data;
 $(document).ready(function(){
     $("#submit").click(function(){
+        //An attempt at form validation.
         if($("#id_motor-0-hp").val() == ""){
             $("#id_motor-0-hp").css("background-color","yellow")
         }else{
@@ -23,7 +24,7 @@ $(document).ready(function(){
 });
 $(document).ready(function(){
     $("#id_motor-0-hp").change(function(){
-        //$("#voltage").val() = "";
+        //Try to force the user to make good valid motor selections. Can't get the JS to drop the horsepower selection, though...
         if($("#id_motor-0-hp").val() > 5){
             $("#1").attr("disabled", "disabled");
         }else{
@@ -70,6 +71,7 @@ function tablebuild(){
     $("#shafts").html("Shaft-to-Shaft Distance: " + data[3] + " inches");
     $("#motor").html("Electric Motor: " + data[4]);
     $("#pump").html("Selected Pump: " + data[5]);
-    $("#continue").removeAttr("hidden", "hidden");
+    $("#continue").removeAttr("hidden", "hidden")
+    //Stringify the data and send it to the server
     $("#data").val(JSON.stringify(data));
 }
