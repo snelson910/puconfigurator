@@ -1,4 +1,9 @@
 secrets.py
 dir_to_ignore/sqlbackup
+<<<<<<< HEAD
 *.pyo
 *.pyc
+=======
+*pyc
+*pyo
+>>>>>>> reservoirs
