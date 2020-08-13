@@ -12,10 +12,12 @@
     <script type="text/javascript" src="/static/reservoir.js"></script>  
     <title>Power Unit Reservoir Selection</title>
 </head>
+<h1>JHF Power Unit Configurator- Reservoir Selection</h1>
 <a id="accountnumber" hidden="hidden">{{ accountnumber }}</a>
 <a id="data" hidden="hidden">{{ data }}</a>
 <body onload='getdata()'>
     <form id="reservoirs" method="POST">
+        Your pump flow is {{ flow }} GPM. The reservoir size should be around 2-4 times the flow rate of the pump, or around {{ recommended }} gallons.
         {% csrf_token %}
         <br>
         Select the Required Reservoir:<br>         
@@ -23,4 +25,7 @@
         <input type="button" class="button" value="Submit" id="submit">
     </form>
 </body>
+<div id="logout">
+    <a href="/logout">Logout</a>
+</div>
 </html>

@@ -119,11 +119,12 @@ def reservoir(request):
               if request.method == 'POST':
                      data = json.loads(request.POST['data'])
                      accountnumber = request.POST['accountnumber']
+                     print(data)
                      ReservoirFormSet = formset_factory(ReservoirForm)
                      reservoir_formset = ReservoirFormSet(prefix = 'reservoir_size')
-                     print(data)
-                     print(accountnumber)
-                     return render(request, "reservoir.html", {"data": json.dumps(data), "accountnumber" : accountnumber, 'reservoir' : reservoir_formset })
+                     pump = Pumpcodes.objects.get(pump = data[5])
+                     flow = ((pump.pump_size * 1800)* (1/(231*16.3871)))
+                     return render(request, "reservoir.html", {"data": json.dumps(data), "accountnumber" : accountnumber, 'reservoir' : reservoir_formset, "flow" : round(flow,2), "recommended" : (round((flow*3/10),0)*10) })
               else:
                      return redirect('/')       
        else:

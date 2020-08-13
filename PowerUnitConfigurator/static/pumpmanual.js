@@ -71,6 +71,5 @@ function tablebuild(){
     $("#motor").html("Electric Motor: " + data[4]);
     $("#pump").html("Selected Pump: " + data[5]);
     $("#continue").removeAttr("hidden", "hidden");
-    data1 = JSON.stringify(data);
-    $("#data").val(JSON.stringify(data1));
+    $("#data").val(JSON.stringify(data));
 }
