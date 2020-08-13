@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
-from .forms import HPForm, PumpForm, FrameForm
+from .forms import HPForm, PumpForm, FrameForm, ReservoirForm
 from django.forms import inlineformset_factory, formset_factory
-from .models import Motors, Pumpcodes, BellHousingSizes, CouplingCodes
+from .models import Motors, Pumpcodes, BellHousingSizes, CouplingCodes, Reservoir
 from django.http import HttpResponse, JsonResponse
 import json, math
 
@@ -35,9 +35,7 @@ def manual(request):
                      motor_formset = MotorFormSet(prefix = 'motor')
                      PumpFormSet = formset_factory(PumpForm)
                      pump_formset = PumpFormSet(prefix = 'pump')
-                     FrameFormSet = formset_factory(FrameForm)
-                     frame_formset = FrameFormSet(prefix = 'frame')
-                     return render(request, "pumpmanual.html", {'motor' : motor_formset, 'pumps' : pump_formset, 'frames' : frame_formset, 'accountnumber' : accountnumber})
+                     return render(request, "pumpmanual.html", {'motor' : motor_formset, 'pumps' : pump_formset, 'accountnumber' : accountnumber})
               return redirect('/')
        else:
               return redirect('/')
@@ -121,9 +119,11 @@ def reservoir(request):
               if request.method == 'POST':
                      data = json.loads(request.POST['data'])
                      accountnumber = request.POST['accountnumber']
+                     ReservoirFormSet = formset_factory(ReservoirForm)
+                     reservoir_formset = ReservoirFormSet(prefix = 'reservoir_size')
                      print(data)
                      print(accountnumber)
-                     return render(request, "reservoir.html", {"data": json.dumps(data), "accountnumber" : accountnumber })
+                     return render(request, "reservoir.html", {"data": json.dumps(data), "accountnumber" : accountnumber, 'reservoir' : reservoir_formset })
               else:
                      return redirect('/')       
        else:

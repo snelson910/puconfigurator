@@ -75,3 +75,5 @@ class Reservoir(models.Model):
     class Meta:
         managed = False
         db_table = 'reservoir'
+    def __str__(self):
+        return u'{0} Gallons , {1}'.format(self.reservoir_size, self.reservoir_configuration)
