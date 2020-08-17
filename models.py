@@ -88,8 +88,8 @@ class BellHousingSizes(models.Model):
     end_style = models.CharField(max_length=-1, blank=True, null=True)
     face_to_face = models.FloatField(blank=True, null=True)
     frame_size = models.CharField(max_length=-1, blank=True, null=True)
-    max_coupling_size = models.IntegerField(blank=True, null=True)
     coupling_size_pref = models.IntegerField(blank=True, null=True)
+    max_coupling_size = models.IntegerField(blank=True, null=True)
     id = models.AutoField()
 
     class Meta:
@@ -99,15 +99,6 @@ class BellHousingSizes(models.Model):
 
 class CouplingCodes(models.Model):
     code = models.CharField(max_length=-1, blank=True, null=True)
-    number_100 = models.IntegerField(db_column='100', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
-    number_200 = models.IntegerField(db_column='200', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
-    number_300 = models.IntegerField(db_column='300', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
-    number_400 = models.IntegerField(db_column='400', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
-    number_500 = models.IntegerField(db_column='500', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
-    number_600 = models.IntegerField(db_column='600', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
-    number_700 = models.IntegerField(db_column='700', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
-    number_800 = models.IntegerField(db_column='800', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
-    number_900 = models.IntegerField(db_column='900', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
     sizes = models.CharField(max_length=-1, blank=True, null=True)
     id = models.AutoField()
 
@@ -221,6 +212,33 @@ class Motors(models.Model):
         db_table = 'motors'
 
 
+class Parts(models.Model):
+    item_number = models.CharField(max_length=-1, blank=True, null=True)
+    product_name = models.CharField(max_length=-1, blank=True, null=True)
+    on_hand = models.IntegerField(blank=True, null=True)
+    stockstatus = models.CharField(max_length=-1, blank=True, null=True)
+    vendor = models.CharField(max_length=-1, blank=True, null=True)
+    cost_each = models.FloatField(blank=True, null=True)
+    list_price = models.FloatField(blank=True, null=True)
+    leadtime = models.IntegerField(blank=True, null=True)
+    saleslinedisc = models.CharField(max_length=-1, blank=True, null=True)
+    purchlinedisc = models.CharField(max_length=-1, blank=True, null=True)
+    costpricedate = models.DateField(blank=True, null=True)
+    listpricedate = models.DateField(blank=True, null=True)
+    contract_number = models.CharField(max_length=-1, blank=True, null=True)
+    goto_item = models.CharField(max_length=-1, blank=True, null=True)
+    gotomaxqty = models.CharField(max_length=-1, blank=True, null=True)
+    csiaccount = models.CharField(max_length=-1, blank=True, null=True)
+    csisalesrep = models.CharField(max_length=-1, blank=True, null=True)
+    csicustname = models.CharField(max_length=-1, blank=True, null=True)
+    csianniversarydate = models.DateField(blank=True, null=True)
+    csilastreviewdate = models.DateField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'parts'
+
+
 class Powerunitconfig(models.Model):
     unit_id = models.IntegerField(blank=True, null=True)
     p1_pressure = models.IntegerField(blank=True, null=True)
@@ -317,7 +335,7 @@ class Pumpcodes(models.Model):
 
 
 class Reservoir(models.Model):
-    reservoir_size = models.CharField(max_length=-1, blank=True, null=True)
+    reservoir_size = models.IntegerField(blank=True, null=True)
     reservoir_configuration = models.CharField(max_length=-1, blank=True, null=True)
     part_number = models.CharField(max_length=-1, blank=True, null=True)
 
