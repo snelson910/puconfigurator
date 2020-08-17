@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from django.template.loader import render_to_string
 from django.http import JsonResponse, HttpResponse
-from .models import Manifold, Manifoldconfig, Projects, Customers
+from .models import Manifold, Manifoldconfig, Projects, Customers, Parts
 from django.utils import timezone
 import json, xlsxwriter, io
 from collections import Counter
@@ -694,6 +694,8 @@ def download(request):
                      partslist = workbook.add_worksheet('Parts')
                      config = workbook.add_worksheet('Configurations')
                      bold = workbook.add_format({'bold': True})
+                     money = workbook.add_format({'num_format': '$#,##0.00'})
+                     percent = workbook.add_format({'num_format':'0%'})
                      projectid = details['0']
                      project = Projects.objects.get(pk=projectid)
                      if project.project_notes1 != "" and project.project_notes2 != "":
@@ -706,20 +708,46 @@ def download(request):
                      make = list(count)
                      l = 0
                      row = 3
-                     col = 0
                      partslist.write('A1','Customer: ' + customer, bold)
                      partslist.write('B1','Project ID: ' + projectid, bold)
                      partslist.write('C1',customers.sales_group, bold)
                      partslist.write('A2',customers.address)
                      partslist.write('B2',customers.customer_account)
                      partslist.write('A3','Item',bold)
-                     partslist.write('B3','Quantity',bold)
-                     partslist.write('C3','Cost',bold)
+                     partslist.write('B3','Part Name',bold)
+                     partslist.write('C3','Quantity',bold)
+                     partslist.write('D3','Cost',bold)
+                     partslist.write('E3','Stock',bold)
                      for x in (count):
-                            partslist.write(row,col,make[l])
-                            partslist.write(row,col+1,count[make[l]])
+                            partslist.write(row,0,make[l])
+                            partslist.write(row,2,count[make[l]])
+                            try:
+                                   part = Parts.objects.get(item_number=make[l])
+                                   partslist.write(row,3,part.cost_each, money)
+                                   partslist.write(row,1,part.product_name)
+                                   partslist.write(row,4,part.on_hand)
+                            except:
+                                   try:
+                                          part = Parts.objects.get(product_name__contains=make[l])
+                                          partslist.write(row,3,part.cost_each, money)
+                                          partslist.write(row,1,part.product_name)
+                                          partslist.write(row,0,part.item_number)
+                                          partslist.write(row,4,part.on_hand)
+                                   except:
+                                          Parts.DoesNotExist
+                                          partslist.write(row,3,'0', money)
+                                          partslist.write(row,4,'0')
+                            
                             row += 1
                             l += 1
+                     row += 1
+                     partslist.write(row, 2, 'Total Cost:')
+                     partslist.write(row, 3, '=SUM(D4:D' + str(row) + ')', money)
+                     partslist.write(row+1, 2, 'Mark Up (%):')
+                     partslist.write(row+1, 3, '.40',percent)
+
+                     partslist.write(row+2, 2, 'Sell Price:')
+                     partslist.write(row+2, 3, '=D' + str(row+1) + '/(1-D' + str(row + 2) + ')',money)
                      config.write('A1', 'Station',bold)
                      config.write('B1', 'Valve',bold)
                      config.write('C1', 'Flow Ports',bold)
