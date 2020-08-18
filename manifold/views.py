@@ -64,10 +64,15 @@ def bom(request):
               if request.method == 'POST':
                      data = json.loads(request.POST['stationconfiguration'])
                      details = json.loads(request.POST['details'])
+                     search = json.loads(request.POST['search'])
                      projectid = details["0"]
                      i = 0
+                     k = 0
                      maninotes = request.POST['notes']
                      parts = json.loads(request.POST['partnumbers'])
+                     for x in search:
+                            print("Valve " + str(k))
+                            k += 1
                      if maninotes != "Enter any notes here...":
                             notes = Projects.objects.get(pk=projectid)
                             notes.project_notes2 = maninotes
@@ -667,17 +672,17 @@ def bom(request):
                      count = Counter(parts)
                      make = list(count)
                      l = 0
-                     for x in count:
-                            part = Manifold()
-                            part.part_number = make[l]
-                            part.quantity = count[make[l]]
-                            part.manifold_id = projectid 
-                            part.save()
-                            l += 1
+                     #for x in count:
+                     #       part = Manifold()
+                     #       part.part_number = make[l]
+                     #       part.quantity = count[make[l]]
+                     #       part.manifold_id = projectid 
+                     #       part.save()
+                     #       l += 1
                      parts.append(details['1'])
                      if '5' in details:
                             parts.append(details['5'])
-                     return render(request, 'bom.html', {"valveData" : json.dumps(data), "details" : json.dumps(details), "partnumbers" : json.dumps(parts),})
+                     return render(request, 'bom.html', {"valveData" : json.dumps(data), "details" : json.dumps(details), "partnumbers" : json.dumps(parts), "search" : json.dumps(search),})
               else:
                      return redirect('/')
        else:
@@ -728,7 +733,7 @@ def download(request):
                                    partslist.write(row,4,part.on_hand)
                             except:
                                    try:
-                                          part = Parts.objects.get(product_name__contains=make[l])
+                                          part = Parts.objects.filter(product_name__contains=make[l], on_hand__gt=0)
                                           partslist.write(row,3,part.cost_each, money)
                                           partslist.write(row,1,part.product_name)
                                           partslist.write(row,0,part.item_number)

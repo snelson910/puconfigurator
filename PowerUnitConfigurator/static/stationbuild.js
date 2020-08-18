@@ -10,6 +10,7 @@ var stationnum = 1;
 var valvenum = [0];
 var pressure;
 var details;
+var searchvalves = [];
 //Pull manifold size and number of stations from submitted POST.
 $(document).ready(function(){
     var datas = $("#details").html();
@@ -114,12 +115,14 @@ $(document).ready(function(){
             switch(true){
                 case size == "D03":
                     valve = ("4WE6" + spool + "6X/E" + voltage + connect);
-                    partNumbers.push(valve);
+                    searchvalves.push(["4WE6", spool, voltage, connect]);
+                    //partNumbers.push(valve);
                     valvenum.push(valve);
                     break;
                 case size == "D05":
                     valve = ("4WE10" + spool + "5X/E" + voltage + connect);
-                    partNumbers.push(valve);
+                    searchvalves.push(["4WE10", spool, voltage, connect]);
+                    //partNumbers.push(valve);
                     valvenum.push(valve);
                     break;
                 case size == "D08":
@@ -129,7 +132,8 @@ $(document).ready(function(){
                         connect = "N9DA";
                     }
                     valve = ("4WEH22" + spool + "7X/6" + voltage + connect);
-                    partNumbers.push(valve);
+                    searchvalves.push(["4WEH22", spool, voltage, connect]);
+                    //partNumbers.push(valve);
                     valvenum.push(valve);
                     break;
             }
@@ -262,7 +266,7 @@ $(document).ready(function(){
         $("#sandwichStyleModify").attr("hidden", "hidden");
         $("#sandwichStyleConfirm").attr("hidden", "hidden");
         $("#configSubmit").removeAttr("hidden", "hidden");
-        
+        console.table(searchvalves);
         for(h=0; h<stations;h++){
             var k= h + 1;
             if($("#floworient0" + k).val() == "none"){
@@ -332,6 +336,8 @@ $(document).ready(function(){
         $("#partnumbers").val(parts);
         var deets = JSON.stringify(details);
         $("#deets").val(deets);
+        var data2 = JSON.stringify(searchvalves);
+        $("#search").val(data2);
         $("#formsubmit").submit();
     });
 });

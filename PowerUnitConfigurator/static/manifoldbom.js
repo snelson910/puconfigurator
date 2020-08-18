@@ -1,6 +1,7 @@
 var valveData;
 var details;
 var parts;
+var search;
 
 function tableBuild(){
     var data = $("#valveData").val();
@@ -9,6 +10,9 @@ function tableBuild(){
     details = JSON.parse(data2);
     var data3 = $("#partnumbers").val();
     parts = JSON.parse(data3);
+    var data4 = $("#search").val();
+    search = JSON.parse(data4);
+    console.table(search);
     $("#note").append(details[0]);
     $("#confirmationTable").removeAttr("hidden", "hidden");
     var x = (valveData.length);

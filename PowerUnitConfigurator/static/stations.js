@@ -1,7 +1,9 @@
+//NOTE! THIS IS NOT THE MOST CURRENT BUILD OF FILE! THIS FILE IS NOT REFERENCED ANYWHERE!!
 var spoolCode;
 var data;
 var details;
 var spoolValveCodes = [];
+var searchvalves = [];
 var i = 0;
 var stationdata = [];
 var station = {}
@@ -79,11 +81,16 @@ $(document).ready(function(){
 					case size == "D03":
 						valve = ("4WE6" + spool + "6X/E" + voltage + connect);
 						spoolValveCodes.push(valve);
+						searchvalves.push(["4WE6", spool, voltage, connect]);
+						console.log(searchvalves);
 						console.log(valve);
 						break;
 					case size == "D05":
 						valve = ("4WE10" + spool + "5X/E" + voltage + connect);
+						searchvalves.push(["4WE10", spool, voltage, connect]);
+
 						spoolValveCodes.push(valve);
+						console.log(searchvalves);
 						console.log(valve);
 						break;
 					case size == "D08":
@@ -94,6 +101,8 @@ $(document).ready(function(){
 						}
 						valve = ("4WEH22" + spool + "7X/6" + voltage + connect);
 						spoolValveCodes.push(valve);
+						searchvalves.push(["4WEH22", spool, voltage, connect]);
+						console.log(searchvalves);
 						console.log(valve);
 						break;
 				}
@@ -122,6 +131,7 @@ $(document).ready(function(){
 				//console.table(voltageAR)
 				$("#valveSelection").attr("hidden","hidden");
 				$("#sandwichTime").removeAttr("hidden", "hidden");
+				console.log(searchvalves);
 			}
 		}
 	});
@@ -248,6 +258,7 @@ $(document).ready(function(){
 			redchecks: redChecks,
 			relorient: relStyle
 			}
+
 	});
 });
 $(document).ready(function(){
@@ -255,6 +266,7 @@ $(document).ready(function(){
 		$(".sandwichConfigurator").removeAttr("disabled", "disabled");
 		$(".configConfirm").attr("hidden", "hidden");
 		$("#sandwichStyleSubmit").removeAttr("hidden", "hidden");
+		console.table(searchvalves);
 	});
 });
 $(document).ready(function(){
@@ -285,7 +297,10 @@ function cleanUp(){
 		$("#voltages").val(voltagedata);
 		var manidetails = JSON.stringify(details);
 		$("#detailsinput").val(manidetails);
-		document.stationsubmit.submit();
+		var search = JSON.stringify(searchvalves);
+		$("#search").val(search);
+		console.table(search);
+		//document.stationsubmit.submit();
 	}
 }
 function cycle(){
