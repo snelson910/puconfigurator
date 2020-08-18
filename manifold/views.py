@@ -65,14 +65,24 @@ def bom(request):
                      data = json.loads(request.POST['stationconfiguration'])
                      details = json.loads(request.POST['details'])
                      search = json.loads(request.POST['search'])
+                     parts = json.loads(request.POST['partnumbers'])
+                     maninotes = request.POST['notes']
                      projectid = details["0"]
                      i = 0
                      k = 0
-                     maninotes = request.POST['notes']
-                     parts = json.loads(request.POST['partnumbers'])
+                     #Raw query the database to grab the best R9 number for each valve. Impossible to make perfect, but it'll get close
                      for x in search:
-                            print("Valve " + str(k))
-                            k += 1
+                            try:
+                                   valvequery = "%" + search[k][0] + search[k][1] + "_X%" + search[k][2] + "%" + search[k][3] + "%"
+                                   print(valvequery)
+                                   valvenumber = Parts.objects.raw('SELECT * FROM parts WHERE product_name LIKE %s ORDER BY on_hand DESC, stockstatus DESC, cost_each', [valvequery])[0]
+                                   print(valvenumber.item_number)
+                                   parts.append(valvenumber.item_number)
+                                   k += 1
+                            except:
+                                   Parts.DoesNotExist
+                                   parts.append(data[k]["valveCode"])
+                                   k += 1
                      if maninotes != "Enter any notes here...":
                             notes = Projects.objects.get(pk=projectid)
                             notes.project_notes2 = maninotes
@@ -728,29 +738,22 @@ def download(request):
                             partslist.write(row,2,count[make[l]])
                             try:
                                    part = Parts.objects.get(item_number=make[l])
-                                   partslist.write(row,3,part.cost_each, money)
                                    partslist.write(row,1,part.product_name)
-                                   partslist.write(row,4,part.on_hand)
+                                   partslist.write(row,3,part.cost_each, money)
+                                   partslist.write(row,4, part.on_hand)
+                                   row += 1
+                                   l += 1
                             except:
-                                   try:
-                                          part = Parts.objects.filter(product_name__contains=make[l], on_hand__gt=0)
-                                          partslist.write(row,3,part.cost_each, money)
-                                          partslist.write(row,1,part.product_name)
-                                          partslist.write(row,0,part.item_number)
-                                          partslist.write(row,4,part.on_hand)
-                                   except:
-                                          Parts.DoesNotExist
-                                          partslist.write(row,3,'0', money)
-                                          partslist.write(row,4,'0')
-                            
-                            row += 1
-                            l += 1
+                                   partslist.write(row,1,make[l])
+                                   partslist.write(row,3,'0.00', money)
+                                   partslist.write(row,4, '0')
+                                   row += 1
+                                   l += 1
                      row += 1
                      partslist.write(row, 2, 'Total Cost:')
                      partslist.write(row, 3, '=SUM(D4:D' + str(row) + ')', money)
                      partslist.write(row+1, 2, 'Mark Up (%):')
                      partslist.write(row+1, 3, '.40',percent)
-
                      partslist.write(row+2, 2, 'Sell Price:')
                      partslist.write(row+2, 3, '=D' + str(row+1) + '/(1-D' + str(row + 2) + ')',money)
                      config.write('A1', 'Station',bold)
@@ -778,7 +781,6 @@ def download(request):
                             l += 1
                             row += 1
                      workbook.close()
-
                      output.seek(0)
                      filename = 'Parts-Project' + projectid +  '.xlsx'
                      response = HttpResponse(

@@ -116,13 +116,11 @@ $(document).ready(function(){
                 case size == "D03":
                     valve = ("4WE6" + spool + "6X/E" + voltage + connect);
                     searchvalves.push(["4WE6", spool, voltage, connect]);
-                    //partNumbers.push(valve);
                     valvenum.push(valve);
                     break;
                 case size == "D05":
                     valve = ("4WE10" + spool + "5X/E" + voltage + connect);
                     searchvalves.push(["4WE10", spool, voltage, connect]);
-                    //partNumbers.push(valve);
                     valvenum.push(valve);
                     break;
                 case size == "D08":
@@ -133,7 +131,6 @@ $(document).ready(function(){
                     }
                     valve = ("4WEH22" + spool + "7X/6" + voltage + connect);
                     searchvalves.push(["4WEH22", spool, voltage, connect]);
-                    //partNumbers.push(valve);
                     valvenum.push(valve);
                     break;
             }
