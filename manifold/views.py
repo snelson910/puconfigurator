@@ -74,9 +74,7 @@ def bom(request):
                      for x in search:
                             try:
                                    valvequery = "%" + search[k][0] + search[k][1] + "_X%" + search[k][2] + "%" + search[k][3] + "%"
-                                   print(valvequery)
                                    valvenumber = Parts.objects.raw('SELECT * FROM parts WHERE product_name LIKE %s ORDER BY on_hand DESC, stockstatus DESC, cost_each', [valvequery])[0]
-                                   print(valvenumber.item_number)
                                    parts.append(valvenumber.item_number)
                                    k += 1
                             except:
