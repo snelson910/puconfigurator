@@ -12,7 +12,7 @@ def newunit(request):
               if request.method == 'POST':
                      #Pass the account number through to the next page
                      accountnumber = request.POST['accountnumber']
-                     return render (request, 'newunit.html', {"accountnumber" : accountnumber, })
+                     return render (request, 'powerunit/newunit.html', {"accountnumber" : accountnumber, })
               else:
                      return redirect('/')
        else:
@@ -24,7 +24,7 @@ def logout(request):
 
 def pumpwizard(request):
        if request.user.is_authenticated:
-              return render(request, "pumpwizard.html")
+              return render(request, "powerunit/pumpwizard.html")
        else:
               return redirect('/')
 
@@ -39,7 +39,7 @@ def manual(request):
                      pump_formset = PumpFormSet(prefix = 'pump')
                      ReservoirFormSet = formset_factory(ReservoirForm)
                      reservoir_formset = ReservoirFormSet(prefix = 'reservoir_size')
-                     return render(request, "pumpmanual.html", {'motor' : motor_formset, 'pumps' : pump_formset, 'accountnumber' : accountnumber,'reservoir' : reservoir_formset,})
+                     return render(request, "powerunit/pumpmanual.html", {'motor' : motor_formset, 'pumps' : pump_formset, 'accountnumber' : accountnumber,'reservoir' : reservoir_formset,})
               return redirect('/')
        else:
               return redirect('/')

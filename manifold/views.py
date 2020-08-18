@@ -17,7 +17,7 @@ def manifold(request):
                      project.created_on = timezone.now()
                      project.save()
                      projectid = project.pk
-                     return render (request, 'manifoldselection.html', {"accountnumber" : accountnumber , "projectid" : projectid,})
+                     return render (request, 'manifolds/manifoldselection.html', {"accountnumber" : accountnumber , "projectid" : projectid,})
               else:
                      return redirect('/')
        else:
@@ -53,7 +53,7 @@ def stations(request):
                             manifold.manifold_id = projectid 
                             manifold.save()
 
-                     return render (request, 'stationbuild.html', {"accountnumber" : accountnumber, "details" : json.dumps(details),})
+                     return render (request, 'manifolds/stationbuild.html', {"accountnumber" : accountnumber, "details" : json.dumps(details),})
               else:
                      return redirect('/')
        else:
@@ -690,7 +690,7 @@ def bom(request):
                      parts.append(details['1'])
                      if '5' in details:
                             parts.append(details['5'])
-                     return render(request, 'bom.html', {"valveData" : json.dumps(data), "details" : json.dumps(details), "partnumbers" : json.dumps(parts), "search" : json.dumps(search),})
+                     return render(request, 'manifolds/bom.html', {"valveData" : json.dumps(data), "details" : json.dumps(details), "partnumbers" : json.dumps(parts), "search" : json.dumps(search),})
               else:
                      return redirect('/')
        else:
