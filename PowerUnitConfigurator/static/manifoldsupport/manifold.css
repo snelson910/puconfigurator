@@ -1,0 +1,85 @@
+.button {
+	background-color: white;
+	color: black;
+	text-align: center;
+	padding: 7px 30px;
+	border-radius: 10px;
+	font-size: 16px;
+	margin-top: 5px;
+	margin-bottom: 20px;
+}
+
+table {
+    width: auto;
+    border-collapse: collapse;
+	margin-left: 20px;
+	font-family: Arial;
+	margin-top: 20px;
+}
+
+table, td, th {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+th {
+	text-align: left;
+}
+
+tr {
+	background-color: white;
+	color: black;
+}
+.text {
+	font-size: 17px;
+	font-family: Arial;
+	font-weight: normal;
+}
+textarea {
+	width: 525px;
+	height: 160px;
+	font-family: Arial;
+	font-size: 16px;
+	border: 2px solid black;
+	border-radius: 5px;
+	resize: none;
+	text-align: left;
+	position: fixed;
+	bottom:25px;
+	right: 25px;	
+}
+
+#sizeSubmit { 
+	margin-left: 20px;
+}
+.notes{
+	position: fixed;
+	font-family: Arial;
+	font-size: 16px;
+	bottom: 150px;
+	right: 75px;
+}
+#textBox {
+	
+	width: 400px;
+	height:90px;
+	position: fixed;
+	bottom:45px;
+	right: 150px;
+	font-family: Arial;
+	padding-top: 5px;
+}
+caption {
+	font-size: 25px;
+	font-family: Arial;
+	font-weight: bold;
+}
+.confirmClass {
+	margin-left: 25px;
+	font-size: 20px;
+	font-family: Arial;
+	font-weight: bold;
+}
+#maniconfirm {
+	margin-left: -20px;
+}

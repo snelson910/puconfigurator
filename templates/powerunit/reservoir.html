@@ -1,0 +1,33 @@
+{% load static %}
+{% static "images" as baseUrl%}
+<link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'basestyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'reservoirsupport/newunit.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/reservoirsupport/reservoir.js"></script>  
+    <title>Power Unit Reservoir Selection</title>
+</head>
+<h1>JHF Power Unit Configurator- Reservoir Selection</h1>
+<a id="accountnumber" hidden="hidden">{{ accountnumber }}</a>
+<a id="data" hidden="hidden">{{ data }}</a>
+<body onload='getdata()'>
+    <br>
+    Your pump flow is {{ flow }} GPM. The reservoir size should be around 2-4 times the flow rate of the pump, or around {{ recommended }} gallons.<br><br>
+    <form id="reservoirs" method="POST">
+        <fieldset>
+        <br><legend class="text">Select the Required Reservoir:</legend>
+        {% csrf_token %}        
+        {{ reservoir }}
+        </fieldset>
+        <input type="button" class="button" value="Submit" id="submit"> 
+    </form>
+</body>
+<div id="logout">
+    <a href="/logout">Logout</a>
+</div>
+</html>

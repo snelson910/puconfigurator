@@ -1,0 +1,32 @@
+{% load static %}
+{% static "images" as baseUrl%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'basestyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'reservoirsupport/newunit.css' %}">
+    <title>Power Unit Configurator</title>
+</head>
+<h1>JHF Power Unit Configurator</h1>
+<br><br>
+<body>
+    <form action="/newunit/pumpwizard" method="POST">
+        {% csrf_token %}
+        <input type="submit" class="button" value="Pump Wizard" id="submit">
+        <input type="text" value="{{ accountnumber }}" name="accountnumber" hidden="hidden">
+    </form>
+    <form action="/newunit/manual" method="POST">
+        {% csrf_token %}
+        <input type="submit" class="button" value="Manual Selection" id="submit">
+        <input type="text" value="{{ accountnumber }}" name="accountnumber" hidden="hidden">
+    </form>
+</body>
+<form>
+    
+</form>
+<div id="logout">
+    <a href="/logout">Logout</a>
+</div>
+</html>
