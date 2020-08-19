@@ -23,7 +23,7 @@ class Motors(models.Model):
         db_table = 'motors'
     
     def __str__(self):
-        return u'{0}'.format(self.hp)
+        return u'{0}, {1}'.format(self.hp, self.frame_size)
 
 class Pumpcodes(models.Model):
     pump = models.CharField(max_length=255, blank=True, null=True)

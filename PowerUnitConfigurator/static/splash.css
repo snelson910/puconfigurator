@@ -40,3 +40,11 @@ form {
 	-ms-transform: translate(-50%, 0%);
 	transform: translate(-50%, 0%);
 }
+
+#pumpmotor {
+	position: absolute;
+	left: 25%;
+	-ms-transform: translate(-50%, 0%);
+	transform: translate(-50%, 0%);
+	top: 50%;
+}

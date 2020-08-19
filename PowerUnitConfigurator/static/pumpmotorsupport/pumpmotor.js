@@ -51,28 +51,26 @@ function coupling(){
         },
         success:function(response)
         {
-            if(response != ""){
+            if(response != "0"){
+                $("#error").attr("hidden", "hidden");
                 data = response;
                 tablebuild();
             }else{
-                $("#bellhousing").html("Please change your configuration");
-                $("#motcoup").html("");
-                $("#pumcoup").html("");
-                $("#shafts").html("");
-                $("#motor").html("");
-                $("#pump").html("");
+                $("#table").attr("hidden", "hidden");
+                $("#error").removeAttr("hidden", "hidden");
+                $("#error").html("Motor option not found");
             }
         }
     });
 }
 function tablebuild(){
-    $("#bellhousing").html("Bellhousing: " + data[0]);
-    $("#motcoup").html("Motor Side Coupling: " + data[1]);
-    $("#pumcoup").html("Pump Side Coupling: " + data[2]);
-    $("#shafts").html("Shaft-to-Shaft Distance: " + data[3] + " inches");
-    $("#motor").html("Electric Motor: " + data[4]);
-    $("#pump").html("Selected Pump: " + data[5]);
-    $("#continue").removeAttr("hidden", "hidden")
+    $("#bellhousing").html(data[0]);
+    $("#motcoup").html(data[1]);
+    $("#pumcoup").html(data[2]);
+    $("#shafts").html(data[3] + " inches");
+    $("#motor").html(data[4]);
+    $("#pump").html(data[5]);
+    $("table").removeAttr("hidden", "hidden")
     $("#data").val(JSON.stringify(data));
 }
 $(document).ready(function(){

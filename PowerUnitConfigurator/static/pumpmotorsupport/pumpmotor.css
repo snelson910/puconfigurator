@@ -13,7 +13,7 @@
 }
 #submit {
 	background-color: white;
-	color: black;
+	color: black; 
 	text-align: center;
 	padding: 7px 30px;
 	border-radius: 10px;
@@ -32,4 +32,10 @@
 #pmgroup {
 	padding-left: 25px;
 	font-size: 20px;
+}
+table, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+    background: white;
 }

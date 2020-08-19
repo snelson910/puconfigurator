@@ -10,9 +10,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'pumpmotorsupport/pumpmotor.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/static/pumpmotorsupport/pumpmotor.js"></script>  
-    <title>Power Unit Pump Selection</title>
+    <title>Pump/Motor Group Configuration</title>
 </head>
-<h1>JHF Power Unit Configurator</h1>
+<h1>Pump/Motor Group Configuration</h1>
 <div id="logout">
     <a href="/logout">Logout</a>
 </div>
@@ -36,18 +36,36 @@
 
         <input type="button" class="button" value="Submit" id="submit">
     </form>
-    <div class="text">
-        <a id="bellhousing"></a><br>
-        <a id="motcoup"></a><br>
-        <a id="pumcoup"></a><br>
-        <a id="shafts"></a><br>
-        <a id="motor"></a><br>
-        <a id="pump"></a><br>
-    </div>
-    </div>
-    <div hidden="hidden" id="reservoirselection" class="text">
-    <br>
-    Your pump flow is <a id="flow"></a> GPM. The reservoir size should be around 2-4 times the flow rate of the pump, or around <a id="recommended"></a> gallons.<br><br>
+    <table class="text" hidden="hidden" id="table">
+        <tr>
+            <th colspan="2">Configuration</th>
+        </tr>
+        <tr>
+            <td>Bellhousing: </td>
+            <td id="bellhousing"></td>
+        </tr>
+        <tr>
+            <td>Motor Side Coupling:</td>
+            <td id="motcoup"></td>
+        </tr>
+        <tr>
+            <td>Pump Side Coupling:</td>
+            <td id="pumcoup"></td>
+        </tr>
+        <tr>
+            <td>Shaft-to-Shaft Distance:</td>
+            <td id="shafts"></td>
+        </tr>
+        <tr>
+            <td>Electric Motor:</td>
+            <td id="motor"></td>
+        </tr>
+        <tr>
+            <td>Selected Pump:</td>
+            <td id="pump"></td>
+        </tr>
+    </table>
+    <a id="error" class="text"></a>
     </div>
 </body>
 </html>

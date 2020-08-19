@@ -2,7 +2,7 @@ from django import forms
 from newunit.models import Motors, Pumpcodes, Reservoir
 
 class HPForm(forms.ModelForm):
-    hp = forms.ModelChoiceField(queryset=Motors.objects.distinct('hp').order_by('hp'), label="Horsepower", empty_label="Select...", to_field_name="hp")
+    hp = forms.ModelChoiceField(queryset=Motors.objects.distinct('hp').order_by('hp'), label="Motor", empty_label="Select...", to_field_name="hp")
     class Meta:
         model=Motors
         fields = [
@@ -15,20 +15,4 @@ class PumpForm(forms.ModelForm):
         model=Pumpcodes
         fields = [
             "pumps",
-        ]
-
-class FrameForm(forms.ModelForm):
-    frames = forms.ModelChoiceField(queryset=Motors.objects.distinct('frame_size'))
-    class Meta:
-        model=Motors
-        fields = [
-            "frames",
-        ]
-
-class ReservoirForm(forms.ModelForm):
-    reservoirs = forms.ModelChoiceField(queryset=Reservoir.objects.order_by('reservoir_size', 'id').exclude(reservoir_configuration='Vertical'), label="Reservoir", empty_label="Select...", to_field_name="id")
-    class Meta:
-        model=Reservoir
-        fields = [
-            "reservoirs",
         ]
