@@ -9,5 +9,6 @@ urlpatterns = [
     path('', include('splash.urls')),
     path('', include('newunit.urls')),
     path('', include('manifold.urls')),
-    path('', include('customers.urls'))
+    path('', include('customers.urls')),
+    path('', include('pumpmotor.urls'))
 ]

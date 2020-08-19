@@ -1,0 +1,53 @@
+{% load static %}
+{% static "images" as baseUrl%}
+<link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'basestyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'pumpmotorsupport/pumpmotor.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/static/pumpmotorsupport/pumpmotor.js"></script>  
+    <title>Power Unit Pump Selection</title>
+</head>
+<h1>JHF Power Unit Configurator</h1>
+<div id="logout">
+    <a href="/logout">Logout</a>
+</div>
+<body>
+    <div id="motorselection">
+    <form id="pmgroup" method="POST">
+        {% csrf_token %}
+        <br>
+        Select the Required Horsepower:<br>         
+        {{motor}}<br>
+        Select the Required Motor Volage:<br>
+        Voltage:
+        <select id="voltage" name="voltage">
+            <option value="">Select...</option>
+            <option value="1" id="1">110V/230V Single Phase</option>
+            <option value="2" id="2">240V/480V Three Phase</option>
+            <option value="3" id="3">575V Three Phase</option>
+        </select><br>
+        Select the Required Pump:<br>        
+        {{pumps}}<br>
+
+        <input type="button" class="button" value="Submit" id="submit">
+    </form>
+    <div class="text">
+        <a id="bellhousing"></a><br>
+        <a id="motcoup"></a><br>
+        <a id="pumcoup"></a><br>
+        <a id="shafts"></a><br>
+        <a id="motor"></a><br>
+        <a id="pump"></a><br>
+    </div>
+    </div>
+    <div hidden="hidden" id="reservoirselection" class="text">
+    <br>
+    Your pump flow is <a id="flow"></a> GPM. The reservoir size should be around 2-4 times the flow rate of the pump, or around <a id="recommended"></a> gallons.<br><br>
+    </div>
+</body>
+</html>
