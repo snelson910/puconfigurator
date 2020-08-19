@@ -24,3 +24,9 @@ h1 {
 	left: 1%;
 	font-size: 25px;
 }
+#home {
+	position: fixed;
+	bottom: 1.5%;
+	right: 1%;
+	font-size: 25px;
+}
