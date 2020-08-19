@@ -12,11 +12,11 @@
 <h1>JHF Power Unit Configurator</h1>
 <br><br>
 <body>
-    <form action="/newunit/pumpwizard" method="POST">
+    <!--<form action="/newunit/pumpwizard" method="POST">
         {% csrf_token %}
         <input type="submit" class="button" value="Pump Wizard" id="submit">
         <input type="text" value="{{ accountnumber }}" name="accountnumber" hidden="hidden">
-    </form>
+    </form>-->
     <form action="/newunit/manual" method="POST">
         {% csrf_token %}
         <input type="submit" class="button" value="Manual Selection" id="submit">

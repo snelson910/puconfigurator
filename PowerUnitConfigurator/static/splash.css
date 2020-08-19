@@ -30,6 +30,7 @@ form {
 #newunit {
 	position: absolute;
 	left: 25%;
+	top: 20%;
 	-ms-transform: translate(-50%, 0%);
 	transform: translate(-50%, 0%);
 }
@@ -37,6 +38,7 @@ form {
 #oldunit {
 	position: absolute;
 	left: 75%;
+	top: 20%;
 	-ms-transform: translate(-50%, 0%);
 	transform: translate(-50%, 0%);
 }
@@ -46,5 +48,5 @@ form {
 	left: 25%;
 	-ms-transform: translate(-50%, 0%);
 	transform: translate(-50%, 0%);
-	top: 50%;
+	top: 30%;
 }
