@@ -12,7 +12,7 @@ def newunit(request):
               if request.method == 'POST':
                      #Pass the account number through to the next page
                      accountnumber = request.POST['accountnumber']
-                     return render (request, 'powerunit/newunit.html', {"accountnumber" : accountnumber, })
+                     return render (request, 'powerunit/pumpmanual.html', {"accountnumber" : accountnumber, })
               else:
                      return redirect('/')
        else:
