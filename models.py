@@ -329,6 +329,7 @@ class Pumpcodes(models.Model):
     pump_shaft_style = models.CharField(max_length=-1, blank=True, null=True)
     pump_class = models.IntegerField(blank=True, null=True)
     id = models.AutoField()
+    pump_group = models.CharField(max_length=-1, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -381,6 +382,7 @@ class Throughdrives(models.Model):
     a10vso18_31 = models.CharField(max_length=-1, blank=True, null=True)
     azpf = models.CharField(max_length=-1, blank=True, null=True)
     azpg = models.CharField(max_length=-1, blank=True, null=True)
+    size = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
