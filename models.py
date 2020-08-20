@@ -233,6 +233,7 @@ class Parts(models.Model):
     csicustname = models.CharField(max_length=-1, blank=True, null=True)
     csianniversarydate = models.DateField(blank=True, null=True)
     csilastreviewdate = models.DateField(blank=True, null=True)
+    id = models.AutoField()
 
     class Meta:
         managed = False
@@ -356,20 +357,30 @@ class SandwichNumbers(models.Model):
 
 
 class Throughdrives(models.Model):
-    front_pump = models.CharField(max_length=-1, blank=True, null=True)
-    a4_250 = models.CharField(max_length=-1, blank=True, null=True)
-    a4_180 = models.CharField(max_length=-1, blank=True, null=True)
-    a4_125 = models.CharField(max_length=-1, blank=True, null=True)
-    a4_71 = models.CharField(max_length=-1, blank=True, null=True)
-    a4_40 = models.CharField(max_length=-1, blank=True, null=True)
-    a10_180 = models.CharField(max_length=-1, blank=True, null=True)
-    a10_40 = models.CharField(max_length=-1, blank=True, null=True)
-    a10_100 = models.CharField(max_length=-1, blank=True, null=True)
-    a10_71_31 = models.CharField(max_length=-1, blank=True, null=True)
-    a10_71_32 = models.CharField(max_length=-1, blank=True, null=True)
-    a10_45 = models.CharField(max_length=-1, blank=True, null=True)
-    a10_28 = models.CharField(max_length=-1, blank=True, null=True)
-    a10_18 = models.CharField(max_length=-1, blank=True, null=True)
+    rear_pump = models.CharField(max_length=-1, blank=True, null=True)
+    a4vso250 = models.CharField(max_length=-1, blank=True, null=True)
+    a4vso180 = models.CharField(max_length=-1, blank=True, null=True)
+    a4vs0125 = models.CharField(max_length=-1, blank=True, null=True)
+    a4vso71 = models.CharField(max_length=-1, blank=True, null=True)
+    a4vso40 = models.CharField(max_length=-1, blank=True, null=True)
+    a10vso180_32 = models.CharField(max_length=-1, blank=True, null=True)
+    a10vso140_32 = models.CharField(max_length=-1, blank=True, null=True)
+    a10vso100_32 = models.CharField(max_length=-1, blank=True, null=True)
+    a10vso71_32 = models.CharField(max_length=-1, blank=True, null=True)
+    a10vso45_32 = models.CharField(max_length=-1, blank=True, null=True)
+    a15vso280 = models.CharField(max_length=-1, blank=True, null=True)
+    a15vso210 = models.CharField(max_length=-1, blank=True, null=True)
+    a15vso175 = models.CharField(max_length=-1, blank=True, null=True)
+    a15vso145 = models.CharField(max_length=-1, blank=True, null=True)
+    a15vso110 = models.CharField(max_length=-1, blank=True, null=True)
+    a10vso140_31 = models.CharField(max_length=-1, blank=True, null=True)
+    a10vso100_31 = models.CharField(max_length=-1, blank=True, null=True)
+    a10vso71_31 = models.CharField(max_length=-1, blank=True, null=True)
+    a10vso45_31 = models.CharField(max_length=-1, blank=True, null=True)
+    a10vso28_31 = models.CharField(max_length=-1, blank=True, null=True)
+    a10vso18_31 = models.CharField(max_length=-1, blank=True, null=True)
+    azpf = models.CharField(max_length=-1, blank=True, null=True)
+    azpg = models.CharField(max_length=-1, blank=True, null=True)
 
     class Meta:
         managed = False
