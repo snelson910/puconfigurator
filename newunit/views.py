@@ -136,15 +136,27 @@ def coupling(request):
        else:
               return redirect('/')
 
-def reservoir(request):
+def pumps(request):
        if request.user.is_authenticated:
               if request.method == 'POST':
-                     data = json.loads(request.POST['data1'])
-                     #Calculate the pump flow in gallons per minute and output it for the user to see
-                     pump = Pumpcodes.objects.get(pump = data[5])
-                     flow = ((pump.pump_size * 1800)* (1/(231*16.3871)))
-                     jsondata = json.dumps({"data": data, "flow" : round(flow,2), "recommended" : int((round((flow*3/10),0)*10)) })
-
+                     pumpnumber = int(request.POST["pumpnum"])
+                     pumpcurrent = int(request.POST["pumpcurrent"])
+                     selected = request.POST["selected"]
+                     pumpcodes = []
+                     if pumpnumber != pumpcurrent:
+                            data = Pumpcodes.objects.all().exclude(pump__startswith = "AZP").exclude(pump__contains="31")
+                            y = 0
+                            for x in data:
+                                   pumpcodes.append(data[y].pump)
+                                   y += 1
+                     else:
+                            data = Pumpcodes.objects.all()
+                            y = 0
+                            for x in data:
+                                   pumpcodes.append(data[y].pump)
+                                   y += 1
+                     #print(pumpcodes)
+                     jsondata = json.dumps(pumpcodes)
                      return HttpResponse(jsondata, content_type="application/json")
               else:
                      return redirect('/')       

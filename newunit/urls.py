@@ -9,5 +9,5 @@ urlpatterns = [
     path("newunit/pumpwizard", views.pumpwizard, name="pumpwizard"),
     path("newunit/manual", views.manual, name="manual"),
     path("newunit/manual/coupling", views.coupling, name="coupling"),
-    path("newunit/reservoir", views.reservoir, name="reservoir"),
+    path("newunit/manual/pumps", views.pumps, name="pumps"),
 ]

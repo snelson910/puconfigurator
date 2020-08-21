@@ -77,3 +77,34 @@ class Reservoir(models.Model):
         db_table = 'reservoir'
     def __str__(self):
         return u'{0} Gallons , {1}'.format(self.reservoir_size, self.reservoir_configuration)
+
+class Throughdrives(models.Model):
+    rear_pump = models.CharField(max_length=255, blank=True, null=True)
+    a4vso250 = models.CharField(max_length=255, blank=True, null=True)
+    a4vso180 = models.CharField(max_length=255, blank=True, null=True)
+    a4vs0125 = models.CharField(max_length=255, blank=True, null=True)
+    a4vso71 = models.CharField(max_length=255, blank=True, null=True)
+    a4vso40 = models.CharField(max_length=255, blank=True, null=True)
+    a10vso180_32 = models.CharField(max_length=255, blank=True, null=True)
+    a10vso140_32 = models.CharField(max_length=255, blank=True, null=True)
+    a10vso100_32 = models.CharField(max_length=255, blank=True, null=True)
+    a10vso71_32 = models.CharField(max_length=255, blank=True, null=True)
+    a10vso45_32 = models.CharField(max_length=255, blank=True, null=True)
+    a15vso280 = models.CharField(max_length=255, blank=True, null=True)
+    a15vso210 = models.CharField(max_length=255, blank=True, null=True)
+    a15vso175 = models.CharField(max_length=255, blank=True, null=True)
+    a15vso145 = models.CharField(max_length=255, blank=True, null=True)
+    a15vso110 = models.CharField(max_length=255, blank=True, null=True)
+    a10vso140_31 = models.CharField(max_length=255, blank=True, null=True)
+    a10vso100_31 = models.CharField(max_length=255, blank=True, null=True)
+    a10vso71_31 = models.CharField(max_length=255, blank=True, null=True)
+    a10vso45_31 = models.CharField(max_length=255, blank=True, null=True)
+    a10vso28_31 = models.CharField(max_length=255, blank=True, null=True)
+    a10vso18_31 = models.CharField(max_length=255, blank=True, null=True)
+    azpf = models.CharField(max_length=255, blank=True, null=True)
+    azpg = models.CharField(max_length=255, blank=True, null=True)
+    size = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'throughdrives'

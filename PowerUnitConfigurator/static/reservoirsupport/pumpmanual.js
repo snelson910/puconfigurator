@@ -1,28 +1,10 @@
 var data;
 var data2;
-$(document).ready(function(){
-    $("#submit").click(function(){
-        //An attempt at form validation.
-        if($("#id_motor-0-hp").val() == ""){
-            $("#id_motor-0-hp").css("background-color","yellow")
-        }else{
-            $("#id_motor-0-hp").css("background-color","white")
-        }
-        if($("#id_pump-0-pumps").val() == ""){
-            $("#id_pump-0-pumps").css("background-color","yellow")
-        }else{
-            $("#id_pump-0-pumps").css("background-color","white") 
-        }
-        if($("#voltage").val() == ""){
-            $("#voltage").css("background-color","yellow")
-        }else{
-            $("#voltage").css("background-color","white") 
-        }
-        if($("#id_motor-0-hp").val() == "" || $("#id_pump-0-pumps").val() == "" || $("#voltage").val() == ""){}else{
-            coupling();
-        }
-    });
-});
+var pumpnum;
+var pumpcurrent = 0;
+var selected = "";
+var max = 0;
+/* Not yet functional; will add back in once I get to the motor selection portion.
 $(document).ready(function(){
     $("#id_motor-0-hp").change(function(){
         //Try to force the user to make good valid motor selections. Can't get the JS to drop the horsepower selection, though...
@@ -38,75 +20,57 @@ $(document).ready(function(){
         }
     })
 });
-
-function coupling(){
-    $.ajax({
-        url: "manual/coupling",
-        type: "POST",
-        data: {
-            csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
-            horsepower: $("#id_motor-0-hp").val(),
-            pump: $("#id_pump-0-pumps").val(),
-            voltage: $("#voltage").val()
-        },
-        success:function(response)
-        {
-            if(response != ""){
-                data = response;
-                tablebuild();
-            }else{
-                $("#bellhousing").html("Please change your configuration");
-                $("#motcoup").html("");
-                $("#pumcoup").html("");
-                $("#shafts").html("");
-                $("#motor").html("");
-                $("#pump").html("");
-            }
-        }
-    });
-}
-function tablebuild(){
-    $("#bellhousing").html("Bellhousing: " + data[0]);
-    $("#motcoup").html("Motor Side Coupling: " + data[1]);
-    $("#pumcoup").html("Pump Side Coupling: " + data[2]);
-    $("#shafts").html("Shaft-to-Shaft Distance: " + data[3] + " inches");
-    $("#motor").html("Electric Motor: " + data[4]);
-    $("#pump").html("Selected Pump: " + data[5]);
-    $("#continue").removeAttr("hidden", "hidden")
-    $("#data").val(JSON.stringify(data));
-}
+*/
 $(document).ready(function(){
-    $("#reservoirselect").click(function(){
-        reservoir();
-    });
+    $("#pumpnumsubmit").click(function(){
+        pumpnum = Number($("#pumpnums").val());
+        max = pumpnum + 1;
+        pumpcurrent ++;
+        if(pumpcurrent <= pumpnum){
+            //console.log("Pump number " + pumpcurrent + " function");
+            pumps();
+        }
+        else{
+            console.log("Complete");
+        }
+    })
 });
-function reservoir(){
+function pumps(){
     $.ajax({
-        url: "reservoir",
+        url: "manual/pumps",
         type: "POST",
         data: {
             csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
-            data1: $("#data").val()
+            pumpnum: pumpnum,
+            pumpcurrent: pumpcurrent,
+            selected: selected
         },
-        success:function(response)
+        success: function(response)
+            {
+                    data = response;
+                    table();
+            },
+        error: function()
         {
-            if(response != ""){
-                $("#motorselection").attr("hidden", "hidden");
-                $("#reservoirselection").removeAttr("hidden", "hidden");
-                $("#flow").html(response.flow);
-                $("#recommended").html(response.recommended);
-            }else{
-                console.log("Not Working")
-            }
+            console.log("Error")
         }
     });
 }
 
-$(document).ready(function(){
-    $("#reservoirsubmit").click(function(){
-        data.push($("#id_reservoir_size-0-reservoirs").val())
-        console.log("Reservoir number is " + data[6]);
-        $("#formdata").val(JSON.stringify(data));
-        console.log($("#formdata").val());
-    });
-});
+function table(){
+    if(pumpcurrent < max){
+        var i = data.length;
+        $("#pumpconfiguration").append("<br><label for='pump" + pumpcurrent + "'>Select Pump " + pumpcurrent + "</label><select id='pump" + pumpcurrent + "' name='pump" + pumpcurrent + "'>");
+        for(j = 0; j < i; j++){
+            $("#pump" + pumpcurrent).append("<option value='" + data[j] + "'>" + data[j] + "</option>");
+        }
+        $("#pumpconfiguration").append("</select><button type='button' id='pump" + pumpcurrent + "submit' class='buttons' onclick='pumpsubmit()'>Submit Pump " + pumpcurrent + "</button><br>");
+    }else{
+        console.log("Completed");
+    }
+}
+function pumpsubmit(){
+        selected = $("#pump" + pumpcurrent).val();
+        pumpcurrent++;
+        pumps();
+}

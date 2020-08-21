@@ -17,53 +17,19 @@
     <a href="/logout">Logout</a>
 </div>
 <body>
-    <div id="motorselection">
-    <form id="pmgroup" method="POST">
-        {% csrf_token %}
-        <br>
-        Select the Required Horsepower:<br>         
-        {{motor}}<br>
-        Select the Required Motor Volage:<br>
-        Voltage:
-        <select id="voltage" name="voltage">
-            <option value="">Select...</option>
-            <option value="1" id="1">110V/230V Single Phase</option>
-            <option value="2" id="2">240V/480V Three Phase</option>
-            <option value="3" id="3">575V Three Phase</option>
-        </select><br>
-        Select the Required Pump:<br>        
-        {{pumps}}<br>
+    <form id="pumpconfiguration">
+        {% csrf_token %}    
+        <label for="pumpnums">How many pumps are required?</label>
+        <select id="pumpnums" name="pumpnums">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <button type="button" id="pumpnumsubmit" class="buttons">Select</button>
+        <button type="button" id="pumpnumreset" hidden="hidden" class="buttons">Select</button>
+    </form>  
 
-        <input type="button" class="button" value="Submit" id="submit">
-    </form>
-    <div class="text">
-        <a id="bellhousing"></a><br>
-        <a id="motcoup"></a><br>
-        <a id="pumcoup"></a><br>
-        <a id="shafts"></a><br>
-        <a id="motor"></a><br>
-        <a id="pump"></a><br>
-    </div>
-    <form id="continue" hidden="hidden" method="POST" >
-        {% csrf_token %}
-        <input type="button" id="reservoirselect" class="button" action="reservoir" value="Continue to Reservoir Selection">
-        <input type="text" name="data" id="data" hidden="hidden">
-        <input type="text" name="accountnumber" hidden="hidden" value="{{ accountnumber }}">
-    </form>
-    </div>
-    <div hidden="hidden" id="reservoirselection" class="text">
-    <br>
-    Your pump flow is <a id="flow"></a> GPM. The reservoir size should be around 2-4 times the flow rate of the pump, or around <a id="recommended"></a> gallons.<br><br>
-    <form id="reservoirs" method="POST">
-        <fieldset>
-        <br><legend class="text">Select the Required Reservoir:</legend>
-        {% csrf_token %}        
-        {{ reservoir }}
-        <br><br>
-        </fieldset>
-        <input type="button" class="button" value="Submit" id="reservoirsubmit"> 
-        <input type="text" hidden="hidden" id="formdata">
-    </form>
-    </div>
 </body>
 </html>
