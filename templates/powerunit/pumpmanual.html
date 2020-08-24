@@ -16,7 +16,7 @@
 <div id="logout">
     <a href="/logout">Logout</a>
 </div>
-<body>
+<body onload=setup()>
     <form id="pumpconfiguration">
         {% csrf_token %}    
         <label for="pumpnums">How many pumps are required?</label>
@@ -32,4 +32,13 @@
     </form>  
 
 </body>
+<div id="chart">
+    Through drive pump options are based off GoTo pumps or available through-drive adapter kits.<br>
+    <img id="myImg" src="{% static 'images/throughdrives.png' %}" alt="Through Drives" style="width:100%;max-width:300px">
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+      </div>
+</div>
 </html>

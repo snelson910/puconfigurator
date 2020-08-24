@@ -74,3 +74,26 @@ function pumpsubmit(){
         pumpcurrent++;
         pumps();
 }
+
+var modal;
+var img;
+var modalImg;
+var captionText;
+
+function setup(){
+    modal = document.getElementById("myModal");
+    img = document.getElementById("myImg");
+    modalImg = document.getElementById("img01");
+    captionText = document.getElementById("caption");
+    var span = document.getElementsByClassName("close")[0];
+    img.onclick = function(){
+        //console.log("clicked");
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+    
+    span.onclick = function() { 
+    modal.style.display = "none";
+  }
+}
