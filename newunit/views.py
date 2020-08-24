@@ -143,19 +143,22 @@ def pumps(request):
                      pumpcurrent = int(request.POST["pumpcurrent"])
                      selected = request.POST["selected"]
                      pumpcodes = []
-                     if pumpnumber != pumpcurrent:
-                            data = Pumpcodes.objects.all().exclude(pump__startswith = "AZP").exclude(pump__contains="31")
-                            y = 0
-                            for x in data:
-                                   pumpcodes.append(data[y].pump)
-                                   y += 1
+                     if selected == "":
+                            if pumpnumber != pumpcurrent:
+                                   data = Pumpcodes.objects.all().exclude(pump__startswith = "AZP").exclude(pump__contains="31")
+                                   y = 0
+                                   for x in data:
+                                          pumpcodes.append(data[y].pump)
+                                          y += 1
+                            else:
+                                   data = Pumpcodes.objects.all()
+                                   y = 0
+                                   for x in data:
+                                          pumpcodes.append(data[y].pump)
+                                          y += 1
                      else:
-                            data = Pumpcodes.objects.all()
-                            y = 0
-                            for x in data:
-                                   pumpcodes.append(data[y].pump)
-                                   y += 1
-                     #print(pumpcodes)
+                            #If not the first time cycled, then progress. Gotta find a way to query the through drives table and pull that informationf rom the pumpcodes table
+                            pass
                      jsondata = json.dumps(pumpcodes)
                      return HttpResponse(jsondata, content_type="application/json")
               else:

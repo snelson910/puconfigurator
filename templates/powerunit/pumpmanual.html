@@ -16,7 +16,7 @@
 <div id="logout">
     <a href="/logout">Logout</a>
 </div>
-<body onload=setup()>
+<body onload=modalpic()>
     <form id="pumpconfiguration">
         {% csrf_token %}    
         <label for="pumpnums">How many pumps are required?</label>
@@ -39,6 +39,6 @@
         <span class="close">&times;</span>
         <img class="modal-content" id="img01">
         <div id="caption"></div>
-      </div>
+    </div>
 </div>
 </html>
