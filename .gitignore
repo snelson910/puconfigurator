@@ -1,5 +1,5 @@
 secrets.py
-dir_to_ignore/sqlbackup
+sqlbackup/
 *.pyo
 *.pyc
 **/__pycache__
