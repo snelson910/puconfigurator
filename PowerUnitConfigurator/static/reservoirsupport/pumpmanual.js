@@ -61,6 +61,7 @@ function table(){
     if(pumpcurrent < max){
         var i = data.length;
         $("#pumpconfiguration").append("<br><label for='pump" + pumpcurrent + "'>Select Pump " + pumpcurrent + "</label><select id='pump" + pumpcurrent + "' name='pump" + pumpcurrent + "'>");
+        //This builds the selection option, but it is a little clunky. Can't figure out how to do it in forms with the joins that I need to run.
         for(j = 0; j < i; j++){
             $("#pump" + pumpcurrent).append("<option value='" + data[j] + "'>" + data[j] + "</option>");
         }
@@ -80,6 +81,7 @@ var img;
 var modalImg;
 var captionText;
 
+//Just a simple modal picture of the possible through drive option selections.
 function modalpic(){
     modal = document.getElementById("myModal");
     img = document.getElementById("myImg");
