@@ -80,8 +80,15 @@ function pumpsubmit(number){
             $(".pumpnumber" + i).remove();
             $("#pumpnumber" + i).remove();
         }
-        console.log("Working");
-        pumps();
+        console.log("Number = " + number);
+        console.log("Pumpnums = " + pumpnum);
+        if(number == pumpnum){
+            console.log("Finished");
+            $("button").attr("disabled", "disabled");
+            $("select").attr("disabled", "disabled");
+        }else{
+            pumps();
+        }
 }
 
 var modal;
