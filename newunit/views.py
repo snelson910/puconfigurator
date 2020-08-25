@@ -143,6 +143,7 @@ def pumps(request):
                      pumpcurrent = int(request.POST["pumpcurrent"])
                      selected = request.POST["selected"]
                      pumpcodes = []
+                     
                      if selected != "":
                             rearupper = Pumpcodes.objects.get(pump = selected)
                             data1 = rearupper.front_pump
@@ -160,14 +161,15 @@ def pumps(request):
                                    for x in data:
                                           pumpcodes.append(data[y].pump)
                                           y += 1
-                     else:
-                            
+                     else: 
                             query = 'select * from pumpcodes join throughdrives on throughdrives.rear_pump = pumpcodes.rear_pump where throughdrives.' + frontpump + ' is not null order by pump_class, pump_size'
                             data = Pumpcodes.objects.raw(query)
                             y = 0
                             for x in data:
                                    pumpcodes.append(data[y].pump)
                                    y += 1
+                     if len(pumpcodes) == 0:
+                            pumpcodes.append("Please choose a different forward pump")
                      jsondata = json.dumps(pumpcodes)
                      return HttpResponse(jsondata, content_type="application/json")
               else:

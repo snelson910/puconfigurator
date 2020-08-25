@@ -22,21 +22,27 @@
         <form>
             {% csrf_token %}
             <tr>    
-            <td><label for="pumpnums">How many pumps are required?</label></td>
-            <td><select id="pumpnums" name="pumpnums">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select></td>
-            <td><button type="button" id="pumpnumsubmit" class="buttons">Select</button></td></tr>
+                <td><label for="pumpnums">How many pumps are required?</label></td>
+                <td><select id="pumpnums" name="pumpnums">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select></td>
+                <td><button type="button" id="pumpnumsubmit" class="buttons">Select</button></td>
+                <td><button type="button" id="pumpnummodify" class="buttons" disabled="disabled">Modify</button></td>
+            </tr>
         </form>  
     </table>
+    <div id="pumpconfirmation">
+        <button type="button" class="modify" id="modify" hidden="hidden">Modify</button>
+        <button type="button" class="modify" id="continue" hidden="hidden">Continue</button>
+    </div>
 </body>
 <div id="chart">
     Through drive pump options are based off GoTo pumps or available through-drive adapter kits.<br>
-    <img id="myImg" src="{% static 'images/throughdrives.png' %}" alt="Through Drives" style="width:100%;max-width:300px">
+    <img id="myImg" src="{% static 'images/throughdrives.png' %}" alt="Options for through drives. K-covers are increasingly rare and as such are not included in this configurator." style="width:100%;max-width:300px">
     <div id="myModal" class="modal">
         <span class="close">&times;</span>
         <img class="modal-content" id="img01">
