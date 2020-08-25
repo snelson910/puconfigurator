@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from .forms import HPForm, PumpForm, FrameForm, ReservoirForm
 from django.forms import inlineformset_factory, formset_factory
-from .models import Motors, Pumpcodes, BellHousingSizes, CouplingCodes, Reservoir
+from .models import Motors, Pumpcodes, BellHousingSizes, CouplingCodes, Reservoir, Throughdrives
 from django.http import HttpResponse, JsonResponse
 import json, math
 
@@ -139,12 +139,16 @@ def coupling(request):
 def pumps(request):
        if request.user.is_authenticated:
               if request.method == 'POST':
-                     pumpnumber = int(request.POST["pumpnum"])
+                     pumptotal = int(request.POST["pumpnum"])
                      pumpcurrent = int(request.POST["pumpcurrent"])
                      selected = request.POST["selected"]
                      pumpcodes = []
+                     if selected != "":
+                            rearupper = Pumpcodes.objects.get(pump = selected)
+                            data1 = rearupper.front_pump
+                            frontpump = data1.lower()
                      if selected == "":
-                            if pumpnumber != pumpcurrent:
+                            if pumptotal != pumpcurrent:
                                    data = Pumpcodes.objects.all().exclude(pump__startswith = "AZP").exclude(pump__contains="31")
                                    y = 0
                                    for x in data:
@@ -157,8 +161,13 @@ def pumps(request):
                                           pumpcodes.append(data[y].pump)
                                           y += 1
                      else:
-                            #If not the first time cycled, then progress. Gotta find a way to query the through drives table and pull that informationf rom the pumpcodes table
-                            pass
+                            
+                            query = 'select * from pumpcodes join throughdrives on throughdrives.rear_pump = pumpcodes.rear_pump where throughdrives.' + frontpump + ' is not null order by pump_class, pump_size'
+                            data = Pumpcodes.objects.raw(query)
+                            y = 0
+                            for x in data:
+                                   pumpcodes.append(data[y].pump)
+                                   y += 1
                      jsondata = json.dumps(pumpcodes)
                      return HttpResponse(jsondata, content_type="application/json")
               else:

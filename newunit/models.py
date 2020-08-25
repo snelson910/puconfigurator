@@ -39,6 +39,8 @@ class Pumpcodes(models.Model):
     pump_coupling_code = models.CharField(max_length=255, blank=True, null=True)
     pump_shaft_style = models.CharField(max_length=255, blank=True, null=True)
     pump_class = models.FloatField(blank=True, null=True)
+    rear_pump = models.CharField(max_length=255, blank=True, null=True)
+    front_pump = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = True

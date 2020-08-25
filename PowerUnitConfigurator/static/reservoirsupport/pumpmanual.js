@@ -28,6 +28,7 @@ $(document).ready(function(){
         pumpcurrent ++;
         if(pumpcurrent <= pumpnum){
             //console.log("Pump number " + pumpcurrent + " function");
+            console.log("Working1");
             pumps();
         }
         else{
@@ -60,19 +61,26 @@ function pumps(){
 function table(){
     if(pumpcurrent < max){
         var i = data.length;
-        $("#pumpconfiguration").append("<br><label for='pump" + pumpcurrent + "'>Select Pump " + pumpcurrent + "</label><select id='pump" + pumpcurrent + "' name='pump" + pumpcurrent + "'>");
-        //This builds the selection option, but it is a little clunky. Can't figure out how to do it in forms with the joins that I need to run.
+        $("#pumpconfiguration").append("<tr class='pumpnumber" + pumpcurrent + "' id='pumpnum" + pumpcurrent + "'><td class='pumpnumber" + pumpcurrent + "'>Select Pump " + pumpcurrent + "</td><td class='pumpnumber" + pumpcurrent + "'><select id='pump" + pumpcurrent + "' name='pump" + pumpcurrent + "'>");
+        //This builds the selection option, but it is a little clunky. Can't figure out how to do it in django.forms with the joins that I need to run.
         for(j = 0; j < i; j++){
             $("#pump" + pumpcurrent).append("<option value='" + data[j] + "'>" + data[j] + "</option>");
         }
-        $("#pumpconfiguration").append("</select><button type='button' id='pump" + pumpcurrent + "submit' class='buttons' onclick='pumpsubmit()'>Submit Pump " + pumpcurrent + "</button><br>");
+        $("#pumpnum" + pumpcurrent).append("</select></td><td class='pumpnumber" + pumpcurrent + "'><button type='button' id='pump" + pumpcurrent + "submit' class='buttons' onclick='pumpsubmit(" + pumpcurrent + ")'>Submit Pump " + pumpcurrent + "</button></td></tr>");
     }else{
         console.log("Completed");
     }
 }
-function pumpsubmit(){
-        selected = $("#pump" + pumpcurrent).val();
-        pumpcurrent++;
+function pumpsubmit(number){
+        selected = $("#pump" + number).val();
+        console.log(number);
+        pumpcurrent = number + 1;
+        for(i=pumpcurrent; i<max; i++){
+            $("#pump" + i + "submit").remove();
+            $(".pumpnumber" + i).remove();
+            $("#pumpnumber" + i).remove();
+        }
+        console.log("Working");
         pumps();
 }
 

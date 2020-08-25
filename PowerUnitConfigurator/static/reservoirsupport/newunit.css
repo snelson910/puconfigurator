@@ -11,6 +11,17 @@
 	font-family: Arial;
 	text-decoration: underline;
 }
+table {
+    width: auto;
+    border-collapse: collapse;
+	margin-left: 20px;
+	font-family: Arial;
+}
+
+table, td, th {
+    border: 1px solid black;
+    padding: 10px;
+}
 #submit {
 	background-color: white;
 	color: black;
@@ -118,3 +129,5 @@ cursor: pointer;
 .modal-content {
 	width: 100%;
 }
+
+
