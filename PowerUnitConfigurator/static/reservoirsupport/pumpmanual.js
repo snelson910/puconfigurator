@@ -42,11 +42,18 @@ $(document).ready(function(){
 $(document).ready(function(){
     $("#pumpnummodify").click(function(){
         if(confirm("Are you sure? This will remove all later selections.")){
-            //Will probably modify the "modify/confirm" buttons to simply lock each section as it goe. Not sure if I want a warning after each modifications 
-            //about potential deletions, because I don't want to go on forever coding this thing.
-
+            for(i=0; i<max; i++){
+                $("#pump" + i + "submit").remove();
+                $(".pumpnumber" + i).remove();
+                $("#pumpnumber" + i).remove();
+            }
+            pumpcurrent = 0;
+            //pumps();
+            $("#pumpnums").removeAttr("disabled", "disabled");
+            $("#pumpnumsubmit").removeAttr("disabled", "disabled");
+            $("#pumpnummodify").attr("disabled","disabled");
         }else{
-
+            //Pass.
         }
     });
 });
@@ -89,24 +96,19 @@ function table(){
 }
 function pumpsubmit(number){
         selected = $("#pump" + number).val();
-        console.log(number);
+        //console.log(number);
         pumpcurrent = number + 1;
         for(i=pumpcurrent; i<max; i++){
             $("#pump" + i + "submit").remove();
             $(".pumpnumber" + i).remove();
             $("#pumpnumber" + i).remove();
         }
-        console.log("Number = " + number);
-        console.log("Pumpnums = " + pumpnum);
-        if(number == pumpnum){
-            console.log("Finished");
-            $("button").attr("disabled", "disabled");
-            $("select").attr("disabled", "disabled");
-            $(".modify").removeAttr("hidden", "hidden");
-            $(".modify").removeAttr("disabled", "disabled");
-        }else{
-            pumps();
-        }
+        /*console.log("Number = " + number);
+        console.log("Pumpnums = " + pumpnum);*/
+        $("#pump" + number).attr("disabled", "disabled");
+        $("#pump" + number + "submit").attr("disabled", "disabled");
+        $("#modify" + number).removeAttr("disabled", "disabled");
+        pumps();
 }
 
 $(document).ready(function(){
@@ -118,6 +120,21 @@ $(document).ready(function(){
     });
 });
 
+function modify(number){
+    if(confirm("Are you sure? This will remove all later selections.")){
+        pumpcurrent = number+1;
+        for(i=pumpcurrent; i<max; i++){
+            $("#pump" + i + "submit").remove();
+            $(".pumpnumber" + i).remove();
+            $("#pumpnumber" + i).remove();
+        }
+        $("#pump" + number + "submit").removeAttr("disabled", "disabled");
+        $("#pump" + number).removeAttr("disabled", "disabled");
+        $("#modify" + number).attr("disabled", "disabled");
+    }else{
+        //Pass.
+    }    
+}
 
 
 

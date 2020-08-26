@@ -84,7 +84,7 @@ class Throughdrives(models.Model):
     rear_pump = models.CharField(max_length=255, blank=True, null=True)
     a4vso250 = models.CharField(max_length=255, blank=True, null=True)
     a4vso180 = models.CharField(max_length=255, blank=True, null=True)
-    a4vs0125 = models.CharField(max_length=255, blank=True, null=True)
+    a4vso125 = models.CharField(max_length=255, blank=True, null=True)
     a4vso71 = models.CharField(max_length=255, blank=True, null=True)
     a4vso40 = models.CharField(max_length=255, blank=True, null=True)
     a10vso180_32 = models.CharField(max_length=255, blank=True, null=True)
