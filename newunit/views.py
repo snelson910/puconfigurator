@@ -191,8 +191,9 @@ def reservoirs(request):
                      data = []
                      y = 0
                      for x in reservoirs:
-                            data.append([str(reservoirs[y].reservoir_size) + " Gallons", " " + reservoirs[y].reservoir_configuration])
+                            data.append([str(reservoirs[y].reservoir_size) + " Gallons", " " + reservoirs[y].reservoir_configuration, reservoirs[y].id])
                             y += 1
+                     data.append(["Custom Reservoir,", " Custom Layout" , 0])
                      jsondata1 = [pumpflow, data]
                      jsondata = json.dumps(jsondata1)
                      return HttpResponse(jsondata, content_type="application/json")

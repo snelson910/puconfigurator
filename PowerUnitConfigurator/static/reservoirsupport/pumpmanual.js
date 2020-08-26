@@ -2,7 +2,7 @@ var data;
 var data2;
 var pumpnum;
 var pumpcurrent = 0;
-var selected = "";
+var selected;
 var max = 0;
 var flow;
 var reservoir;
@@ -31,6 +31,7 @@ $(document).ready(function(){
         pumpnum = Number($("#pumpnums").val());
         max = pumpnum + 1;
         pumpcurrent ++;
+        selected = "";
         if(pumpcurrent <= pumpnum){
             pumps();
         }
@@ -48,10 +49,11 @@ $(document).ready(function(){
                 $("#pumpnumber" + i).remove();
             }
             pumpcurrent = 0;
-            //pumps();
             $("#pumpnums").removeAttr("disabled", "disabled");
             $("#pumpnumsubmit").removeAttr("disabled", "disabled");
             $("#pumpnummodify").attr("disabled","disabled");
+            $("#reservoirs").empty();
+            $("#reservoirconfiguration").attr("hidden", "hidden");
         }else{
             //Pass.
         }
@@ -89,7 +91,7 @@ function table(){
             $("#pump" + pumpcurrent).append("<option value='" + data[j] + "'>" + data[j] + "</option>");
         }
         $("#pumpnum" + pumpcurrent).append("</select></td><td class='pumpnumber" + pumpcurrent + "'><button type='button' id='pump" + pumpcurrent + "submit' class='buttons' onclick='pumpsubmit(" + 
-        pumpcurrent + ")'>Submit Pump " + pumpcurrent + "</button></td><td><button type='button' id='modify" + pumpcurrent + "' onclick='modify(" + pumpcurrent + ")' disabled='disabled'>Modify</button></td></tr>");
+        pumpcurrent + ")'>Select Pump " + pumpcurrent + "</button></td><td><button type='button' id='modify" + pumpcurrent + "' onclick='modify(" + pumpcurrent + ")' disabled='disabled'>Modify</button></td></tr>");
     }else{
         reservoirs();
     }
@@ -129,8 +131,7 @@ function modify(number){
         $("#pump" + number).removeAttr("disabled", "disabled");
         $("#modify" + number).attr("disabled", "disabled");
         $("#reservoirs").empty();
-        $("#reservoirsubmit").attr("disabled", "disabled");
-        $("#flow").html("XXX");
+        $("#reservoirconfiguration").attr("hidden", "hidden");
     }else{
         //Pass.
     }    
@@ -153,8 +154,6 @@ function reservoirs(){
             {
                     flow = response[0];
                     reservoir = response[1];
-                    console.log("Flow is " + flow);
-                    console.log("Reservoirs are " + reservoir);
                     $("#flow").html(flow.toFixed(2));
                     reservoirtable();
             },
@@ -169,12 +168,15 @@ function reservoirtable(){
     $("#reservoirconfiguration").removeAttr("hidden", "hidden");
     $("#reservoirsubmit").removeAttr("disabled", "disabled");
     for(x in reservoir){
-        $("#reservoirs").append("<option value='" + reservoir[x] + "'>" + reservoir[x] + "</option>");
+        $("#reservoirs").append("<option value='" + reservoir[x][2] + "'>" + reservoir[x][0] + reservoir[x][1] + "</option>");
     }
 }
 
+$(document).ready(function(){
+    $("#reservoirsubmit").click(function(){
 
-
+    });
+});
 
 var modal;
 var img;
