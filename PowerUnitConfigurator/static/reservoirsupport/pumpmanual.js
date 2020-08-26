@@ -6,6 +6,7 @@ var selected;
 var max = 0;
 var flow;
 var reservoir;
+var motor;
 /* Not yet functional; will add back in once I get to the motor selection portion.
 $(document).ready(function(){
     $("#id_motor-0-hp").change(function(){
@@ -174,9 +175,37 @@ function reservoirtable(){
 
 $(document).ready(function(){
     $("#reservoirsubmit").click(function(){
-
+        /*$("#reservoirsubmit").attr("disabled", "disabled");
+        $("#reservoirs").attr("disabled", "disabled");*/
+        $.ajax({
+            url: "manual/motors",
+            type: "POST",
+            data: {
+                csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val()
+            },
+            success: function(response)
+                {
+                    motor = response;
+                    $("#motorconfiguration").removeAttr("hidden", "hidden");
+                    motors();
+                },
+            error: function()
+            {
+                console.log("Error")
+            }
+        })
     });
 });
+function motors(){
+    $("#motorconfiguration").removeAttr("hidden", "hidden");
+    $("#motorsubmit").removeAttr("disabled", "disabled");
+    for(x in motor){
+        $("#motors").append("<option value='" + motor[x][2] + "'>" + motor[x][0] + motor[x][1] + "</option>");
+    }
+}
+//Start work on controls options for each pump so I can select actual pump part nubmers and pull R9's out of parts database.
+
+
 
 var modal;
 var img;

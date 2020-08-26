@@ -328,7 +328,6 @@ class Pumpcodes(models.Model):
     pump_coupling_code = models.CharField(max_length=-1, blank=True, null=True)
     pump_shaft_style = models.CharField(max_length=-1, blank=True, null=True)
     pump_class = models.IntegerField(blank=True, null=True)
-    id = models.AutoField()
     pump_group = models.CharField(max_length=-1, blank=True, null=True)
 
     class Meta:

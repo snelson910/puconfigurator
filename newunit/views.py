@@ -201,3 +201,29 @@ def reservoirs(request):
                      return redirect('/')       
        else:
               return redirect('/')
+
+def motors(request):
+       if request.user.is_authenticated:
+              if request.method == 'POST':
+                     data = Motors.objects.all().order_by('hp')
+                     motors = []
+                     y = 0
+                     voltage = ''
+                     for x in data:
+                            if data[y].voltage == '1':
+                                  voltage = ', 110V Single Phase'
+                            elif data[y].voltage == '2':
+                                   voltage = ', 240V/480V Three Phase'
+                            elif data[y].voltage == '3':
+                                   voltage = ', 575V Three Phase'
+                            else:
+                                   print('Error') 
+                            motors.append([str(data[y].hp) + " Horsepower", voltage, data[y].id])
+                            y += 1
+                     motors.append(["Desired motor not entered","",""])
+                     jsondata = json.dumps(motors)
+                     return HttpResponse(jsondata, content_type="application/json")
+              else:
+                     return redirect('/')       
+       else:
+              return redirect('/')
