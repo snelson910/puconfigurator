@@ -176,3 +176,27 @@ def pumps(request):
                      return redirect('/')       
        else:
               return redirect('/')
+
+def reservoirs(request):
+       if request.user.is_authenticated:
+              if request.method == 'POST':
+                     pumps = json.loads(request.POST['pumps'])
+                     y = 0
+                     displacement = 0
+                     for x in pumps:
+                            displacement += Pumpcodes.objects.get(pump = pumps[y]).pump_size
+                            y += 1
+                     pumpflow = (displacement * 1800)/3785.4201
+                     reservoirs = Reservoir.objects.all().exclude(reservoir_configuration = 'Vertical').order_by('reservoir_size')
+                     data = []
+                     y = 0
+                     for x in reservoirs:
+                            data.append([str(reservoirs[y].reservoir_size) + " Gallons", " " + reservoirs[y].reservoir_configuration])
+                            y += 1
+                     jsondata1 = [pumpflow, data]
+                     jsondata = json.dumps(jsondata1)
+                     return HttpResponse(jsondata, content_type="application/json")
+              else:
+                     return redirect('/')       
+       else:
+              return redirect('/')

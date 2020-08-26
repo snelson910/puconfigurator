@@ -4,6 +4,8 @@ var pumpnum;
 var pumpcurrent = 0;
 var selected = "";
 var max = 0;
+var flow;
+var reservoir;
 /* Not yet functional; will add back in once I get to the motor selection portion.
 $(document).ready(function(){
     $("#id_motor-0-hp").change(function(){
@@ -30,12 +32,10 @@ $(document).ready(function(){
         max = pumpnum + 1;
         pumpcurrent ++;
         if(pumpcurrent <= pumpnum){
-            //console.log("Pump number " + pumpcurrent + " function");
-            console.log("Working1");
             pumps();
         }
         else{
-            console.log("Complete");
+            //Pass
         }
     })
 });
@@ -91,20 +91,17 @@ function table(){
         $("#pumpnum" + pumpcurrent).append("</select></td><td class='pumpnumber" + pumpcurrent + "'><button type='button' id='pump" + pumpcurrent + "submit' class='buttons' onclick='pumpsubmit(" + 
         pumpcurrent + ")'>Submit Pump " + pumpcurrent + "</button></td><td><button type='button' id='modify" + pumpcurrent + "' onclick='modify(" + pumpcurrent + ")' disabled='disabled'>Modify</button></td></tr>");
     }else{
-        console.log("Completed");
+        reservoirs();
     }
 }
 function pumpsubmit(number){
         selected = $("#pump" + number).val();
-        //console.log(number);
         pumpcurrent = number + 1;
         for(i=pumpcurrent; i<max; i++){
             $("#pump" + i + "submit").remove();
             $(".pumpnumber" + i).remove();
             $("#pumpnumber" + i).remove();
         }
-        /*console.log("Number = " + number);
-        console.log("Pumpnums = " + pumpnum);*/
         $("#pump" + number).attr("disabled", "disabled");
         $("#pump" + number + "submit").attr("disabled", "disabled");
         $("#modify" + number).removeAttr("disabled", "disabled");
@@ -131,14 +128,50 @@ function modify(number){
         $("#pump" + number + "submit").removeAttr("disabled", "disabled");
         $("#pump" + number).removeAttr("disabled", "disabled");
         $("#modify" + number).attr("disabled", "disabled");
+        $("#reservoirs").empty();
+        $("#reservoirsubmit").attr("disabled", "disabled");
+        $("#flow").html("XXX");
     }else{
         //Pass.
     }    
 }
 
+function reservoirs(){
+    var pumps = [];
+    for(i=1; i<max ; i++){
+        pump = $("#pump" + i ).val();
+        pumps.push(pump);
+    }
+    $.ajax({
+        url: "manual/reservoirs",
+        type: "POST",
+        data: {
+            csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+            pumps: JSON.stringify(pumps)
+        },
+        success: function(response)
+            {
+                    flow = response[0];
+                    reservoir = response[1];
+                    console.log("Flow is " + flow);
+                    console.log("Reservoirs are " + reservoir);
+                    $("#flow").html(flow.toFixed(2));
+                    reservoirtable();
+            },
+        error: function()
+        {
+            console.log("Error")
+        }
+    });
+}
 
-
-
+function reservoirtable(){
+    $("#reservoirconfiguration").removeAttr("hidden", "hidden");
+    $("#reservoirsubmit").removeAttr("disabled", "disabled");
+    for(x in reservoir){
+        $("#reservoirs").append("<option value='" + reservoir[x] + "'>" + reservoir[x] + "</option>");
+    }
+}
 
 
 

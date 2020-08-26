@@ -33,12 +33,21 @@
                 <td><button type="button" id="pumpnumsubmit" class="buttons">Select</button></td>
                 <td><button type="button" id="pumpnummodify" class="buttons" disabled="disabled">Modify</button></td>
             </tr>
-        </form>  
+          
     </table>
-    <!--<div id="pumpconfirmation">
-        <button type="button" class="modify" id="modify" hidden="hidden">Modify</button>
-        <button type="button" class="modify" id="continue" hidden="hidden">Continue</button>
-    </div>-->
+    <table id="reservoirconfiguration" hidden="hidden">
+        <tr>
+            <td colspan="3">Your total pump flow is <a id="flow"></a> gallons per minute</td>
+        </tr>
+        <tr>
+            <td>Please select a reservoir:</td>
+            <td><select id="reservoirs" name="reservoirs"></select></td>
+                <!--Select options will fill in here-->
+            <td><button type="button" id="reservoirsubmit" class="buttons">Select</button></td>
+        </tr>
+    </table>
+</form>
+
 </body>
 <div id="chart">
     Through drive pump options are based off GoTo pumps or available through-drive adapter kits.<br>

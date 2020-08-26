@@ -10,4 +10,5 @@ urlpatterns = [
     path("newunit/manual", views.manual, name="manual"),
     path("newunit/manual/coupling", views.coupling, name="coupling"),
     path("newunit/manual/pumps", views.pumps, name="pumps"),
+    path("newunit/manual/reservoirs", views.reservoirs, name="reservoirs"),
 ]
