@@ -142,6 +142,7 @@ def pumps(request):
                      pumptotal = int(request.POST["pumpnum"])
                      pumpcurrent = int(request.POST["pumpcurrent"])
                      selected = request.POST["selected"]
+                     print(selected)
                      pumpcodes = []
                      
                      if selected != "":

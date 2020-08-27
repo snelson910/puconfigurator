@@ -55,6 +55,7 @@ $(document).ready(function(){
             $("#pumpnummodify").attr("disabled","disabled");
             $("#reservoirs").empty();
             $("#reservoirconfiguration").attr("hidden", "hidden");
+            $(".pumpmod").attr("hidden", "hidden");
         }else{
             //Pass.
         }
@@ -105,9 +106,10 @@ function pumpsubmit(number){
             $(".pumpnumber" + i).remove();
             $("#pumpnumber" + i).remove();
         }
-        $("#pump" + number).attr("disabled", "disabled");
-        $("#pump" + number + "submit").attr("disabled", "disabled");
+        //$("#pump" + number).attr("disabled", "disabled");
+        //$("#pump" + number + "submit").attr("disabled", "disabled");
         $("#modify" + number).removeAttr("disabled", "disabled");
+        console.log(selected);
         pumps();
 }
 
@@ -155,7 +157,7 @@ function reservoirs(){
             {
                     flow = response[0];
                     reservoir = response[1];
-                    $("#flow").html(flow.toFixed(2));
+                    flows();
                     reservoirtable();
             },
         error: function()
@@ -165,6 +167,12 @@ function reservoirs(){
     });
 }
 
+function flows(){
+    $("#flow").html(flow.toFixed(2));
+    $("#ninetyfive").html((flow*.95).toFixed(2));
+    $("#ninety").html((flow*.9).toFixed(2));
+    $("#eightyfive").html((flow*.85).toFixed(2));
+}
 function reservoirtable(){
     $("#reservoirconfiguration").removeAttr("hidden", "hidden");
     $("#reservoirsubmit").removeAttr("disabled", "disabled");
@@ -175,8 +183,9 @@ function reservoirtable(){
 
 $(document).ready(function(){
     $("#reservoirsubmit").click(function(){
-        /*$("#reservoirsubmit").attr("disabled", "disabled");
-        $("#reservoirs").attr("disabled", "disabled");*/
+        //$("#reservoirsubmit").attr("disabled", "disabled");
+        //$("#reservoirs").attr("disabled", "disabled");
+        
         $.ajax({
             url: "manual/motors",
             type: "POST",
@@ -203,7 +212,14 @@ function motors(){
         $("#motors").append("<option value='" + motor[x][2] + "'>" + motor[x][0] + motor[x][1] + "</option>");
     }
 }
-//Start work on controls options for each pump so I can select actual pump part nubmers and pull R9's out of parts database.
+$(document).ready(function(){
+    $("#reservoirmodify").click(function(){
+        $("#reservoirsubmit").removeAttr("disabled", "disabled");
+        $("#reservoirs").removeAttr("disabled", "disabled");
+        $("#motorconfiguration").attr("hidden", "hidden");
+    });
+});
+//Start work on controls options for each pump so I can select actual pump part numbers and pull R9's out of parts database.
 
 
 

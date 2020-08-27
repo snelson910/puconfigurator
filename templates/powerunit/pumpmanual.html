@@ -36,9 +36,10 @@
           
     </table>
     <br>
-    <table id="reservoirconfiguration" hidden="hidden">
+    <table id="reservoirconfiguration" hidden="hidden" class="pumpmod">
         <tr>
-            <td colspan="4">Your total pump flow is <a id="flow"></a> gallons per minute</td>
+            <td colspan="4">Total theoretical pump flow is <a id="flow"></a> GPM at 100% efficiency and 1800 RPM. 95%: <a id="ninetyfive">GPM </a>
+            90%: <a id="ninety"></a>GPM 85%: <a id="eightyfive"></a>GPM</td>
         </tr>
         <tr>
             <td>Please select a reservoir:</td>
@@ -49,7 +50,7 @@
         </tr>
     </table>
     <br>
-    <table id="motorconfiguration" hidden="hidden">
+    <table id="motorconfiguration" hidden="hidden" class="pumpmod">
         <tr>
             <td>Please select a motor:</td>
             <td><select id="motors" name="motors"></select></td>
