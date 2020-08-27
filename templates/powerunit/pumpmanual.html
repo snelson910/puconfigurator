@@ -38,8 +38,8 @@
     <br>
     <table id="reservoirconfiguration" hidden="hidden" class="pumpmod">
         <tr>
-            <td colspan="4">Total theoretical pump flow is <a id="flow"></a> GPM at 100% efficiency and 1800 RPM. 95%: <a id="ninetyfive">GPM </a>
-            90%: <a id="ninety"></a>GPM 85%: <a id="eightyfive"></a>GPM</td>
+            <td colspan="4">Total theoretical pump flow is <a id="flow" class="flows"></a> GPM at 100% efficiency and 1800 RPM. 95%: <a id="ninetyfive" class="flows">GPM </a>
+            90%: <a id="ninety" class="flows"></a>GPM 85%: <a id="eightyfive" class="flows"></a>GPM</td>
         </tr>
         <tr>
             <td>Please select a reservoir:</td>
@@ -51,6 +51,9 @@
     </table>
     <br>
     <table id="motorconfiguration" hidden="hidden" class="pumpmod">
+        <tr>
+            <td colspan="4">For reference, to run all pumps at 3000psi (95% eff),  <a id="horsepower" class="hps"></a> horsepower is required.</td>
+        </tr>
         <tr>
             <td>Please select a motor:</td>
             <td><select id="motors" name="motors"></select></td>

@@ -7,23 +7,7 @@ var max = 0;
 var flow;
 var reservoir;
 var motor;
-/* Not yet functional; will add back in once I get to the motor selection portion.
-$(document).ready(function(){
-    $("#id_motor-0-hp").change(function(){
-        //Try to force the user to make good valid motor selections. Can't get the JS to drop the horsepower selection, though...
-        if($("#id_motor-0-hp").val() > 5){
-            $("#1").attr("disabled", "disabled");
-        }else{
-            $("#1").removeAttr("disabled", "disabled");
-        }
-        if($("#id_motor-0-hp").val() < 1 || $("#id_motor-0-hp").val() > 40){
-            $("#3").attr("disabled", "disabled");
-        }else{
-            $("#3").removeAttr("disabled", "disabled");
-        }
-    })
-});
-*/
+
 $(document).ready(function(){
     $("#pumpnumsubmit").click(function(){
         $("#pumpnumsubmit").attr("disabled", "disabled");
@@ -100,17 +84,20 @@ function table(){
 }
 function pumpsubmit(number){
         selected = $("#pump" + number).val();
-        pumpcurrent = number + 1;
-        for(i=pumpcurrent; i<max; i++){
-            $("#pump" + i + "submit").remove();
-            $(".pumpnumber" + i).remove();
-            $("#pumpnumber" + i).remove();
+        if(selected != "Please choose a different forward pump"){
+            pumpcurrent = number + 1;
+            for(i=pumpcurrent; i<max; i++){
+                $("#pump" + i + "submit").remove();
+                $(".pumpnumber" + i).remove();
+                $("#pumpnumber" + i).remove();
+            }
+            //$("#pump" + number).attr("disabled", "disabled");
+            //$("#pump" + number + "submit").attr("disabled", "disabled");
+            $("#modify" + number).removeAttr("disabled", "disabled");
+            $(".flows").html("XXX");
+            console.log(selected);
+            pumps();
         }
-        //$("#pump" + number).attr("disabled", "disabled");
-        //$("#pump" + number + "submit").attr("disabled", "disabled");
-        $("#modify" + number).removeAttr("disabled", "disabled");
-        console.log(selected);
-        pumps();
 }
 
 $(document).ready(function(){
@@ -172,6 +159,7 @@ function flows(){
     $("#ninetyfive").html((flow*.95).toFixed(2));
     $("#ninety").html((flow*.9).toFixed(2));
     $("#eightyfive").html((flow*.85).toFixed(2));
+    $("#horsepower").html((flow*1.7503/.95).toFixed(2));
 }
 function reservoirtable(){
     $("#reservoirconfiguration").removeAttr("hidden", "hidden");
