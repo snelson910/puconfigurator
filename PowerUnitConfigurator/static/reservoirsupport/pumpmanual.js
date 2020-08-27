@@ -95,7 +95,6 @@ function pumpsubmit(number){
             //$("#pump" + number + "submit").attr("disabled", "disabled");
             $("#modify" + number).removeAttr("disabled", "disabled");
             $(".flows").html("XXX");
-            console.log(selected);
             pumps();
         }
 }
