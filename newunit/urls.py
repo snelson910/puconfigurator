@@ -12,4 +12,5 @@ urlpatterns = [
     path("newunit/manual/pumps", views.pumps, name="pumps"),
     path("newunit/manual/reservoirs", views.reservoirs, name="reservoirs"),
     path("newunit/manual/motors", views.motors, name="motors"),
+    path("newunit/manual/pumpnums", views.pumpnums, name="pumpnums"),
 ]

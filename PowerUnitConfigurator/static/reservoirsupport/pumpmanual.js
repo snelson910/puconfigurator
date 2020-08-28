@@ -7,10 +7,18 @@ var max = 0;
 var flow;
 var reservoir;
 var motor;
+var accountnumber;
 
 function cookiecheck(){
-    var customer = document.cookie;
-    console.log(customer);
+    var ac = document.cookie;
+    ca = ac.split(';');
+    for(x in ca){
+        key = ca[x].split('=')[0];
+        value = ca[x].split('=')[1];
+        if(key.substring(1) == "an"){
+            accountnumber = value;
+        }
+    }
 }
 
 $(document).ready(function(){
