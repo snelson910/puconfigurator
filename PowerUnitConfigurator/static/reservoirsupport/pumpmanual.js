@@ -8,6 +8,11 @@ var flow;
 var reservoir;
 var motor;
 
+function cookiecheck(){
+    var customer = document.cookie;
+    console.log(customer);
+}
+
 $(document).ready(function(){
     $("#pumpnumsubmit").click(function(){
         $("#pumpnumsubmit").attr("disabled", "disabled");

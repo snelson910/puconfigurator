@@ -11,55 +11,37 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/static/reservoirsupport/pumpmanual.js"></script>  
     <title>Power Unit Pump Selection</title>
+    <script ></script>
 </head>
 <h1>JHF Power Unit Configurator</h1>
 <div id="logout">
     <a href="/logout">Logout</a>
 </div>
-<body onload=modalpic()>
+<body onload="modalpic(); cookiecheck();">
     <br>
-    <table id="pumpconfiguration">
-        <form>
-            {% csrf_token %}
-            <tr>    
-                <td><label for="pumpnums">How many pumps are required?</label></td>
-                <td><select id="pumpnums" name="pumpnums">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select></td>
-                <td><button type="button" id="pumpnumsubmit" class="buttons">Select</button></td>
-                <td><button type="button" id="pumpnummodify" class="buttons" disabled="disabled">Modify</button></td>
-            </tr>
-          
-    </table>
-    <br>
-    <table id="reservoirconfiguration" hidden="hidden" class="pumpmod">
+    <table id="configuration">
         <tr>
-            <td colspan="4">Total theoretical pump flow is <a id="flow" class="flows"></a> GPM at 100% efficiency and 1800 RPM. 95%: <a id="ninetyfive" class="flows">GPM </a>
-            90%: <a id="ninety" class="flows"></a>GPM 85%: <a id="eightyfive" class="flows"></a>GPM</td>
+            <th>Component</th>
+            <th>Selection</th>
+            <th>Cost</th>
+            <th>Availability</th>
+            <th>Lead Time</th>
+            <th></th>
         </tr>
-        <tr>
-            <td>Please select a reservoir:</td>
-            <td><select id="reservoirs" name="reservoirs"></select></td>
-                <!--Select options will fill in here-->
-            <td><button type="button" id="reservoirsubmit" class="buttons">Select</button></td>
-            <td><button type="button" id="reservoirmodify" class="buttons">Modify</button></td>
+        <tr class="tr_product" id="tr_pumps">
+            <td class="td_component">
+                <a href="manual/pumps">Pumps</a>
+            </td>
         </tr>
-    </table>
-    <br>
-    <table id="motorconfiguration" hidden="hidden" class="pumpmod">
-        <tr>
-            <td colspan="4">For reference, to run all pumps at 3000psi (95% eff),  <a id="horsepower" class="hps"></a> horsepower is required.</td>
+        <tr class="tr_product" id="tr_motors">
+            <td class="td_component">
+                <a href="manual/motors">Electric Motors</a>
+            </td>
         </tr>
-        <tr>
-            <td>Please select a motor:</td>
-            <td><select id="motors" name="motors"></select></td>
-                <!--Select options will fill in here-->
-            <td><button type="button" id="motorsubmit" class="buttons">Select</button></td>
-            <td><button type="button" id="motormodify" class="buttons">Modify</button></td>
+        <tr class="tr_product" id="tr_reservoirs">
+            <td class="td_component">
+                <a href="manual/reservoirs">Reservoirs</a>
+            </td>
         </tr>
     </table>
 </form>

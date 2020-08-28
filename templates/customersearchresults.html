@@ -1,4 +1,6 @@
 {% load static %}
+{% static "images" as baseUrl%}
+<link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,25 +45,22 @@
 <br><br>
 <div>
 
-    <form action="/manifold" method="post" id="confirmmani" class="buttons" hidden="hidden">
-        {%csrf_token%}
-        <input type="text" class="accountnumber"  name="accountnumber" hidden="hidden">
+    <form action="/manifold" id="confirmmani" class="buttons" hidden="hidden">
         <input type="submit" class="button" id="confirmbutton" value="New Manifold">
     </form>
-    <form action="/newunit/manual" method="post" id="confirmunit" class="buttons" hidden="hidden">
-        {%csrf_token%}
-        <input type="text" class="accountnumber"  name="accountnumber" hidden="hidden">
+    <form action="/newunit/manual" id="confirmunit" class="buttons" hidden="hidden">
         <input type="submit" class="button" value="New Power Unit">
     </form>
 </div>
 </html>
 <script>
     function customerAccount(a){
-        console.log(a);
         $("tr").css("background-color", "white");
         $("#"+a).css("background-color","yellow");
         $(".buttons").removeAttr("hidden");
         $("#confirmmani").removeAttr("hidden");
         $(".accountnumber").val(a)
+        document.cookie =  "an=" + a + "; SameSite=Lax; Secure; path=/";
+        console.log(document.cookie);
     }
 </script>

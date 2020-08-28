@@ -30,17 +30,7 @@ def pumpwizard(request):
 
 def manual(request):
        if request.user.is_authenticated:
-              if request.method == 'POST':
-                     #Still not completely sure how forms work but it passes the right information, so hey, can't complain too much right?
-                     accountnumber = request.POST['accountnumber']
-                     MotorFormSet = formset_factory(HPForm)
-                     motor_formset = MotorFormSet(prefix = 'motor')
-                     PumpFormSet = formset_factory(PumpForm)
-                     pump_formset = PumpFormSet(prefix = 'pump')
-                     ReservoirFormSet = formset_factory(ReservoirForm)
-                     reservoir_formset = ReservoirFormSet(prefix = 'reservoir_size')
-                     return render(request, "powerunit/pumpmanual.html", {'motor' : motor_formset, 'pumps' : pump_formset, 'accountnumber' : accountnumber,'reservoir' : reservoir_formset,})
-              return redirect('/')
+                     return render(request, "powerunit/pumpmanual.html")
        else:
               return redirect('/')
 
@@ -138,91 +128,17 @@ def coupling(request):
 
 def pumps(request):
        if request.user.is_authenticated:
-              if request.method == 'POST':
-                     pumptotal = int(request.POST["pumpnum"])
-                     pumpcurrent = int(request.POST["pumpcurrent"])
-                     selected = request.POST["selected"]
-                     pumpcodes = []
-                     if selected != "":
-                            rearupper = Pumpcodes.objects.get(pump = selected)
-                            data1 = rearupper.front_pump
-                            frontpump = data1.lower()
-                     if selected == "":
-                            if pumptotal != pumpcurrent:
-                                   data = Pumpcodes.objects.all().exclude(pump__startswith = "AZP").exclude(pump__contains="31")
-                                   y = 0
-                                   for x in data:
-                                          pumpcodes.append(data[y].pump)
-                                          y += 1
-                            else:
-                                   data = Pumpcodes.objects.all()
-                                   y = 0
-                                   for x in data:
-                                          pumpcodes.append(data[y].pump)
-                                          y += 1
-                     else: 
-                            query = 'select * from pumpcodes join throughdrives on throughdrives.rear_pump = pumpcodes.rear_pump where throughdrives.' + frontpump + ' is not null order by pump_class, pump_size'
-                            data = Pumpcodes.objects.raw(query)
-                            y = 0
-                            for x in data:
-                                   pumpcodes.append(data[y].pump)
-                                   y += 1
-                     if len(pumpcodes) == 0:
-                            pumpcodes.append("Please choose a different forward pump")
-                     jsondata = json.dumps(pumpcodes)
-                     return HttpResponse(jsondata, content_type="application/json")
-              else:
-                     return redirect('/')       
+              return render(request, "powerunit/pumps.html")
        else:
               return redirect('/')
 
 def reservoirs(request):
        if request.user.is_authenticated:
-              if request.method == 'POST':
-                     pumps = json.loads(request.POST['pumps'])
-                     y = 0
-                     displacement = 0
-                     for x in pumps:
-                            displacement += Pumpcodes.objects.get(pump = pumps[y]).pump_size
-                            y += 1
-                     pumpflow = (displacement * 1800)/3785.4201
-                     reservoirs = Reservoir.objects.all().exclude(reservoir_configuration = 'Vertical').order_by('reservoir_size')
-                     data = []
-                     y = 0
-                     for x in reservoirs:
-                            data.append([str(reservoirs[y].reservoir_size) + " Gallons", " " + reservoirs[y].reservoir_configuration, reservoirs[y].id])
-                            y += 1
-                     data.append(["Custom Reservoir,", " Custom Layout" , 0])
-                     jsondata1 = [pumpflow, data]
-                     jsondata = json.dumps(jsondata1)
-                     return HttpResponse(jsondata, content_type="application/json")
-              else:
-                     return redirect('/')       
+              pass
        else:
               return redirect('/')
-
 def motors(request):
        if request.user.is_authenticated:
-              if request.method == 'POST':
-                     data = Motors.objects.all().order_by('hp')
-                     motors = []
-                     y = 0
-                     voltage = ''
-                     for x in data:
-                            if data[y].voltage == '1':
-                                  voltage = ', 110V Single Phase'
-                            elif data[y].voltage == '2':
-                                   voltage = ', 240V/480V Three Phase'
-                            elif data[y].voltage == '3':
-                                   voltage = ', 575V Three Phase'
-                            else:
-                                   print('Error') 
-                            motors.append([str(data[y].hp) + " Horsepower", voltage, data[y].id])
-                            y += 1
-                     motors.append(["Desired motor not entered","",""])
-                     jsondata = json.dumps(motors)
-                     return HttpResponse(jsondata, content_type="application/json")
-              else:
-                     return redirect('/')       
+              pass
        else:
               return redirect('/')
