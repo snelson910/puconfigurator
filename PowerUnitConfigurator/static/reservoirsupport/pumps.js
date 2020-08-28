@@ -133,6 +133,7 @@ function table(){
         //reservoirs();
     }
 }
+
 function pumpsubmit(number){
     selected = $("#pump" + number).val();
     if(selected != "Please choose a different forward pump"){
