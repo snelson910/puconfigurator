@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, auth
 from .forms import HPForm, PumpForm, FrameForm, ReservoirForm
 from django.forms import inlineformset_factory, formset_factory
 from .models import Motors, Pumpcodes, BellHousingSizes, CouplingCodes, Reservoir, Throughdrives
+from manifold.models import Parts
 from django.http import HttpResponse, JsonResponse
 import json, math
 
@@ -178,6 +179,38 @@ def pumpnums(request):
                             pumpcodes.append("Please choose a different forward pump")
                      jsondata = json.dumps(pumpcodes)
                      return HttpResponse(jsondata, content_type="application/json")
+              else:
+                     return redirect('/')       
+       else:
+              return redirect('/')
+
+def pumpselect(request):
+       if request.user.is_authenticated:
+              if request.method == 'POST':
+                     pumps = json.loads(request.POST['pumpparts'])
+                     i = 0
+                     results = []
+                     #for x in pumps:
+                     search = pumps[i].replace("*", "%%").replace("/","").rsplit("R")
+                     currentpump = '%%' + search[0] + '%%'
+                     i += 1
+                     query = "select * from parts where product_name like '" + currentpump + "' order by on_hand desc, pref"
+                     #query = 'select * from parts where product_name like ' + "'%%A10VSO100%%'"
+                     print(currentpump)
+                     print(query)
+                     options = Parts.objects.raw(query)
+                     print(options[0].item_number)
+                     #item_number, product_name, on_hand, cost_each, pref, stockstatus
+                     #options = Parts.objects.filter(product_name__contains = currentpump)
+                     for x in options:
+                            print(x.item_number)
+                            j = 0
+                            for y in options:
+                                   info = [options[j].item_number, options[j].product_name, options[j].on_hand, options[j].cost_each,options[j].stockstatus, options[j].pref]
+                                   results.append(info)
+                                   j += 1
+                     jsondata = results
+                     return HttpResponse(json.dumps(jsondata), content_type="application/json")        
               else:
                      return redirect('/')       
        else:

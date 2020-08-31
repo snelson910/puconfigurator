@@ -31,7 +31,7 @@ function modalpic(){
   }
 }
 
-//Check cookies and hold account number, will modify to reflect any choe parts suo that they stay stored later on.
+//Check cookies and hold account number, will modify to reflect any chosen parts so that they stay stored later on.
 function readcookies(){
     var allcookies = document.cookie;
     cookiearray = allcookies.split(';');
@@ -130,7 +130,7 @@ function table(){
         $("#pumpnum" + pumpcurrent).append("</select></td><td class='pumpnumber" + pumpcurrent + "'><button type='button' id='pump" + pumpcurrent + "submit' class='buttons' onclick='pumpsubmit(" + 
         pumpcurrent + ")'>Select Pump " + pumpcurrent + "</button></td><td><button type='button' id='modify" + pumpcurrent + "' onclick='modify(" + pumpcurrent + ")' disabled='disabled'>Modify</button></td></tr>");
     }else{
-        //reservoirs();
+        pumpconfig();
     }
 }
 
@@ -149,4 +149,28 @@ function pumpsubmit(number){
         $(".flows").html("XXX");
         pumps();
     }
+}
+
+function pumpconfig(){
+    pumpparts = []
+    for(i=1; i<max;i++){
+        pumpparts.push($("#pump" + i).val())
+    }
+    $.ajax({
+        url: "pumpselect",
+        type: "POST",
+        data: {
+            csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+            pumpparts: JSON.stringify(pumpparts)
+        },
+        success: function(response)
+            {
+                    data = response;
+                    console.table(data);
+            },
+        error: function()
+        {
+            console.log("Error")
+        }
+    });
 }
