@@ -179,6 +179,8 @@ function pumpconfig(){
 
 function pumptable(){
     $(".pump").remove();
+    $("#pumppref").html(pumpparts[0]);
+    $("#notes").removeAttr("hidden", "hidden");
     $("#pumptable").removeAttr("hidden", "hidden");
     var i=0;
     if(data[0][0]=="No pumps with this configuration."){
