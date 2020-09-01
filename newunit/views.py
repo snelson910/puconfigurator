@@ -157,13 +157,13 @@ def pumpnums(request):
                             frontpump = data1.lower()
                      if selected == "":
                             if pumptotal != pumpcurrent:
-                                   data = Pumpcodes.objects.all().exclude(pump__startswith = "AZP").exclude(pump__contains="31")
+                                   data = Pumpcodes.objects.all().exclude(pump__startswith = "AZP").exclude(pump__contains="31").order_by('pump_class', 'pump_size', 'id')
                                    y = 0
                                    for x in data:
                                           pumpcodes.append(data[y].pump)
                                           y += 1
                             else:
-                                   data = Pumpcodes.objects.all()
+                                   data = Pumpcodes.objects.all().order_by('pump_class', 'pump_size', 'id')
                                    y = 0
                                    for x in data:
                                           pumpcodes.append(data[y].pump)
@@ -190,25 +190,22 @@ def pumpselect(request):
                      pumps = json.loads(request.POST['pumpparts'])
                      i = 0
                      results = []
-                     #for x in pumps:
-                     search = pumps[i].replace("*", "%%").replace("/","").rsplit("R")
+                     search = pumps[i].replace("*", "%%").replace("/","").split("R")
                      currentpump = '%%' + search[0] + '%%'
+                     if search[1].count('K') != 0:
+                            currentpump += 'K%%'
+                     if search[1].count('S') != 0:
+                            currentpump += 'S%%'
                      i += 1
-                     query = "select * from parts where product_name like '" + currentpump + "' order by on_hand desc, pref"
-                     #query = 'select * from parts where product_name like ' + "'%%A10VSO100%%'"
-                     print(currentpump)
-                     print(query)
+                     query = "select * from parts where product_name like '" + currentpump + "' order by on_hand desc, pref desc, stockstatus desc"
                      options = Parts.objects.raw(query)
-                     print(options[0].item_number)
-                     #item_number, product_name, on_hand, cost_each, pref, stockstatus
-                     #options = Parts.objects.filter(product_name__contains = currentpump)
-                     for x in options:
-                            print(x.item_number)
-                            j = 0
-                            for y in options:
-                                   info = [options[j].item_number, options[j].product_name, options[j].on_hand, options[j].cost_each,options[j].stockstatus, options[j].pref]
-                                   results.append(info)
-                                   j += 1
+                     j = 0
+                     for x in options:         
+                            info = [options[j].item_number, options[j].product_name, options[j].on_hand, options[j].cost_each,options[j].stockstatus, options[j].pref, options[j].goto_item ]
+                            results.append(info)
+                            j += 1
+                     if len(results) == 0:
+                            results.append(["No pumps with this configuration.","","","","","","",""])
                      jsondata = results
                      return HttpResponse(json.dumps(jsondata), content_type="application/json")        
               else:

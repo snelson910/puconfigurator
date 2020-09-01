@@ -121,14 +121,15 @@ function modify(number){
 function table(){
     if(pumpcurrent < max){
         var i = data.length;
-        $("#pumpconfiguration").append("<tr class='pumpnumber" + pumpcurrent + "' id='pumpnum" + pumpcurrent + "'><td class='pumpnumber" + pumpcurrent + "'>Select Pump " + pumpcurrent + 
-        "</td><td class='pumpnumber" + pumpcurrent + "'><select id='pump" + pumpcurrent + "' name='pump" + pumpcurrent + "'>");
+        $("#pumpconfiguration").append("<tr class='pumpnumber" + pumpcurrent + "' id='pumpnum" + pumpcurrent + "'><td class='pumpnumber" + pumpcurrent + 
+        "'>Select Pump " + pumpcurrent + "</td><td class='pumpnumber" + pumpcurrent + "'><select id='pump" + pumpcurrent + "' name='pump" + pumpcurrent + "'>");
         //This builds the selection option, but it is a little clunky. Can't figure out how to do it in django.forms with the joins that I need to run.
         for(j = 0; j < i; j++){
             $("#pump" + pumpcurrent).append("<option value='" + data[j] + "'>" + data[j] + "</option>");
         }
-        $("#pumpnum" + pumpcurrent).append("</select></td><td class='pumpnumber" + pumpcurrent + "'><button type='button' id='pump" + pumpcurrent + "submit' class='buttons' onclick='pumpsubmit(" + 
-        pumpcurrent + ")'>Select Pump " + pumpcurrent + "</button></td><td><button type='button' id='modify" + pumpcurrent + "' onclick='modify(" + pumpcurrent + ")' disabled='disabled'>Modify</button></td></tr>");
+        $("#pumpnum" + pumpcurrent).append("</select></td><td class='pumpnumber" + pumpcurrent + "'><button type='button' id='pump" + pumpcurrent + 
+        "submit' class='buttons' onclick='pumpsubmit(" + pumpcurrent + ")'>Select Pump " + pumpcurrent + "</button></td><td><button type='button' id='modify" 
+        + pumpcurrent + "' onclick='modify(" + pumpcurrent + ")' disabled='disabled'>Modify</button></td></tr>");
     }else{
         pumpconfig();
     }
@@ -152,6 +153,7 @@ function pumpsubmit(number){
 }
 
 function pumpconfig(){
+    $(".pump").remove();
     pumpparts = []
     for(i=1; i<max;i++){
         pumpparts.push($("#pump" + i).val())
@@ -166,11 +168,27 @@ function pumpconfig(){
         success: function(response)
             {
                     data = response;
-                    console.table(data);
+                    pumptable();
             },
         error: function()
         {
             console.log("Error")
         }
     });
+}
+
+function pumptable(){
+    $(".pump").remove();
+    $("#pumptable").removeAttr("hidden", "hidden");
+    var i=0;
+    if(data[0][0]=="No pumps with this configuration."){
+        $("#pumptable").append("<tr><td colspan='8'>No pumps with this configuration.</td></tr>")
+    }else{
+        for(x in data){
+            $("#pumptable").append("<tr class='pump'><td>" + data[i][0] + "</td><td>" + data[i][1] + "</td><td>" + data[i][2] + "</td><td>" + 
+            data[i][3] + "</td><td>" + data[i][4] + "</td><td>" + data[i][5] + "</td><td>" + data[i][6] + "</td><td><button onclick='nextpump(" + 
+            data[i][0] + ")' >Select</button></td></tr>");
+            i++;
+        }
+    }
 }
