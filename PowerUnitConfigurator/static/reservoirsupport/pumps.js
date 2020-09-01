@@ -158,6 +158,9 @@ function pumpconfig(){
     pumpparts = []
     var val = num + 1
     pumpparts[0] = $("#pump" + val).val();
+    console.log(max);
+    console.log(num);
+    num++;
     $.ajax({
         url: "pumpselect",
         type: "POST",
@@ -165,7 +168,7 @@ function pumpconfig(){
             csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
             pumpparts: JSON.stringify(pumpparts),
             pumpmax: max,
-            current: num = 1
+            current: num
         },
         success: function(response)
             {
@@ -184,6 +187,7 @@ function pumptable(){
     $("#pumppref").html(pumpparts[0]);
     $("#notes").removeAttr("hidden", "hidden");
     $("#pumptable").removeAttr("hidden", "hidden");
+    $("#pumpnumber").html("Pump " + num + " Selection");
     var i=0;
     if(data[0][0]=="No pumps with this configuration."){
         $("#pumptable").append("<tr class='pump'><td colspan='8'>No pumps with this configuration.</td></tr>")
