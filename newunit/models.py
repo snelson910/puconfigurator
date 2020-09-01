@@ -106,6 +106,7 @@ class Throughdrives(models.Model):
     azpf = models.CharField(max_length=255, blank=True, null=True)
     azpg = models.CharField(max_length=255, blank=True, null=True)
     size = models.IntegerField(blank=True, null=True)
+    azpb = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False

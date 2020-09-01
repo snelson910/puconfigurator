@@ -131,7 +131,7 @@ function table(){
         "submit' class='buttons' onclick='pumpsubmit(" + pumpcurrent + ")'>Select Pump " + pumpcurrent + "</button></td><td><button type='button' id='modify" 
         + pumpcurrent + "' onclick='modify(" + pumpcurrent + ")' disabled='disabled'>Modify</button></td></tr>");
     }else{
-        pumpconfig();
+        //pumpconfig();
     }
 }
 
@@ -163,7 +163,9 @@ function pumpconfig(){
         type: "POST",
         data: {
             csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
-            pumpparts: JSON.stringify(pumpparts)
+            pumpparts: JSON.stringify(pumpparts),
+            pumpmax: max,
+            current: '1'
         },
         success: function(response)
             {

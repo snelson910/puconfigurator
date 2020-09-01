@@ -151,24 +151,26 @@ def pumpnums(request):
                      pumpcurrent = int(request.POST["pumpcurrent"])
                      selected = request.POST["selected"]
                      pumpcodes = []
+                     print("pumptotal = " + str(pumptotal) + " pumpcurrent = " + str(pumpcurrent))
                      if selected != "":
                             rearupper = Pumpcodes.objects.get(pump = selected)
                             data1 = rearupper.front_pump
                             frontpump = data1.lower()
-                     if selected == "":
-                            if pumptotal != pumpcurrent:
-                                   data = Pumpcodes.objects.all().exclude(pump__startswith = "AZP").exclude(pump__contains="31").order_by('pump_class', 'pump_size', 'id')
-                                   y = 0
-                                   for x in data:
-                                          pumpcodes.append(data[y].pump)
-                                          y += 1
-                            else:
-                                   data = Pumpcodes.objects.all().order_by('pump_class', 'pump_size', 'id')
-                                   y = 0
-                                   for x in data:
-                                          pumpcodes.append(data[y].pump)
-                                          y += 1
-                     else: 
+                     if pumpcurrent == 1 and pumptotal != 1:
+                            data = Pumpcodes.objects.all().exclude(pump__startswith = "AZP").exclude(pump__contains="31").order_by('pump_class', 'pump_size', 'id')
+                            y = 0
+                            for x in data:
+                                   pumpcodes.append(data[y].pump)
+                                   y += 1
+                     elif pumptotal ==  1:
+                            #allow any selection
+                            data = Pumpcodes.objects.all().order_by('pump_class', 'pump_size', 'id')
+                            y = 0
+                            for x in data:
+                                   pumpcodes.append(data[y].pump)
+                                   y += 1
+                     elif pumptotal - pumpcurrent == 1 or pumptotal == pumpcurrent:
+                            #allow any selection that has through drive options
                             query = 'select * from pumpcodes join throughdrives on throughdrives.rear_pump = pumpcodes.rear_pump where throughdrives.' + frontpump + ' is not null order by pump_class, pump_size'
                             data = Pumpcodes.objects.raw(query)
                             y = 0
@@ -188,18 +190,39 @@ def pumpselect(request):
        if request.user.is_authenticated:
               if request.method == 'POST':
                      pumps = json.loads(request.POST['pumpparts'])
+                     pumpmax = json.loads(request.POST['pumpmax'])
+                     current = json.loads(request.POST['current'])
                      i = 0
                      results = []
+                     #prefpump = results[0]
+                     
+
                      search = pumps[i].replace("*", "%%").replace("/","").split("R")
                      currentpump = '%%' + search[0] + '%%'
                      if search[1].count('K') != 0:
                             currentpump += 'K%%'
                      if search[1].count('S') != 0:
                             currentpump += 'S%%'
-                     i += 1
-                     query = "select * from parts where product_name like '" + currentpump + "' order by on_hand desc, pref desc, stockstatus desc"
-                     options = Parts.objects.raw(query)
+                     if pumps[0].count('31') != 0:
+                            option1 = currentpump + 'N00%%'
+                            option2 = currentpump + 'K01%%'
+                            option3 = currentpump + 'K68%%'
+                     if pumps[0].count('32') != 0:
+                            option1 = currentpump + 'U00%%'
+                            option2 = currentpump + 'U00%%'
+                            option3 = currentpump + 'U00%%'
+                     if pumps[0].count('A15') != 0:
+                            option1 = currentpump
+                            option2 = currentpump
+                            option3 = currentpump
+                     if pumps[0].count('A4') != 0:   
+                            option1 = currentpump + 'U00%%'
+                            option2 = currentpump + 'N00%%'
+                            option3 = currentpumpa
+                     query = "select * from parts where product_name like '" + option1 + "' or product_name like '" + option2 + "' or product_name like '" + option3 + "' order by on_hand desc, pref desc, stockstatus desc"
                      print(query)
+                     options = Parts.objects.raw(query)
+                     
                      j = 0
                      for x in options:         
                             info = [options[j].item_number, options[j].product_name, options[j].on_hand, options[j].cost_each,options[j].stockstatus, options[j].pref, options[j].goto_item ]
