@@ -12,6 +12,7 @@ var max = 0;
 var flow;
 var reservoir;
 var motor;
+var num = 0;
 
 //Just a simple modal picture of the possible through drive option selections.
 function modalpic(){
@@ -131,7 +132,7 @@ function table(){
         "submit' class='buttons' onclick='pumpsubmit(" + pumpcurrent + ")'>Select Pump " + pumpcurrent + "</button></td><td><button type='button' id='modify" 
         + pumpcurrent + "' onclick='modify(" + pumpcurrent + ")' disabled='disabled'>Modify</button></td></tr>");
     }else{
-        //pumpconfig();
+        pumpconfig();
     }
 }
 
@@ -155,9 +156,8 @@ function pumpsubmit(number){
 function pumpconfig(){
     $(".pump").remove();
     pumpparts = []
-    for(i=1; i<max;i++){
-        pumpparts.push($("#pump" + i).val())
-    }
+    var val = num + 1
+    pumpparts[0] = $("#pump" + val).val();
     $.ajax({
         url: "pumpselect",
         type: "POST",
@@ -165,7 +165,7 @@ function pumpconfig(){
             csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
             pumpparts: JSON.stringify(pumpparts),
             pumpmax: max,
-            current: '1'
+            current: num = 1
         },
         success: function(response)
             {
@@ -186,7 +186,7 @@ function pumptable(){
     $("#pumptable").removeAttr("hidden", "hidden");
     var i=0;
     if(data[0][0]=="No pumps with this configuration."){
-        $("#pumptable").append("<tr><td colspan='8'>No pumps with this configuration.</td></tr>")
+        $("#pumptable").append("<tr class='pump'><td colspan='8'>No pumps with this configuration.</td></tr>")
     }else{
         for(x in data){
             $("#pumptable").append("<tr class='pump'><td>" + data[i][0] + "</td><td>" + data[i][1] + "</td><td>" + data[i][2] + "</td><td>" + 

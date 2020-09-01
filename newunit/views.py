@@ -192,37 +192,42 @@ def pumpselect(request):
                      pumps = json.loads(request.POST['pumpparts'])
                      pumpmax = json.loads(request.POST['pumpmax'])
                      current = json.loads(request.POST['current'])
-                     i = 0
                      results = []
-                     #prefpump = results[0]
-                     
-
-                     search = pumps[i].replace("*", "%%").replace("/","").split("R")
-                     currentpump = '%%' + search[0] + '%%'
-                     if search[1].count('K') != 0:
-                            currentpump += 'K%%'
-                     if search[1].count('S') != 0:
-                            currentpump += 'S%%'
-                     if pumps[0].count('31') != 0:
-                            option1 = currentpump + 'N00%%'
-                            option2 = currentpump + 'K01%%'
-                            option3 = currentpump + 'K68%%'
-                     if pumps[0].count('32') != 0:
-                            option1 = currentpump + 'U00%%'
-                            option2 = currentpump + 'U00%%'
-                            option3 = currentpump + 'U00%%'
-                     if pumps[0].count('A15') != 0:
+                     if pumps[0].count('AZP') != 0:
+                            currentpump = pumps[0].replace("*","%%")
                             option1 = currentpump
                             option2 = currentpump
                             option3 = currentpump
-                     if pumps[0].count('A4') != 0:   
-                            option1 = currentpump + 'U00%%'
-                            option2 = currentpump + 'N00%%'
-                            option3 = currentpumpa
+                     else:
+                            search = pumps[0].replace("*", "%%").replace("/","").split("R")
+                            currentpump = '%%' + search[0] + '%%'
+                            if search[1].count('K') != 0:
+                                   currentpump += 'K%%'
+                            if search[1].count('S') != 0:
+                                   currentpump += 'S%%'
+                            if pumps[0].count('31') != 0:
+                                   if pumpmax - current > 1:
+                                          option1 = currentpump + 'K01%%'
+                                          option2 = currentpump + 'K01%%'
+                                          option3 = currentpump + 'K68%%'
+                                   else:
+                                          option1 = currentpump + 'N00%%'
+                                          option2 = currentpump + 'K01%%'
+                                          option3 = currentpump + 'K68%%'
+                            if pumps[0].count('32') != 0:
+                                   option1 = currentpump + 'U00%%'
+                                   option2 = currentpump + 'U00%%'
+                                   option3 = currentpump + 'U00%%'
+                            if pumps[0].count('A15') != 0:
+                                   option1 = currentpump
+                                   option2 = currentpump
+                                   option3 = currentpump
+                            if pumps[0].count('A4') != 0:   
+                                   option1 = currentpump + 'U00%%'
+                                   option2 = currentpump + 'N00%%'
+                                   option3 = currentpump
                      query = "select * from parts where product_name like '" + option1 + "' or product_name like '" + option2 + "' or product_name like '" + option3 + "' order by on_hand desc, pref desc, stockstatus desc"
-                     print(query)
                      options = Parts.objects.raw(query)
-                     
                      j = 0
                      for x in options:         
                             info = [options[j].item_number, options[j].product_name, options[j].on_hand, options[j].cost_each,options[j].stockstatus, options[j].pref, options[j].goto_item ]
