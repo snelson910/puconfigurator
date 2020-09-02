@@ -44,6 +44,17 @@ function readcookies(){
         }
     }
 }
+
+function selection(x){
+    if(x=='wiz'){
+        $("#wizard").removeAttr("hidden", "hidden");
+    }
+    if(x=='man'){
+        $("#manual").removeattr("hidden", "hidden");
+    }
+    $("#option").attr("hidden", "hidden");
+}
+
 $(document).ready(function(){
     $("#pumpnumsubmit").click(function(){
         $("#pumpnumsubmit").attr("disabled", "disabled");

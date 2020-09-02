@@ -226,7 +226,7 @@ def pumpselect(request):
                                    option1 = currentpump + 'U00%%'
                                    option2 = currentpump + 'N00%%'
                                    option3 = currentpump
-                     query = "select * from parts where product_name like '" + option1 + "' or product_name like '" + option2 + "' or product_name like '" + option3 + "' order by on_hand desc, pref desc, stockstatus desc"
+                     query = "select * from parts where product_name like '" + option1 + "' or product_name like '" + option2 + "' or product_name like '" + option3 + "' order by on_hand desc, pref desc, stockstatus desc, goto_item desc"
                      options = Parts.objects.raw(query)
                      j = 0
                      for x in options:         
