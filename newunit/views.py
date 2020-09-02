@@ -156,6 +156,7 @@ def pumpnums(request):
                             rearupper = Pumpcodes.objects.get(pump = selected)
                             data1 = rearupper.front_pump
                             frontpump = data1.lower()
+                            print(frontpump)
                      if pumpcurrent == 1 and pumptotal != 1:
                             data = Pumpcodes.objects.all().exclude(pump__startswith = "AZP").exclude(pump__contains="31").order_by('pump_class', 'pump_size', 'id')
                             y = 0
@@ -237,6 +238,36 @@ def pumpselect(request):
                             results.append(["No pumps with this configuration."])
                      jsondata = results
                      return HttpResponse(json.dumps(jsondata), content_type="application/json")        
+              else:
+                     return redirect('/')       
+       else:
+              return redirect('/')
+
+def pumpparts(request):
+       if request.user.is_authenticated:
+              if request.method == 'POST':
+                     pumps = json.loads(request.POST['pumpnums'])
+                     parts = []
+                     i = 0
+                     j = 1
+                     for x in pumps:
+                            frontupper = Pumpcodes.objects.get(pump = pumps[i])
+                            data1 = frontupper.front_pump
+                            frontpump = data1.lower()
+                            try:
+                                   rearlower = Pumpcodes.objects.get(pump = pumps[j])
+                                   data2 = rearlower.front_pump
+                                   rearpump = data2.upper()
+                            except IndexError:
+                                   break
+                            print(frontpump)
+                            print(rearpump)
+                            part = Throughdrives.objects.get(rear_pump = rearpump)
+                            print(part)
+                            i += 1
+                            j += 1
+                     jsondata = pumps
+                     return HttpResponse(json.dumps(jsondata), content_type="application/json") 
               else:
                      return redirect('/')       
        else:

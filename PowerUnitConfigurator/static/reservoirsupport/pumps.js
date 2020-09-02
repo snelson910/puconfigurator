@@ -129,7 +129,6 @@ function modify(number){
         $("#notes").attr("hidden", "hidden");
         $(".pump").remove();
         partlist = [];
-        console.log(partlist);
         num = 0;
     }else{
         //Pass.
@@ -221,10 +220,42 @@ function nextpump(x){
     partlist.push(data[x][0]);
     num++;
     $("#pumppref").html(num+1);
-    console.log(partlist);
     if(num != (max-1)){
         pumpconfig(); 
     }else{
-        console.log("Completed");
+        $(".pump").remove();
+        //$("#wizard").attr("hidden","hidden"); Commented out for testing purposes
+        throughdrives();
     }
+    $(".pump").remove();
+}
+
+function throughdrives(){
+    var pumpnums = [];
+    i=1;
+    for(x in partlist){
+        pumpnums.push($("#pump" + i).val());
+        i++
+    }
+    $.ajax({
+        url: "pumpparts",
+        type: "POST",
+        data: {
+            csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+            pumpnums: JSON.stringify(pumpnums),
+        },
+        success: function(response)
+            {
+                    data2 = response;
+                    partslist();
+            },
+        error: function()
+        {
+            console.log("Error")
+        }
+    });
+}
+
+function partslist(){
+    console.log(data2[0]);
 }

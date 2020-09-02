@@ -14,4 +14,5 @@ urlpatterns = [
     path("newunit/manual/motors", views.motors, name="motors"),
     path("newunit/manual/pumpnums", views.pumpnums, name="pumpnums"),
     path("newunit/manual/pumpselect", views.pumpselect, name="pumpselect"),
+    path("newunit/manual/pumpparts", views.pumpparts, name="pumpparts"),
 ]
