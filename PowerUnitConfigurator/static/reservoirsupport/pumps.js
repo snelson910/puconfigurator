@@ -13,6 +13,7 @@ var flow;
 var reservoir;
 var motor;
 var num = 0;
+var partlist = [];
 
 //Just a simple modal picture of the possible through drive option selections.
 function modalpic(){
@@ -50,7 +51,8 @@ function selection(x){
         $("#wizard").removeAttr("hidden", "hidden");
     }
     if(x=='man'){
-        $("#manual").removeattr("hidden", "hidden");
+        $("#manual").removeAttr("hidden", "hidden");
+        alert("Then do it yourself");
     }
     $("#option").attr("hidden", "hidden");
 }
@@ -123,8 +125,12 @@ function modify(number){
         $("#pump" + number + "submit").removeAttr("disabled", "disabled");
         $("#pump" + number).removeAttr("disabled", "disabled");
         $("#modify" + number).attr("disabled", "disabled");
-        $("#reservoirs").empty();
-        $("#reservoirconfiguration").attr("hidden", "hidden");
+        $("#pumptable").attr("hidden","hidden");
+        $("#notes").attr("hidden", "hidden");
+        $(".pump").remove();
+        partlist = [];
+        console.log(partlist);
+        num = 0;
     }else{
         //Pass.
     }    
@@ -156,8 +162,8 @@ function pumpsubmit(number){
             $(".pumpnumber" + i).remove();
             $("#pumpnumber" + i).remove();
         }
-        //$("#pump" + number).attr("disabled", "disabled");
-        //$("#pump" + number + "submit").attr("disabled", "disabled");
+        $("#pump" + number).attr("disabled", "disabled");
+        $("#pump" + number + "submit").attr("disabled", "disabled");
         $("#modify" + number).removeAttr("disabled", "disabled");
         $(".flows").html("XXX");
         pumps();
@@ -168,10 +174,7 @@ function pumpconfig(){
     $(".pump").remove();
     pumpparts = []
     var val = num + 1
-    pumpparts[0] = $("#pump" + val).val();
-    console.log(max);
-    console.log(num);
-    num++;
+    pumpparts[0] = $("#pump" + val).val(); 
     $.ajax({
         url: "pumpselect",
         type: "POST",
@@ -179,7 +182,7 @@ function pumpconfig(){
             csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
             pumpparts: JSON.stringify(pumpparts),
             pumpmax: max,
-            current: num
+            current: val
         },
         success: function(response)
             {
@@ -198,7 +201,8 @@ function pumptable(){
     $("#pumppref").html(pumpparts[0]);
     $("#notes").removeAttr("hidden", "hidden");
     $("#pumptable").removeAttr("hidden", "hidden");
-    $("#pumpnumber").html("Pump " + num + " Selection");
+    var j = num+1;
+    $("#pumpnumber").html("Pump " + j +  " Selection");
     var i=0;
     if(data[0][0]=="No pumps with this configuration."){
         $("#pumptable").append("<tr class='pump'><td colspan='8'>No pumps with this configuration.</td></tr>")
@@ -206,8 +210,21 @@ function pumptable(){
         for(x in data){
             $("#pumptable").append("<tr class='pump'><td>" + data[i][0] + "</td><td>" + data[i][1] + "</td><td>" + data[i][2] + "</td><td>" + 
             data[i][3] + "</td><td>" + data[i][4] + "</td><td>" + data[i][5] + "</td><td>" + data[i][6] + "</td><td><button onclick='nextpump(" + 
-            data[i][0] + ")' >Select</button></td></tr>");
+            i + ")' >Select</button></td></tr>");
             i++;
         }
+    }
+}
+
+function nextpump(x){
+    $(".pump").remove();
+    partlist.push(data[x][0]);
+    num++;
+    $("#pumppref").html(num+1);
+    console.log(partlist);
+    if(num != (max-1)){
+        pumpconfig(); 
+    }else{
+        console.log("Completed");
     }
 }
