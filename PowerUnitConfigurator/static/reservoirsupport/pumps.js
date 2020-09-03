@@ -53,6 +53,9 @@ function selection(x){
     if(x=='man'){
         $("#manual").removeAttr("hidden", "hidden");
         alert("Then do it yourself");
+        alert("Just kidding");
+        $("#chart").attr("hidden", "hidden");
+        $("#manualsearch").removeAttr("hidden", "hidden");
     }
     $("#option").attr("hidden", "hidden");
 }
@@ -261,4 +264,8 @@ function partslist(){
         partlist.push(data2[x]);
     }
     console.log(partlist);
+}
+
+function search(){
+    console.log($("#partsearch").val());
 }

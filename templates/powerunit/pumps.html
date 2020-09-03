@@ -18,7 +18,7 @@
         <br>
         Would you like to use the pump/though-drive selection wizard or enter your own parts?
         <button id="towizard" onclick="selection('wiz')">Selection Wizard</button>
-        <button id="tomanual" onclick="selection('man')">Leavemealoneiknowwhatiamdoing</button>
+        <button id="tomanual" onclick="selection('man')">Manual Selection</button>
     </div>
 <div id="wizard" hidden="hidden">
     <br>
@@ -58,6 +58,17 @@
             <th>Select</th>
         </tr>
     </table>
+</div>
+<div id="manualsearch" hidden="hidden">
+    <br>
+    <form id="manually">
+        <label for="partsearch">Search for parts here:</label>
+        <input type="text" id="partsearch" onfocus="this.value=''" value="Search...">
+        <input type="button" onclick='search()' value="Search">
+    </form>
+<script type="text/javascript">
+    window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='text'){e.preventDefault();return false;}}},true);
+</script>
 </div>
 </body>
 <div id="chart">
