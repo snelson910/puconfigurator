@@ -13,7 +13,7 @@ var flow;
 var reservoir;
 var motor;
 var num = 0;
-var partlist = [];
+var pumplist = [];
 
 //Just a simple modal picture of the possible through drive option selections.
 function modalpic(){
@@ -131,7 +131,7 @@ function modify(number){
         $("#pumptable").attr("hidden","hidden");
         $("#notes").attr("hidden", "hidden");
         $(".pump").remove();
-        partlist = [];
+        pumplist = [];
         num = 0;
     }else{
         //Pass.
@@ -220,7 +220,7 @@ function pumptable(){
 
 function nextpump(x){
     $(".pump").remove();
-    partlist.push(data[x][0]);
+    pumplist.push(data[x][0]);
     num++;
     $("#pumppref").html(num+1);
     if(num != (max-1)){
@@ -236,7 +236,7 @@ function nextpump(x){
 function throughdrives(){
     var pumpnums = [];
     i=1;
-    for(x in partlist){
+    for(x in pumplist){
         pumpnums.push($("#pump" + i).val());
         i++
     }
@@ -260,12 +260,28 @@ function throughdrives(){
 }
 
 function partslist(){
-    for(x in data2){
-        partlist.push(data2[x]);
+    $("#save").removeAttr("hidden", "hidden");
+    for(x in pumplist){
+        $("#partlist").append("<tr><td>" + pumplist[x] + "</td></tr>");
     }
-    console.log(partlist);
+    for(x in data2){
+        $("#partlist").append("<tr><td>" + data2[x] + "</td></tr>");
+    }
 }
 
 function search(){
     console.log($("#partsearch").val());
+}
+
+function savefunct(){
+    var pumpjson = JSON.stringify(pumplist);
+    var data2json = JSON.stringify(data2)
+    var d = new Date();
+    exdays = 10;
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires=" + d.toGMTString();
+    document.cookie="pumps=" + pumpjson + ";path=/";
+    document.cookie="throughdrives=" + data2json + ";path=/";
+    console.log(document.cookie);
+    window.location.replace("/newunit/manual");
 }

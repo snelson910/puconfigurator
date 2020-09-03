@@ -152,14 +152,12 @@ def pumpnums(request):
                      pumpcurrent = int(request.POST["pumpcurrent"])
                      selected = request.POST["selected"]
                      pumpcodes = []
-                     print("pumptotal = " + str(pumptotal) + " pumpcurrent = " + str(pumpcurrent))
                      if selected != "":
                             rearupper = Pumpcodes.objects.get(pump = selected)
                             data1 = rearupper.front_pump
                             frontpump = data1.lower()
-                            print(frontpump)
                      if pumpcurrent == 1 and pumptotal != 1:
-                            data = Pumpcodes.objects.all().exclude(pump__startswith = "AZP").exclude(pump__contains="31").order_by('pump_class', 'pump_size', 'id')
+                            data = Pumpcodes.objects.all().exclude(pump__startswith = "AZP").order_by('pump_class', 'pump_size', 'id')
                             y = 0
                             for x in data:
                                    pumpcodes.append(data[y].pump)

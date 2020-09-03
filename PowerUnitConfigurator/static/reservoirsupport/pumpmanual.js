@@ -15,10 +15,20 @@ function cookiecheck(){
     for(x in ca){
         key = ca[x].split('=')[0];
         value = ca[x].split('=')[1];
-        if(key.substring(1) == "an"){
+        if(key == " an"){
             accountnumber = value;
         }
+        if(key == ' pumps'){
+            console.log(value);
+        }
+        if(key == ' throughdrives'){
+            console.log(value);
+        }
     }
+}
+
+function chartconfig(){
+
 }
 
 $(document).ready(function(){
