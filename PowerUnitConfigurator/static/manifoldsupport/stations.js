@@ -128,10 +128,8 @@ $(document).ready(function(){
 				}else{
 					console.log("Voltage Counter Broken");
 				}
-				//console.table(voltageAR)
 				$("#valveSelection").attr("hidden","hidden");
 				$("#sandwichTime").removeAttr("hidden", "hidden");
-				console.log(searchvalves);
 			}
 		}
 	});
@@ -266,7 +264,6 @@ $(document).ready(function(){
 		$(".sandwichConfigurator").removeAttr("disabled", "disabled");
 		$(".configConfirm").attr("hidden", "hidden");
 		$("#sandwichStyleSubmit").removeAttr("hidden", "hidden");
-		console.table(searchvalves);
 	});
 });
 $(document).ready(function(){
@@ -285,7 +282,6 @@ function cleanUp(){
 	$("#voltageSubmit").attr("hidden", "hidden");
 	$(".cleanupClass")[0].reset();
 	stationdata.push(station);
-	console.log(stationdata[0].floworient);
 	i=i+1;
 	if(i < (stationNum)){
 		cycle();
@@ -299,8 +295,6 @@ function cleanUp(){
 		$("#detailsinput").val(manidetails);
 		var search = JSON.stringify(searchvalves);
 		$("#search").val(search);
-		console.table(search);
-		//document.stationsubmit.submit();
 	}
 }
 function cycle(){
