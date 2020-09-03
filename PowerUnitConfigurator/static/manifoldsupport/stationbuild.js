@@ -263,7 +263,6 @@ $(document).ready(function(){
         $("#sandwichStyleModify").attr("hidden", "hidden");
         $("#sandwichStyleConfirm").attr("hidden", "hidden");
         $("#configSubmit").removeAttr("hidden", "hidden");
-        console.table(searchvalves);
         for(h=0; h<stations;h++){
             var k= h + 1;
             if($("#floworient0" + k).val() == "none"){
@@ -283,7 +282,6 @@ $(document).ready(function(){
         $(":input").removeAttr("disabled", "disabled");    
         for(h=0;h<stations;h++){
             var k = h+1;
-            console.log(valvenum[k]);
             floworient = $("#floworient0"+k).val();
             if(floworient == "none"){
                 floworient = null;
@@ -326,7 +324,6 @@ $(document).ready(function(){
             stationdata.push(station);
                 
         }
-        console.table(stationdata);
         var data = JSON.stringify(stationdata);
         $("#stationinput").val(data);
         var parts = JSON.stringify(partNumbers);
