@@ -224,7 +224,7 @@ function nextpump(x){
         pumpconfig(); 
     }else{
         $(".pump").remove();
-        //$("#wizard").attr("hidden","hidden"); Commented out for testing purposes
+        $("#wizard").attr("hidden","hidden");
         throughdrives();
     }
     $(".pump").remove();
@@ -257,5 +257,8 @@ function throughdrives(){
 }
 
 function partslist(){
-    console.log(data2[0]);
+    for(x in data2){
+        partlist.push(data2[x]);
+    }
+    console.log(partlist);
 }

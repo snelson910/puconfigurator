@@ -7,6 +7,7 @@ from .models import Motors, Pumpcodes, BellHousingSizes, CouplingCodes, Reservoi
 from manifold.models import Parts
 from django.http import HttpResponse, JsonResponse
 import json, math
+from django.db import connection
 
 def newunit(request):
        if request.user.is_authenticated:       
@@ -258,15 +259,22 @@ def pumpparts(request):
                                    rearlower = Pumpcodes.objects.get(pump = pumps[j])
                                    data2 = rearlower.front_pump
                                    rearpump = data2.upper()
+                                   if rearpump.count('AZP') != 0:
+                                          rearpump += '%%'
                             except IndexError:
                                    break
-                            print(frontpump)
-                            print(rearpump)
-                            part = Throughdrives.objects.get(rear_pump = rearpump)
-                            print(part)
+                            cursor = connection.cursor()
+                            sql = """SELECT %s FROM throughdrives WHERE rear_pump LIKE '%s'""" % (frontpump,rearpump)
+                            print(sql)
+                            cursor.execute(sql)
+                            num = cursor.fetchall()
+                            if num[0][0].startswith("K"):
+                                   pass
+                            else:
+                                   parts.append(num[0][0])
                             i += 1
                             j += 1
-                     jsondata = pumps
+                     jsondata = parts
                      return HttpResponse(json.dumps(jsondata), content_type="application/json") 
               else:
                      return redirect('/')       
