@@ -1,0 +1,22 @@
+{% load static %}
+{% static "images" as baseUrl%}
+<link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'basestyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'reservoirsupport/newunit.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/reservoirsupport/motors.js"></script>  
+    <title>JHF Power Unit Configurator</title>
+</head>
+<h1>JHF Power Unit Configurator</h1>
+<body onload='cookiecheck()'>
+    <a id="flows"></a>
+</body>
+<div id="logout">
+    <a href="/logout">Logout</a>
+</div>
+</html>
