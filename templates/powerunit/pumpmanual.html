@@ -17,29 +17,31 @@
 <div id="logout">
     <a href="/logout">Logout</a>
 </div>
-<body onload="modalpic(); cookiecheck();">
+<body onload="cookiecheck();">
     <br>
+<form>
+        {% csrf_token %}
     <table id="configuration">
         <tr>
-            <th>Component</th>
-            <th>Selection</th>
-            <th>Cost</th>
-            <th>Availability</th>
-            <th>Lead Time</th>
-            <th></th>
+            <th>Part Number</th>
+            <th>Item Name</th>
+            <th>On Hand Quantity</th>
+            <th>Cost Each</th>
+            <th>Stock Status</th>
+            <th>GoTo Status</th>
         </tr>
-        <tr class="tr_product" id="tr_pumps">
-            <td class="td_component">
+        <tr class="tr_product" id="tr_pumps"> 
+            <td class="td_component" colspan='7'>
                 <a href="manual/pumps">Pumps</a>
             </td>
         </tr>
         <tr class="tr_product" id="tr_motors">
-            <td class="td_component">
+            <td class="td_component" colspan='7'>
                 <a href="manual/motors">Electric Motors</a>
             </td>
         </tr>
         <tr class="tr_product" id="tr_reservoirs">
-            <td class="td_component">
+            <td class="td_component" colspan='7'>
                 <a href="manual/reservoirs">Reservoirs</a>
             </td>
         </tr>
@@ -47,13 +49,4 @@
 </form>
 
 </body>
-<div id="chart">
-    Through drive pump options are based off GoTo pumps or available through-drive adapter kits.<br>
-    <img id="myImg" src="{% static 'images/throughdrives.png' %}" alt="Options for through drives. K-covers are increasingly rare and as such are not included in this configurator." style="width:100%;max-width:300px">
-    <div id="myModal" class="modal">
-        <span class="close">&times;</span>
-        <img class="modal-content" id="img01">
-        <div id="caption"></div>
-    </div>
-</div>
 </html>

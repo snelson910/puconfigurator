@@ -14,6 +14,7 @@ var reservoir;
 var motor;
 var num = 0;
 var pumplist = [];
+var flows;
 
 //Just a simple modal picture of the possible through drive option selections.
 function modalpic(){
@@ -249,7 +250,8 @@ function throughdrives(){
         },
         success: function(response)
             {
-                    data2 = response;
+                    data2 = response[0];
+                    flows = response[1];
                     partslist();
             },
         error: function()
@@ -276,12 +278,14 @@ function search(){
 function savefunct(){
     var pumpjson = JSON.stringify(pumplist);
     var data2json = JSON.stringify(data2)
-    var d = new Date();
+    var flowjson = JSON.stringify(flows);
+    /*var d = new Date();
     exdays = 10;
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires=" + d.toGMTString();
+    var expires = "expires=" + d.toGMTString();*/
     document.cookie="pumps=" + pumpjson + ";path=/";
     document.cookie="throughdrives=" + data2json + ";path=/";
+    document.cookie="flows=" + flowsjson + ";path=/";
     console.log(document.cookie);
     window.location.replace("/newunit/manual");
 }

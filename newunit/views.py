@@ -247,16 +247,20 @@ def pumpparts(request):
               if request.method == 'POST':
                      pumps = json.loads(request.POST['pumpnums'])
                      parts = []
+                     flows = []
                      i = 0
                      j = 1
                      for x in pumps:
                             frontupper = Pumpcodes.objects.get(pump = pumps[i])
+                            if i == 0:
+                                   flows.append(frontupper.pump_size)
                             data1 = frontupper.front_pump
                             frontpump = data1.lower()
                             try:
                                    rearlower = Pumpcodes.objects.get(pump = pumps[j])
+                                   flows.append(rearlower.pump_size)
                                    data2 = rearlower.front_pump
-                                   rearpump = data2.upper()
+                                   rearpump = data2.upper()                         
                                    if rearpump.count('AZP') != 0:
                                           rearpump += '%%'
                             except IndexError:
@@ -271,8 +275,30 @@ def pumpparts(request):
                                    parts.append(num[0][0])
                             i += 1
                             j += 1
-                     jsondata = parts
+                     jsondata = [parts,flows]
                      return HttpResponse(json.dumps(jsondata), content_type="application/json") 
+              else:
+                     return redirect('/')       
+       else:
+              return redirect('/')
+
+def details(request):
+       if request.user.is_authenticated:
+              if request.method == 'POST':
+                     arr = json.loads(request.POST['arr'])
+                     print("TESTED")
+                     parts = []
+                     i = 0
+                     print(arr)
+                     for x in arr:
+                            try:
+                                   data = Parts.objects.get(item_number = arr[i])
+                                   parts.append([data.item_number, data.product_name, data.on_hand, data.cost_each, data.stockstatus, data.goto_item])
+                            except:
+                                   parts.append([arr[i],"Part not yet loaded into AX","","0.00","",""])
+                            i += 1
+                     jsondata = parts
+                     return HttpResponse(json.dumps(jsondata), content_type="application/json")
               else:
                      return redirect('/')       
        else:

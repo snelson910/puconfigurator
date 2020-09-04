@@ -12,15 +12,16 @@
 	text-decoration: underline;
 }
 table {
-    width: 40%;
+    width: auto;
     border-collapse: collapse;
 	margin-left: 20px;
 	font-family: Arial;
+	font-size: 15px;
 }
 
 table, td, th {
     border: 1px solid black;
-    padding: 10px;
+    padding: 5px;
 }
 #submit {
 	background-color: white;
@@ -55,6 +56,9 @@ table, td, th {
 	position: fixed;
 	right: 2%;
 	bottom: 2%;
+}
+.tr_product{
+	text-align: center;
 }
 .modal {
 display: none;
