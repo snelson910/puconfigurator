@@ -263,7 +263,6 @@ def pumpparts(request):
                                    break
                             cursor = connection.cursor()
                             sql = """SELECT %s FROM throughdrives WHERE rear_pump LIKE '%s'""" % (frontpump,rearpump)
-                            print(sql)
                             cursor.execute(sql)
                             num = cursor.fetchall()
                             if num[0][0].startswith("K"):
