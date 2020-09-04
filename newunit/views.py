@@ -136,12 +136,12 @@ def pumps(request):
 
 def reservoirs(request):
        if request.user.is_authenticated:
-              pass
+              return render(request, "powerunit/reservoirs.html")
        else:
               return redirect('/')
 def motors(request):
        if request.user.is_authenticated:
-              pass
+              return render(request, "powerunit/motors.html")
        else:
               return redirect('/')
 
@@ -153,10 +153,12 @@ def pumpnums(request):
                      selected = request.POST["selected"]
                      pumpcodes = []
                      if selected != "":
+                            #If this is not the  first selection being presented
                             rearupper = Pumpcodes.objects.get(pump = selected)
                             data1 = rearupper.front_pump
                             frontpump = data1.lower()
                      if pumpcurrent == 1 and pumptotal != 1:
+                            #Prevent selection of gear pump for front pump if > 1 pump
                             data = Pumpcodes.objects.all().exclude(pump__startswith = "AZP").order_by('pump_class', 'pump_size', 'id')
                             y = 0
                             for x in data:
@@ -286,10 +288,8 @@ def details(request):
        if request.user.is_authenticated:
               if request.method == 'POST':
                      arr = json.loads(request.POST['arr'])
-                     print("TESTED")
                      parts = []
                      i = 0
-                     print(arr)
                      for x in arr:
                             try:
                                    data = Parts.objects.get(item_number = arr[i])

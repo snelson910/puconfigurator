@@ -285,7 +285,7 @@ function savefunct(){
     var expires = "expires=" + d.toGMTString();*/
     document.cookie="pumps=" + pumpjson + ";path=/";
     document.cookie="throughdrives=" + data2json + ";path=/";
-    document.cookie="flows=" + flowsjson + ";path=/";
+    document.cookie="flows=" + flowjson + ";path=/";
     console.log(document.cookie);
     window.location.replace("/newunit/manual");
 }
