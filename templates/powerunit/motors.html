@@ -13,8 +13,19 @@
     <title>JHF Power Unit Configurator</title>
 </head>
 <h1>JHF Power Unit Configurator</h1>
-<body onload='cookiecheck()'>
-    <a id="flows"></a>
+<a hidden="hidden" id="allmotors">{{ allmotors }}</a>
+<body onload='cookiecheck(), motors()'>
+    <div id="flow_div" hidden="hidden">
+        <a id="flows"></a><br>
+        <a id="total">Total theoretical required horsepower is 0 HP at 1800 RPM and 95% efficiency.</a>
+    </div>
+    <div id='motors'>
+        <form id='motorform'>
+            Select a motor:<br>
+            <select id='motorselect'></select><br>
+            <input type='button' id='motorsubmit' value='Submit'>
+        </form>
+    </div>
 </body>
 <div id="logout">
     <a href="/logout">Logout</a>

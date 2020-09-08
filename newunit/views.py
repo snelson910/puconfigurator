@@ -141,7 +141,21 @@ def reservoirs(request):
               return redirect('/')
 def motors(request):
        if request.user.is_authenticated:
-              return render(request, "powerunit/motors.html")
+              motorsall = Motors.objects.all().order_by('hp', 'id')
+              motorselect = []
+              i = 0
+              for x in motorsall:
+                     voltage = ""
+                     if motorsall[i].voltage == "1":
+                            voltage = "120VAC/240VAC Single Phase"
+                     elif motorsall[i].voltage == "2":
+                            voltage = "240VAC/480VAC Three Phase"
+                     elif motorsall[i].voltage == "3":
+                            voltage = "575VAC Three Phase"
+                     motorselect.append([motorsall[i].hp, voltage, motorsall[i].id, motorsall[i].motor_number])
+                     i += 1
+              jsondata = json.dumps(motorselect)
+              return render(request, "powerunit/motors.html", {"allmotors" : jsondata})
        else:
               return redirect('/')
 

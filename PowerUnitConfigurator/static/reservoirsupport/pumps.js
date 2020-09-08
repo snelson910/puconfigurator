@@ -283,9 +283,9 @@ function savefunct(){
     exdays = 10;
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     var expires = "expires=" + d.toGMTString();*/
-    document.cookie="pumps=" + pumpjson + ";path=/";
-    document.cookie="throughdrives=" + data2json + ";path=/";
-    document.cookie="flows=" + flowjson + ";path=/";
+    document.cookie="pumps=" + pumpjson + ";SameSite=Lax; Secure; path=/";
+    document.cookie="throughdrives=" + data2json + ";SameSite=Lax; Secure; path=/";
+    document.cookie="flows=" + flowjson + ";SameSite=Lax; Secure; path=/";
     console.log(document.cookie);
     window.location.replace("/newunit/manual");
 }

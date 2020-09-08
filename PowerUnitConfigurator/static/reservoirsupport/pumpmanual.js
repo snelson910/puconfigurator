@@ -10,6 +10,7 @@ var motor;
 var accountnumber;
 var pumparray = []; 
 var througharray = [];
+var motorarray = [];
 
 function cookiecheck(){
     var ac = document.cookie;
@@ -25,6 +26,9 @@ function cookiecheck(){
         }
         if(key == ' throughdrives'){
             througharray = JSON.parse(value)
+        }
+        if(key ==' motor'){
+            motorarray = [value];
         }
     }
     throughtables();
@@ -70,6 +74,7 @@ function pumptables(){
                         $("#tr_pumps").after("<tr><td>" + pumps[x][0] + "</td><td>" + pumps[x][1] + "</td><td>" + pumps[x][2] +"</td><td>$" + pumps[x][3] +"</td><td>" + 
                         pumps[x][4] + "</td><td>" + pumps[x][5] +"</td></tr>");
                     }
+                    motortables();
                 },
             error: function()
             {
@@ -77,6 +82,27 @@ function pumptables(){
             }
         });        
     }
-    
 }
-
+function motortables(){
+    if(motorarray.length > 0){
+        $.ajax({
+            url: "details",
+            type: "POST",
+            data: {
+                csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+                arr: JSON.stringify(motorarray)
+            },
+            success: function(response)
+                {
+                    for(x in response){
+                        $("#tr_motors").after("<tr><td>" + response[x][0] + "</td><td>" + response[x][1] + "</td><td>" + response[x][2] +"</td><td>$" + response[x][3] +"</td><td>" + 
+                        response[x][4] + "</td><td>" + response[x][5] +"</td></tr>");
+                    }
+                },
+            error: function()
+            {
+                console.log("Error")
+            }
+        });
+    }
+}
