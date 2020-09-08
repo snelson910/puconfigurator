@@ -13,8 +13,12 @@
     <title>JHF Power Unit Configurator</title>
 </head>
 <h1>JHF Power Unit Configurator</h1>
-<body onload='reservoirs()'>
-
+<a id="reservoirs" hidden="hidden">{{ reservoirs }}</a>
+<body onload='cookiecheck(), reservoirs()'>
+    <div id="flow_div" hidden="hidden">
+        <br>
+        <a id="flows"></a><br>
+    </div>
 </body>
 <div id="logout">
     <a href="/logout">Logout</a>

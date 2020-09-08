@@ -136,7 +136,13 @@ def pumps(request):
 
 def reservoirs(request):
        if request.user.is_authenticated:
-              return render(request, "powerunit/reservoirs.html")
+              reservoirsall = Reservoir.objects.all().order_by('reservoir_size', 'reservoir_configuration')
+              reservoirselect = []
+              i = 0
+              for x in reservoirsall:
+                     reservoirselect.append([reservoirsall[i].reservoir_size, reservoirsall[i].reservoir_configuration, reservoirsall[i].part_number])
+              jsondata = json.dumps(reservoirselect)
+              return render(request, "powerunit/reservoirs.html", {"reservoirs" : jsondata})
        else:
               return redirect('/')
 def motors(request):
