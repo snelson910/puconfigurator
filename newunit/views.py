@@ -141,6 +141,7 @@ def reservoirs(request):
               i = 0
               for x in reservoirsall:
                      reservoirselect.append([reservoirsall[i].reservoir_size, reservoirsall[i].reservoir_configuration, reservoirsall[i].part_number])
+                     i += 1
               jsondata = json.dumps(reservoirselect)
               return render(request, "powerunit/reservoirs.html", {"reservoirs" : jsondata})
        else:

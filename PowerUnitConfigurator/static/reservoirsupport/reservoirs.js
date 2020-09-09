@@ -28,5 +28,7 @@ function flowcalc(){
 
 function reservoirs(){
     allreservoirs = JSON.parse($("#reservoirs").html());
-    console.log(allreservoirs);
+    for(x in allreservoirs){
+        $("#resselect").append("<option value='" + x + "'>"+ allreservoirs[x][0] + " Gallon, " + allreservoirs[x][1] + "</option>");
+    }
 }
