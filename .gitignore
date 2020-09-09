@@ -1,9 +1,7 @@
 secrets.py
-sqlbackup/
 *.pyo
 *.pyc
 **/__pycache__
 Power Unit Configurator.code-workspace
 fizzbuzz.py
-rexrothdata.html
 cookietest/
