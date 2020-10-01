@@ -32,3 +32,14 @@ function reservoirs(){
         $("#resselect").append("<option value='" + x + "'>"+ allreservoirs[x][0] + " Gallon, " + allreservoirs[x][1] + "</option>");
     }
 }
+
+$(document).ready(function(){
+    $("#reservoirsubmit").click(function(){
+        console.table(allreservoirs);
+        var reservoir = $("#reservoirselect").val();
+        //var selection = motor[motornumber][3];
+        //document.cookie="motor=" + selection + ";SameSite=Lax; Secure; path=/";
+        //console.log(document.cookie);
+        //window.location.replace("/newunit/manual");
+    });
+});
