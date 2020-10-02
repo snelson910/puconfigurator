@@ -355,3 +355,12 @@ def extra(request):
               return render(request, "powerunit/manualselection.html")
        else:
               return redirect('/')
+
+def search(request):
+       if request.user.is_authenticated:
+              if request.method == 'POST':
+                     jsondata = request.POST['query']
+                     return HttpResponse(json.dumps(jsondata), content_type="application/json")
+              return redirect('/')
+       else:
+              return redirect('/')
