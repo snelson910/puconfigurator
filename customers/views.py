@@ -26,10 +26,3 @@ class SearchResultsView(LoginRequiredMixin, ListView):
             Q(name__icontains=query) | Q(customer_account__icontains=query)
         )
         return object_list 
-
-
-
-#def custnum(request):
-#    if request.method == 'POST':
-#        accountnumber = request.POST['accountnumber']
-#        return render (request, 'test.html', {"accountnumber" : accountnumber})

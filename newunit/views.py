@@ -12,9 +12,7 @@ from django.db import connection
 def newunit(request):
        if request.user.is_authenticated:       
               if request.method == 'POST':
-                     #Pass the account number through to the next page
-                     accountnumber = request.POST['accountnumber']
-                     return render (request, 'powerunit/pumpmanual.html', {"accountnumber" : accountnumber, })
+                     return render (request, 'powerunit/pumpmanual.html')
               else:
                      return redirect('/')
        else:
@@ -149,7 +147,6 @@ def coupling(request):
                                    parts.append([arr[j],"Custom part required","","0.00","","No"])
                             j += 1
                      jsondata = json.dumps(parts)
-                     #jsondata = json.dumps(data)
                      return HttpResponse(jsondata, content_type="application/json")  
               else:
                      return redirect('/')       
@@ -350,5 +347,11 @@ def details(request):
                      return HttpResponse(json.dumps(jsondata), content_type="application/json")
               else:
                      return redirect('/')       
+       else:
+              return redirect('/')
+
+def extra(request):
+       if request.user.is_authenticated:
+              return render(request, "powerunit/manualselection.html")
        else:
               return redirect('/')

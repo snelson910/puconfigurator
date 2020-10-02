@@ -156,6 +156,7 @@ function reservoirtables(){
 
 function couplingtables(){
     if(frame != "" && frontpump != ""){
+        $("#tr_couplings").removeAttr("hidden", "hidden");
         $.ajax({
             url: "manual/coupling",
             type: "POST",
