@@ -29,17 +29,14 @@ function flowcalc(){
 function reservoirs(){
     allreservoirs = JSON.parse($("#reservoirs").html());
     for(x in allreservoirs){
-        $("#resselect").append("<option value='" + x + "'>"+ allreservoirs[x][0] + " Gallon, " + allreservoirs[x][1] + "</option>");
+        $("#resselect").append("<option value='" + allreservoirs[x][2] + "'>"+ allreservoirs[x][0] + " Gallon, " + allreservoirs[x][1] + "</option>");
     }
 }
 
 $(document).ready(function(){
     $("#reservoirsubmit").click(function(){
-        console.table(allreservoirs);
-        var reservoir = $("#reservoirselect").val();
-        //var selection = motor[motornumber][3];
-        //document.cookie="motor=" + selection + ";SameSite=Lax; Secure; path=/";
-        //console.log(document.cookie);
-        //window.location.replace("/newunit/manual");
+        var reservoir = $("#resselect").val();
+        document.cookie="reservoir=" + reservoir + ";SameSite=Lax; Secure; path=/";
+        window.location.replace("/newunit/manual");
     });
 });

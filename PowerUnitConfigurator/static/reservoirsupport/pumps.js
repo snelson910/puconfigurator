@@ -279,13 +279,10 @@ function savefunct(){
     var pumpjson = JSON.stringify(pumplist);
     var data2json = JSON.stringify(data2)
     var flowjson = JSON.stringify(flows);
-    /*var d = new Date();
-    exdays = 10;
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires=" + d.toGMTString();*/
     document.cookie="pumps=" + pumpjson + ";SameSite=Lax; Secure; path=/";
     document.cookie="throughdrives=" + data2json + ";SameSite=Lax; Secure; path=/";
     document.cookie="flows=" + flowjson + ";SameSite=Lax; Secure; path=/";
+    document.cookie="frontpump=" + $("#pump1").val() + ";SameSite=Lax; Secure; path=/";
     console.log(document.cookie);
     window.location.replace("/newunit/manual");
 }

@@ -51,7 +51,9 @@ $(document).ready(function(){
     $("#motorsubmit").click(function(){
         var motornumber = $("#motorselect").val();
         var selection = motor[motornumber][3];
+        var frame = motor[motornumber][4];
         document.cookie="motor=" + selection + ";SameSite=Lax; Secure; path=/";
+        document.cookie="frame=" + frame  + ";SameSite=Lax; Secure; path=/";
         console.log(document.cookie);
         window.location.replace("/newunit/manual");
     });

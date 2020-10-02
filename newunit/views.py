@@ -39,14 +39,22 @@ def manual(request):
 def coupling(request):
        if request.user.is_authenticated:
               if request.method == 'POST':
-                     num = request.POST["horsepower"]
                      pump = request.POST['pump']
-                     volts = request.POST['voltage']
-                     a = str(volts)
+                     tick = 0
+                     try:
+                            volts = request.POST['voltage']
+                            num = request.POST["horsepower"]
+                            a = str(volts)
+                     except:
+                            motor = request.POST['motor']
+                            tick = 1
                      #Grab the motor from the horsepower and voltage provided. I don't have a fail safe on this, because the HTML
                      #should stop the user from picking impossible motors, but it can happen. Worry about this later.
                      #The only failure is that the AJAX does not get a response.
-                     mot = Motors.objects.get(voltage = a, hp = num)
+                     try:
+                            mot = Motors.objects.get(voltage = a, hp = num)
+                     except:
+                            mot = Motors.objects.get(motor_number = motor)
                      frame = mot.frame_size
                      motshaft = mot.shaft_length
                      motcoup = mot.coupling_code
@@ -61,6 +69,7 @@ def coupling(request):
                      i = 0
                      l = 0
                      bellnum = ""
+                     finalsize = ""
                      #Check if there were any bell housings selected and make a determination on if a custom housing needs to be made
                      if len(bells)== 0:
                             custbell = BellHousingSizes.objects.get(frame_size__contains = frame, part_number__startswith = 'S')
@@ -94,6 +103,7 @@ def coupling(request):
                      #Check if the coupling codes exist in the preferred size
                      if CouplingCodes.objects.filter(code = str(motcoup), sizes__contains = pref):
                             motorcoupling = "M" + str(pref) + str(motcoup)
+                            finalsize = pref
                      else:
                             motorcoupling = ""
                      if CouplingCodes.objects.filter(code = str(pumcoup), sizes__contains = pref):
@@ -106,11 +116,13 @@ def coupling(request):
                             size = maxsize
                             while motorcoupling == "" or pumpcoupling == "":
                                    if CouplingCodes.objects.filter(code = str(motcoup), sizes__contains = size):
-                                          motorcoupling = "M" + str(size) + str(motcoup)  
+                                          motorcoupling = "M" + str(size) + str(motcoup)
+                                          finalsize = size
                                    else:
                                           motorcoupling = ""
                                    if CouplingCodes.objects.filter(code = str(pumcoup), sizes__contains = size):
                                           pumpcoupling = "M" + str(size) + str(pumcoup)
+                                          finalsize = size
                                    else:
                                           pumpcoupling = ""
                                    size = size-100
@@ -119,9 +131,25 @@ def coupling(request):
                                    if size == 0:
                                           motorcoupling = "Custom coupling required: M" + str(pref) + str(motcoup)
                                           pumpcoupling = "Custom coupling required: M" + str(pref) + str(pumcoup)
+                                          finalsize = pref
                      #Drop the data in a JSON to pass to the AJAX response
-                     data = [bellnum, motorcoupling, pumpcoupling, l, mot.motor_number, pump]
-                     jsondata = json.dumps(data)
+                     finalsizestr = str(finalsize)
+                     if finalsizestr[0] == 1 or finalsizestr[0] == 2:
+                            insert = 'M' + finalsizestr[0] + '70H5RC'
+                     else:
+                            insert = 'M' + finalsizestr[0] + '70H5'
+                     arr = [bellnum, motorcoupling, pumpcoupling, insert]
+                     j = 0
+                     parts = []
+                     for x in arr:
+                            try:
+                                   data = Parts.objects.get(item_number = arr[j])
+                                   parts.append([data.item_number, data.product_name, data.on_hand, data.cost_each, data.stockstatus, data.goto_item])
+                            except:
+                                   parts.append([arr[j],"Custom part required","","0.00","","No"])
+                            j += 1
+                     jsondata = json.dumps(parts)
+                     #jsondata = json.dumps(data)
                      return HttpResponse(jsondata, content_type="application/json")  
               else:
                      return redirect('/')       
@@ -159,7 +187,7 @@ def motors(request):
                             voltage = "240VAC/480VAC Three Phase"
                      elif motorsall[i].voltage == "3":
                             voltage = "575VAC Three Phase"
-                     motorselect.append([motorsall[i].hp, voltage, motorsall[i].id, motorsall[i].motor_number])
+                     motorselect.append([motorsall[i].hp, voltage, motorsall[i].id, motorsall[i].motor_number, motorsall[i].frame_size])
                      i += 1
               jsondata = json.dumps(motorselect)
               return render(request, "powerunit/motors.html", {"allmotors" : jsondata})

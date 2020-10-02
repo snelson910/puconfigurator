@@ -11,6 +11,9 @@ var accountnumber;
 var pumparray = []; 
 var througharray = [];
 var motorarray = [];
+var reservoirarray = [];
+var frame = "";
+var frontpump = "";
 
 function cookiecheck(){
     var ac = document.cookie;
@@ -25,12 +28,22 @@ function cookiecheck(){
             pumparray = JSON.parse(value);
         }
         if(key == ' throughdrives'){
-            througharray = JSON.parse(value)
+            througharray = JSON.parse(value);
         }
         if(key ==' motor'){
             motorarray = [value];
         }
+        if(key ==' reservoir'){
+            reservoirarray = [value];
+        }
+        if(key == ' frame'){
+            frame = value;
+        }
+        if(key == ' frontpump'){
+            frontpump = value;
+        }
     }
+
     throughtables();
 }
 function throughtables(){
@@ -57,6 +70,9 @@ function throughtables(){
             }
         });
     }
+    else{
+        pumptables();
+    }
 }
 function pumptables(){
     if(pumparray.length > 0){
@@ -82,6 +98,9 @@ function pumptables(){
             }
         });        
     }
+    else{
+        motortables();
+    }
 }
 function motortables(){
     if(motorarray.length > 0){
@@ -96,6 +115,59 @@ function motortables(){
                 {
                     for(x in response){
                         $("#tr_motors").after("<tr><td>" + response[x][0] + "</td><td>" + response[x][1] + "</td><td>" + response[x][2] +"</td><td>$" + response[x][3] +"</td><td>" + 
+                        response[x][4] + "</td><td>" + response[x][5] +"</td></tr>");
+                    }
+                    reservoirtables();
+                },
+            error: function()
+            {
+                console.log("Error")
+            }
+        });
+    }
+    else{
+        reservoirtables();
+    }
+}
+function reservoirtables(){
+    if(reservoirarray.length > 0){
+        $.ajax({
+            url: "details",
+            type: "POST",
+            data: {
+                csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+                arr: JSON.stringify(reservoirarray)
+            },
+            success: function(response)
+                {
+                    for(x in response){
+                        $("#tr_reservoirs").after("<tr><td>" + response[x][0] + "</td><td>" + response[x][1] + "</td><td>" + response[x][2] +"</td><td>$" + response[x][3] +"</td><td>" + 
+                        response[x][4] + "</td><td>" + response[x][5] +"</td></tr>");
+                    }
+                },
+            error: function()
+            {
+                console.log("Error")
+            }
+        });
+    }
+    couplingtables();
+}
+
+function couplingtables(){
+    if(frame != "" && frontpump != ""){
+        $.ajax({
+            url: "manual/coupling",
+            type: "POST",
+            data: {
+                csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
+                pump: frontpump,
+                motor: motorarray[0]
+            },
+            success: function(response)
+                {
+                    for(x in response){
+                        $("#tr_couplings").after("<tr><td>" + response[x][0] + "</td><td>" + response[x][1] + "</td><td>" + response[x][2] +"</td><td>$" + response[x][3] +"</td><td>" + 
                         response[x][4] + "</td><td>" + response[x][5] +"</td></tr>");
                     }
                 },
