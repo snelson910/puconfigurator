@@ -9,7 +9,7 @@ function search(){
         },
         success: function(response)
             {
-                console.log(response);
+                console.table(response);
             },
         error: function()
         {

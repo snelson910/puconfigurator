@@ -359,7 +359,14 @@ def extra(request):
 def search(request):
        if request.user.is_authenticated:
               if request.method == 'POST':
-                     jsondata = request.POST['query']
+                     query = request.POST['query']
+                     results = Parts.objects.filter(item_number__icontains=query)[:10] | Parts.objects.filter(product_name__icontains=query)[:10]
+                     parts = []
+                     i = 0
+                     for x in results:
+                            parts.append([results[i].item_number, results[i].product_name, results[i].on_hand, results[i].cost_each,results[i].stockstatus, results[i].goto_item ])
+                            i += 1
+                     jsondata = parts
                      return HttpResponse(json.dumps(jsondata), content_type="application/json")
               return redirect('/')
        else:
