@@ -200,7 +200,7 @@ def pumpnums(request):
                      selected = request.POST["selected"]
                      pumpcodes = []
                      if selected != "":
-                            #If this is not the  first selection being presented
+                            #If this is not the first selection being presented
                             rearupper = Pumpcodes.objects.get(pump = selected)
                             data1 = rearupper.front_pump
                             frontpump = data1.lower()
@@ -212,14 +212,14 @@ def pumpnums(request):
                                    pumpcodes.append(data[y].pump)
                                    y += 1
                      elif pumptotal ==  1:
-                            #allow any selection
+                            #Allow any selection
                             data = Pumpcodes.objects.all().order_by('pump_class', 'pump_size', 'id')
                             y = 0
                             for x in data:
                                    pumpcodes.append(data[y].pump)
                                    y += 1
                      elif pumptotal - pumpcurrent == 1 or pumptotal == pumpcurrent:
-                            #allow any selection that has through drive options
+                            #Allow any selection that has through drive options
                             query = 'select * from pumpcodes join throughdrives on throughdrives.rear_pump = pumpcodes.rear_pump where throughdrives.' + frontpump + ' is not null order by pump_class, pump_size'
                             data = Pumpcodes.objects.raw(query)
                             y = 0
@@ -242,18 +242,23 @@ def pumpselect(request):
                      pumpmax = json.loads(request.POST['pumpmax'])
                      current = json.loads(request.POST['current'])
                      results = []
+                     #If the selection is a gear pump, simply replace wildcards and move on.
                      if pumps[0].count('AZP') != 0:
                             currentpump = pumps[0].replace("*","%%")
                             option1 = currentpump
                             option2 = currentpump
                             option3 = currentpump
                      else:
+                            #Set up a raw query concat
                             search = pumps[0].replace("*", "%%").replace("/","").split("R")
+                            #Set up wildcard search
                             currentpump = '%%' + search[0] + '%%'
+                            #Check the type of shaft in the selected pump and add correct shaft to the query.
                             if search[1].count('K') != 0:
                                    currentpump += 'K%%'
                             if search[1].count('S') != 0:
                                    currentpump += 'S%%'
+                            #Check the number of following pumps to add correct suffixes. If more than one, no N00 option.
                             if pumps[0].count('31') != 0:
                                    if pumpmax - current > 1:
                                           option1 = currentpump + 'K01%%'
@@ -263,21 +268,27 @@ def pumpselect(request):
                                           option1 = currentpump + 'N00%%'
                                           option2 = currentpump + 'K01%%'
                                           option3 = currentpump + 'K68%%'
+                            #If the selected pump is a series 32, put the correct suffix on the query.
                             if pumps[0].count('32') != 0:
                                    option1 = currentpump + 'U00%%'
                                    option2 = currentpump + 'U00%%'
                                    option3 = currentpump + 'U00%%'
+                            #If the selected pump is an A15, query remains unmodified.
                             if pumps[0].count('A15') != 0:
                                    option1 = currentpump
                                    option2 = currentpump
                                    option3 = currentpump
+                            #If the selected pump is an A4, query remains unmodified.
                             if pumps[0].count('A4') != 0:   
                                    option1 = currentpump + 'U00%%'
                                    option2 = currentpump + 'N00%%'
                                    option3 = currentpump
+                     #Build query string.
                      query = "select * from parts where product_name like '" + option1 + "' or product_name like '" + option2 + "' or product_name like '" + option3 + "' order by on_hand desc, pref desc, stockstatus desc, goto_item desc"
+                     #Run query and save as var options
                      options = Parts.objects.raw(query)
                      j = 0
+                     #Build an array to send to the js to be displayed. Probably an easier or better way to do this but I don't know it.
                      for x in options:         
                             info = [options[j].item_number, options[j].product_name, options[j].on_hand, options[j].cost_each,options[j].stockstatus, options[j].pref, options[j].goto_item ]
                             results.append(info)
@@ -294,6 +305,7 @@ def pumpselect(request):
 def pumpparts(request):
        if request.user.is_authenticated:
               if request.method == 'POST':
+                     #Load all selected pumps as an array
                      pumps = json.loads(request.POST['pumpnums'])
                      parts = []
                      flows = []
