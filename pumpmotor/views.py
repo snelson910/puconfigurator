@@ -34,24 +34,25 @@ def coupling(request):
                 #The only failure is that the AJAX does not get a response.
                 mot = ""
                 try:
-                    mot = Motors.objects.get(voltage = a, hp = num)
+                    mot = Motors.objects.get(voltage = a, hp = num) #Referencing motors.csv
                     frame = mot.frame_size
                     motshaft = mot.shaft_length
                     motcoup = mot.coupling_code
                     #Grab the selected pump as an object.
-                    pum = Pumpcodes.objects.get(pump = pump)
+                    pum = Pumpcodes.objects.get(pump = pump) #Referencing pumpcodes.csv
                     pumframe = pum.pump_flange
                     pumshaft = pum.pump_shaft_length
                     pumcoup = pum.pump_coupling_code
                     #Add a bit of wiggle room for the shafts so that the minimum S_S distance is .15 inches. 
                     facelen = motshaft + pumshaft + .15
-                    bells = BellHousingSizes.objects.order_by('face_to_face').filter(end_style = pumframe, frame_size__contains = frame)
+                    bells = BellHousingSizes.objects.order_by('face_to_face').filter(end_style = pumframe, frame_size__contains = frame) #Referencing bellhousings.csv
                     i = 0
                     l = 0
                     bellnum = ""
+                    finalsize = ""
                     #Check if there were any bell housings selected and make a determination on if a custom housing needs to be made
                     if len(bells)== 0:
-                        custbell = BellHousingSizes.objects.get(frame_size__contains = frame, part_number__startswith = 'S')
+                        custbell = BellHousingSizes.objects.get(frame_size__contains = frame, part_number__startswith = 'S') #Referencing bellhousings.csv
                         #Round to nearest quarter inch.
                         length = math.ceil((facelen + .10)*4)/4
                         #Bellhousing number concatenation
@@ -73,19 +74,21 @@ def coupling(request):
                                 i += 1
                         #If the longest bellhousing is not long enough, build one using the concatenator 3000       
                         if bellnum == "":
-                                custbell = BellHousingSizes.objects.get(frame_size__contains = frame, part_number__startswith = 'S')
+                                custbell = BellHousingSizes.objects.get(frame_size__contains = frame, part_number__startswith = 'S') #Referencing bellhousings.csv
                                 length = math.ceil((facelen + .10)*4)/4
                                 bellnum = custbell.part_number + str(length*100)[:-3] + '2' + pumframe
                                 pref = custbell.coupling_size_pref
                                 maxsize = custbell.max_coupling_size
                                 l = str(round(length - facelen + .15, 2))
                     #Check if the coupling codes exist in the preferred size
-                    if CouplingCodes.objects.filter(code = str(motcoup), sizes__contains = pref):
+                    if CouplingCodes.objects.filter(code = str(motcoup), sizes__contains = pref): #Referencing couplingCodes.csv
                         motorcoupling = "M" + str(pref) + str(motcoup)
+                        finalsize = pref
                     else:
                         motorcoupling = ""
-                    if CouplingCodes.objects.filter(code = str(pumcoup), sizes__contains = pref):
+                    if CouplingCodes.objects.filter(code = str(pumcoup), sizes__contains = pref): #Referencing couplingCodes.csv
                         pumpcoupling = "M" + str(pref) + str(pumcoup)
+                        finalsize = pref
                     else:
                         pumpcoupling = ""
                     #If the coupling codes do not exist, grab the largest coupling size that will fit in the housing and begin checking through
@@ -93,12 +96,14 @@ def coupling(request):
                     if motorcoupling == "" or pumpcoupling == "":
                         size = maxsize
                         while motorcoupling == "" or pumpcoupling == "":
-                                if CouplingCodes.objects.filter(code = str(motcoup), sizes__contains = size):
-                                        motorcoupling = "M" + str(size) + str(motcoup)  
+                                if CouplingCodes.objects.filter(code = str(motcoup), sizes__contains = size): #Referencing couplingCodes.csv
+                                        motorcoupling = "M" + str(size) + str(motcoup)
+                                        finalsize = size
                                 else:
                                         motorcoupling = ""
-                                if CouplingCodes.objects.filter(code = str(pumcoup), sizes__contains = size):
+                                if CouplingCodes.objects.filter(code = str(pumcoup), sizes__contains = size): #Referencing couplingCodes.csv
                                         pumpcoupling = "M" + str(size) + str(pumcoup)
+                                        finalsize = size
                                 else:
                                         pumpcoupling = ""
                                 size = size-100
@@ -107,8 +112,16 @@ def coupling(request):
                                 if size == 0:
                                         motorcoupling = "Custom coupling required: M" + str(pref) + str(motcoup)
                                         pumpcoupling = "Custom coupling required: M" + str(pref) + str(pumcoup)
+                                        finalsize = pref
+                    #Select correct coupling insert for parts group
+                    finalsizestr = str(finalsize)
+                    if finalsizestr[0] == '1' or finalsizestr[0] == '2':
+                           insert = 'M' + finalsizestr[0] + '70H5RC'
+                    else:
+                           insert = 'M' + finalsizestr[0] + '70H5'
                     #Drop the data in a JSON to pass to the AJAX response
-                    data = [bellnum, motorcoupling, pumpcoupling, l, mot.motor_number, pump]
+                    #For usage, bellnum, motorcoupling, pumpcoupling, and insert are the part numbers that would be selected for reqd. parts
+                    data = [bellnum, motorcoupling, pumpcoupling, l, mot.motor_number, pump, insert]
                     jsondata = json.dumps(data)
                     return HttpResponse(jsondata, content_type="application/json") 
                 except:

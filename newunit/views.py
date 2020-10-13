@@ -106,6 +106,7 @@ def coupling(request):
                             motorcoupling = ""
                      if CouplingCodes.objects.filter(code = str(pumcoup), sizes__contains = pref):
                             pumpcoupling = "M" + str(pref) + str(pumcoup)
+                            finalsize = pref
                      else:
                             pumpcoupling = ""
                      #If the coupling codes do not exist, grab the largest coupling size that will fit in the housing and begin checking through

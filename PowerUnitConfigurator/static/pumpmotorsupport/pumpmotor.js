@@ -70,6 +70,7 @@ function tablebuild(){
     $("#shafts").html(data[3] + " inches");
     $("#motor").html(data[4]);
     $("#pump").html(data[5]);
+    $("#insert").html(data[6]);
     $("table").removeAttr("hidden", "hidden")
     $("#data").val(JSON.stringify(data));
 }
