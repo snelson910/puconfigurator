@@ -137,7 +137,16 @@ def coupling(request):
                             insert = 'M' + finalsizestr[0] + '70H5RC'
                      else:
                             insert = 'M' + finalsizestr[0] + '70H5'
-                     arr = [bellnum, motorcoupling, pumpcoupling, insert]
+                     baseplate = ""
+                     if frame in {'213TC', '215TC', '254TC', '256TC'}:
+                            baseplate = '5131'
+                     elif frame in {'56C', '143TC', '145TC', '182TC', '184TC'}:
+                            baseplate = '5135'
+                     elif frame in {'284TC', '284TSC', '286TC', '286TSC', '324TC', '324TSC', '326TC', '326TSC'}:
+                            baseplate = '5132'
+                     else:
+                            baseplate = 'VPM324'
+                     arr = [bellnum, motorcoupling, pumpcoupling, insert, baseplate]
                      j = 0
                      parts = []
                      for x in arr:
