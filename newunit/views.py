@@ -230,6 +230,7 @@ def pumpnums(request):
                      elif pumptotal - pumpcurrent == 1 or pumptotal == pumpcurrent:
                             #Allow any selection that has through drive options
                             query = 'select * from pumpcodes join throughdrives on throughdrives.rear_pump = pumpcodes.rear_pump where throughdrives.' + frontpump + ' is not null order by pump_class, pump_size'
+                            print(query)
                             data = Pumpcodes.objects.raw(query)
                             y = 0
                             for x in data:
