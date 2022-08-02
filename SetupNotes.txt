@@ -1,0 +1,16 @@
+Django install notes
+
+workon configurator
+	enters configurator virtual environment
+	
+required modules
+	pip install psycopg
+	pip install xlsxwriter
+	
+If auth_group is a table:
+	delete/drop table
+	python manage.py migrate auth
+	python manage.py migrate
+	python manage.py runserver
+	
+	
