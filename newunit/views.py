@@ -228,7 +228,7 @@ def pumpnums(request):
                                    pumpcodes.append(data[y].pump)
                                    y += 1
                      elif pumptotal - pumpcurrent == 1 or pumptotal == pumpcurrent:
-                            #Allow any selection that has through drive options
+                            #Allow any selection that has through drive options. There's probably a better way to build this than raw SQL transactions, but this is all I know how to do.
                             query = 'select * from pumpcodes join throughdrives on throughdrives.rear_pump = pumpcodes.rear_pump where throughdrives.' + frontpump + ' is not null order by pump_class, pump_size'
                             print(query)
                             data = Pumpcodes.objects.raw(query)
@@ -294,13 +294,13 @@ def pumpselect(request):
                                    option2 = currentpump + 'N00%%'
                                    option3 = currentpump
                      #Build query string.
-                     query = "select * from parts where product_name like '" + option1 + "' or product_name like '" + option2 + "' or product_name like '" + option3 + "' order by on_hand desc, pref desc, stockstatus desc, goto_item desc"
+                     query = "select * from parts where product_name like '" + option1 + "' or product_name like '" + option2 + "' or product_name like '" + option3 + "' order by on_hand desc, stockstatus desc, goto_item desc" #pref desc, goes before stockstatus
                      #Run query and save as var options
                      options = Parts.objects.raw(query)
                      j = 0
                      #Build an array to send to the js to be displayed. Probably an easier or better way to do this but I don't know it.
                      for x in options:         
-                            info = [options[j].item_number, options[j].product_name, options[j].on_hand, options[j].cost_each,options[j].stockstatus, options[j].pref, options[j].goto_item ]
+                            info = [options[j].item_number, options[j].product_name, options[j].on_hand, options[j].cost_each,options[j].stockstatus, options[j].goto_item ] #options[j].pref, goes before GoTo.
                             results.append(info)
                             j += 1
                      if len(results) == 0:
