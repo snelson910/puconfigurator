@@ -23,6 +23,7 @@
     <div id="motorselection">
     <form id="pmgroup" method="POST">
         {% csrf_token %}
+        <br><br>NOTE: Configuration does not guarantee existance of selected couplings. <br> Please ensure with Magnaloy that the selected couplings are feasible.<br>
         <br>
         Select the Required Horsepower:<br>         
         {{motor}}<br>
